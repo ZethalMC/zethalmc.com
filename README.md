@@ -21,9 +21,9 @@ I plan to continually update and expand the website with new projects. Check out
 
 If you have any questions, suggestions, or just want to say hi, don't hesitate to reach out:
 
-- Email: [YourEmail@example.com](mailto:YourEmail@example.com)
-- Discord: Zethal_#1234
-- NameMC: [ZethalMC on NameMC](https://namemc.com/profile/ZethalMC)
-- GitHub: [ZethalMC on GitHub](https://github.com/ZethalMC)
+- Email: [ZethalMC@gmail.com](mailto:ZethalMC@gmail.com)
+- Discord: Zethal_
+- Follow me on NameMC: [[Zethal_ on NameMC](https://nl.namemc.com/profile/Zethal_.1)
+- Follow me on GitHub: [ZethalMC on GitHub](https://github.com/ZethalMC)
 
 Happy coding!
