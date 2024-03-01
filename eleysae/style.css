@@ -7,7 +7,7 @@
 
 @font-face {
   font-family: 'title';
-  src: url('../eleysae/fonts/MinecrafterAlt.ttf') format('truetype');
+  src: url('main/eleysae/fonts/MinecrafterAlt.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 body {
   font-family: 'regular', sans-serif;
   background-color: #f0f0f0;
-  background-image: url('Images/*');
+  background-image: url('main/eleysae/images/*');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -27,7 +27,7 @@ body {
 }
 
 header {
-  background-image: url('../eleysae/images/EleysaeChurchSideZe.webp');
+  background-image: url('main/eleysae/images/EleysaeChurchSideZe.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
