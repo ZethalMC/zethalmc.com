@@ -76,8 +76,6 @@ section {
   margin-bottom: 20px;
 }
 
-}
-
 h1 {
   font-family: 'title', sans-serif;
   color: #FFF;
@@ -117,7 +115,7 @@ footer {
   color: white;
   text-align: center;
   padding: 1em;
-  position: bottom;
+  position: fixed;
   bottom: 0;
   width: 100%;
 }
