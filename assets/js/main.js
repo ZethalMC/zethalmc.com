@@ -1,5 +1,3 @@
-document.addEventListener("contextmenu","event.preventDefault")
-
 (function($) {
 
 	var	$window = $(window),
