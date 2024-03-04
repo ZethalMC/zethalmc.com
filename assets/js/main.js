@@ -1,4 +1,4 @@
-document.addEventListener("contextmenu","event.preventDefault()")
+document.addEventListener("contextmenu","event.preventDefault")
 
 (function($) {
 
