@@ -27,4 +27,3 @@ If you have any questions, suggestions, or just want to say hi, don't hesitate t
 - Follow me on GitHub: [ZethalMC on GitHub](https://github.com/ZethalMC)
 
 Happy coding!
-:D
