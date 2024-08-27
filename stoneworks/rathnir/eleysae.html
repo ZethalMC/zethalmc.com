@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eleysae</title>
+  <link rel="icon" href=".../images/Icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="../style.css">
+  <script src="../script.js" defer></script>
+</head>
+
+<body>
+
+  <header>
+    <h1 onclick="showPage('about')" style="cursor: pointer;">Eleysae</h1>
+    <p>Welcome to my simplistic website which I use to post some of my stories.</p>
+    <hr>
+  </header>
+
+  <nav>
+    <button onclick="showPage('news')" style="cursor: pointer;">News</button>
+    <button onclick="showPage('info')" style="cursor: pointer;">Info</button>
+    <button onclick="showPage('events')" style="cursor: pointer;">Events</button>
+    <button onclick="showPage('characters')" style="cursor: pointer;">Characters</button>
+    <button onclick="showPage('books')" style="cursor: pointer;">Books</button>
+    <button onclick="showPage('timeline')" style="cursor: pointer;">Timeline</button>
+  </nav>
+
+  <section id="about" class="page">
+    <h2>About Me</h2>
+    <p>So, I am <strong>Ze Alaric Thalos</strong>, am the mayor of Eleysae, and write books for a living. I am a fervent
+      Boaterist and became the Messiah of Boaterism.</p>
+    <hr>
+    <button onclick="toggleImage('AboutImage')">Toggle Image</button>
+    <p></p>
+    <img id="AboutImage" src="about-image.jpg" alt="About Me Image"
+      style="display: none; width: 100%; max-width: 600px; height: auto;">
+  </section>
+
+  <section id="news" class="page" style="display: none">
+    <h2>News</h2>
+    <article>
+      <h3>Founding of Eleysae</h3>
+      <p>For a long time, Ze Alaric wanted to establish a town, dedicated to Boaterism. A town where Boaterists would have a
+        safe place, a haven. When he finally got to found it, he immediately invited his best friends, Jeremaeh and
+        Harold, to join the town. They quickly built their houses in the center of Eleysae and inhabited them. This was
+        the start of Eleysae. The safe haven for Boaterists was born.</p>
+      <p>Date: November 21th, 2023</p>
+      <hr>
+      <button onclick="toggleGallery('newsGallery')">Toggle Images</button>
+      <p></p>
+      <div class="gallery" id="newsGallery" style="display: none;">
+        <img src="../images/TownPictureSloan.webp" alt="EleysaeImage1" class="gallery-image">
+        <img src="../images/TownPictureSloan (2).webp" alt="EleysaeImage2" class="gallery-image">
+        <img src="../images/TownPictureSloan (3).webp" alt="EleysaeImage3" class="gallery-image">
+        <img src="../images/NewApartmentHarold.webp" alt="EleysaeImage4" class="gallery-image">
+        <img src="../images/BackGardenHarlod.webp" alt="EleysaeImage5" class="gallery-image">
+    </article>
+  </section>
+
+  <section id="info" class="page" style="display: none">
+    <h2>Info</h2>
+    <article>
+      <h3>Eleysae Church of Boaterism</h3>
+      <p>There were plans to build the church of Eleysae for a long time, and some person, named Brend, started the
+        building process, but he was not able to finish it. He sadly left Eleysae before the church was finished.
+        Jeremaeh and Harold eventually built the church. This was, because Jeremaeh couldn't live with a half done
+        church next to his house, so he tore it down. After that action, there was an empty hole at the place. Jeremaeh
+        and Harold decided that someone had to build the church again, before Iristor would come and freeze the world,
+        so they built the church themselves. On the evening of january the 27th, the church was finished and
+        officially opened.</p>
+      <p>Date: January 27th, 2024</p>
+      <hr>
+      <button onclick="toggleGallery('blogGallery')">Toggle Images</button>
+      <p></p>
+      <div class="gallery" id="blogGallery" style="display: none;">
+        <img src="../images/EleysaeChurchSideZe.webp" alt="ChurchSide" class="gallery-image">
+        <img src="../images/EleysaeChurchFrontZe.webp" alt="ChurchFront" class="gallery-image">
+        <img src="../images/EleysaeChurchInZe.webp" alt="ChurchIn" class="gallery-image">
+    </article>
+  </section>
+
+  <section id="events" class="page" style="display: none">
+    <h2>Events</h2>
+    <article>
+      <h3>Current Events</h3>
+      <p>Currently, the Boaterists have a service every sunday at the church. Everyone is welcome to come and join the
+        service.</p>
+    </article>
+  </section>
+
+  <section id="characters" class="page" style="display: none">
+    <h2>Characters</h2>
+    <article>
+      <P>Press the buttons for more information about the characters.</P>
+      <button onclick="showPage('ze-info')" style="cursor: pointer;">Ze Alaric Thalos</button>
+      <button onclick="showPage('jeremaeh-info')" style="cursor: pointer;">Jeremaeh ad Alendir-Vulidion</button>
+      <button onclick="showPage('harold-info')" style="cursor: pointer;">Harold Teutonicus-ad Alendir</button>
+    </article>
+  </section>
+
+  <section id="ze-info" class="page" style="display: none">
+    <button onclick="showPage('characters')" style="cursor: pointer;">Back</button>
+    <article>
+      <h3>Ze Alaric Thalos</h3>
+      <p>Ze Alaric Thalos is the founder and mayor of Eleysae. He is a Boaterist, and is the Messiah of Boaterism.
+        He
+        wrote different books about his life, and about Boaterism. He is the author of the book "Spirit's Vision", a
+        book about the moment that he withnessed the Boaterist Spirits.</p>
+    </article>
+  </section>
+
+  <section id="jeremaeh-info" class="page" style="display: none">
+    <button onclick="showPage('characters')" style="cursor: pointer;">Back</button>
+    <article>
+      <h3>Jeremaeh ad Alendir-Vulidion</h3>
+      <p>Jeremaeh is an important Boaterist for the church. He built the church in Eleysae and is the builder of the
+        Eleysae Wall.
+        Once he was corrupted by the flesh of Bob, a demon sheep, but he was cured by Ze Alaric and Harold in the
+        Hierapolis river. He was transported to Flaitheas shortly, but came back, cured by the spirits.</p>
+    </article>
+  </section>
+
+  <section id="harold-info" class="page" style="display: none">
+    <button onclick="showPage('characters')" style="cursor: pointer;">Back</button>
+    <article>
+      <h3>Harold Teutonicus-ad Alendir</h3>
+      <p>Harold is the Navigator of the Boaterism Church. He is one of the Founders of the
+        Boaterism
+        faith.
+        He has incredibly much knowledge about Boaterism, Boat Spirits and Enithica, the main location of Boaterism.
+      </p>
+    </article>
+  </section>
+
+  <section id="books" class="page" style="display: none">
+    <h2>Books</h2>
+    <button onclick="showPage('oneboat')" style="cursor: pointer;">One Boat</button>
+    <button onclick="showPage('discovery')" style="cursor: pointer;">The Discovery</button>
+    <button onclick="showPage('spiritsvision')" style="cursor: pointer;">Spirits Vision</button>
+  </section>
+
+  <section id="oneboat" class="page" style="display: none">
+    <button onclick="showPage('books')" style="cursor: pointer;">Back</button>
+    <article>
+      <h3>One Boat</h3>
+      <p>This is the first book about Boaterism that Ze Alaric Thalos wrote. It is about a fictional person, Aric, a man
+        who became a Boat and returned after from the afterlife, back to the world of the living.</p>
+    </article>
+    <hr>
+    <article>
+      <h2>One Boat</h2>
+      <p>In the realm of Rathnir, Boaterism was an intriguing philosophy that intertwined deeply with the lives of its
+        followers. Beyond its simplistic origins, it had grown to encompass a rich tapestry of belief and tradition,
+        where the six types of boats symbolized different aspects of existence.</p>
+
+      <p>Deep within the heart of a sprawling metropolis known as Fjörgyien, the Boaterist community had established a
+        special place of worship: the Boat Tower. This grand structure resembles a tower of Boats. It stood as a
+        testament to the diverse facets of life celebrated by the followers.</p>
+
+      <p>At the heart of the Boater's Haven was a legend, one whispered only among the most devout. It spoke of a man
+        named Aric, who had lived during a time when the city was plagued by darkness and discord. Aric, an ordinary oak
+        boat maker, had dedicated his life to crafting boats of exquisite beauty and balance.</p>
+
+      <p>One fateful day, as Aric set out to sail on his latest creation, he encountered a terrible storm that engulfed
+        his vessel. Struggling against the tempest, he clung to his boat for dear life as lightning crashed around him.
+        When the storm finally subsided, Aric was nowhere to be found, and all that remained was his boat.</p>
+
+      <p>The boat drifted along the shores of Ironhaven, passed down from one owner to the next, each unaware of its
+        extraordinary history. Years turned into decades, and the boat's wood began to age and crack, reflecting the
+        hardships of the city itself.</p>
+
+      <p>Then, on an ordinary day, as the boat sat in a humble workshop, its timbers creaking with the weight of time,
+        an
+        unexpected event occurred. A bolt of lightning struck the boat, illuminating the workshop with an otherworldly
+        radiance. When the light faded, there stood Aric, not as a boat but as a living, breathing man.
+
+      <p>The city was awestruck by Aric's miraculous return from the afterlife, and he became a living legend among the
+        followers of Boaterism. He shared tales of his time adrift, where he had witnessed the hardships and joys of
+        life from the perspective of a boat. His return was seen as a symbol of the eternal cycle of life and rebirth,
+        where even in the darkest of times, hope could prevail.</p>
+
+      <p>Aric spent the rest of his days in Ironhaven, crafting boats that bore his wisdom and the lessons he had
+        learned
+        during his time as a vessel. These boats were regarded as sacred artifacts, and those who owned them cherished
+        the connection to Aric's extraordinary journey.</p>
+
+      <p>Boaterism in Ironhaven evolved to include the belief that boats were vessels not only for transportation but
+        for
+        the human spirit itself. They symbolized the resilience of life, the enduring strength of the human soul, and
+        the unbreakable bond between people and their creations. In Ironhaven, the legacy of Aric and his miraculous
+        return continued to inspire generations, reminding them that even in the face of adversity, there was always a
+        chance for renewal and transformation.</p>
+      <h4>Written by: Ze Alaric Thalos</h4>
+    </article>
+  </section>
+
+  <section id="discovery" class="page" style="display: none">
+    <button onclick="showPage('books')" style="cursor: pointer;">Back</button>
+    <article>
+      <h3>The Discovery</h3>
+      <p>This is the second book about Boaterism that Ze Alaric Thalos wrote. It is about Harold Teutonicus-ad Alendir
+        and Saunic Spud discovering the existence of Spirits inside of the Boats of the sacred Boat Tower.</p>
+    </article>
+    <hr>
+    <article>
+      <h2>The Discovery</h2>
+      <p>In the world of Rathnir, a new religion was born, known as Boaterism. It revolved around the belief that boats
+        were not just tools for transportation but, vessels imbued with spiritual significance. The six types of boats
+        symbolized different aspects of the world, and their importance was central to this emerging faith.</p>
+
+      <p>In the heart of Fjörgyien, a vast, picturesque city in the land of Sirradra, the Boat tower stood tall. It was
+        the epicenter of Boaterism, a place of great reverence for its sheer abundance of boats. The tower itself was a
+        symbol of restoration, for it was frequently destroyed and rebuilt by the devout followers who considered it an
+        act of devotion to maintain the sacred structure. Each boat within the tower represented something unique. The
+        spruce boats symbolized Priests and Heroes, honored for their wisdom and bravery. Oak boats were associated with
+        the common people, representing the backbone of society. Acacia boats were dedicated to animals, recognizing
+        their role in the natural world. Dark oak boats stood for monsters and mobs, embodying the challenges that
+        people faced. Jungle boats celebrated the importance of plants, while birch boats were reserved for those who
+        had transgressed the laws and were seen as criminals seeking redemption.</p>
+
+      <p>Saunic Spud and Harold Ad Alendir were the founders of Boaterism. One day, while exploring the Fjörgyien Boat
+        tower, they stumbled upon an astonishing revelation. Through their experiments, they discovered that every boat
+        harbored spirits within them. As they delved deeper into their research, they heard a mysterious voice inside
+        their heads, as if the very boats were speaking to them.</p>
+
+      <p>'Finally, someone recognized our existence,' the voice echoed. 'We have been guiding the people for many years,
+        even though they did not know. Please, give us the recognition we deserve. Spread our word across the lands, for
+        we deserve to be praised!'</p>
+
+      <p>Overwhelmed by this revelation, Saunic and Harold felt compelled to heed the voice's request. In a moment of
+        divine connection, a sacred book descended from the heavens, containing everything related to the Boat Spirits
+        and their wishes. It was their divine mission to share this knowledge with the world.</p>
+
+      <p>Boaterism quickly gained followers across the whole province, Enithica-Novoros. The faithful gathered at the
+        Fjörgyien Boat tower, where they worshiped, celebrated, and restored the sacred structure. They believed that by
+        respecting and understanding the spirits within the boats, they could bring harmony to their lives and the world
+        around them.</p>
+
+      <p>The Enithica River in Hierapolis also held a special place in Boaterism. It was here that one of the faith's
+        founders had found an enormous treasure. This discovery was seen as a sign that "what is the boat without the
+        water underneath?" The river became a place of pilgrimage for those seeking blessings and a deeper connection to
+        the spirits.</p>
+
+      <p>Among the many spirits that Boaterism recognized, two were particularly notable. Knunkles Spud, believed to be
+        one of the first boat creators, was revered as a founding ancestor. He was reincarnated as the spirit atop the
+        Fjörgyien Boat tower, guiding and protecting the faithful. On the other hand, there was Bob the first, an evil
+        sheep with unnatural powers. After one person, named Sir Sonic, killed him, he was reborn as a birch boat,
+        instead of an acacia boat. This boat embodies the belief in redemption and transformation.</p>
+
+      <p>Boaterism continued to grow, its followers spreading the teachings of the Boat Spirits far and wide. In
+        Rathnir,
+        the boats were no longer mere vessels. They were sacred conduits to the spirits that guided and protected the
+        people. As the faith expanded, so too did the recognition of the importance of boats and the world they
+        symbolized.</p>
+
+      <p>However, as time flowed relentlessly forward, the fervor of Boaterism gradually waned. The once vibrant faith
+        that had united communities and celebrated the spirits within boats began to fade into obscurity.
+
+      <p>Among those who still believed, the spirits within the boats continued to speak to them, albeit in fainter
+        whispers. Knunkles Spud and Bob the first remained symbols of faith, but their stories became more obscure with
+        each passing year.</p>
+
+      <p>Boaterism, the religion that had once promised spiritual connection through boats and their spirits, was now a
+        shadow of its former self. Its teachings, once embraced by the masses, were now known to only a handful. The
+        world had moved on, leaving Boat Spirits to quietly linger in the hearts of a few who still believed in their
+        presence and power.</p>
+    </article>
+  </section>
+
+  <section id="spiritsvision" class="page" style="display: none">
+    <button onclick="showPage('books')" style="cursor: pointer;">Back</button>
+    <article>
+      <h3>Spirits Vision</h3>
+      <p>This is the third book about Boaterism that Ze Alaric Thalos wrote. It is about Ze Alaric Thalos seeing the
+        Spirits, on the place that is now the Holy Lands. The town of Eleysae is built on the Holy Lands, and is the
+        capital town of the Boaterists. The perception of Ze Alaric Thalos has ensured that he is now the Messiah of
+        Boaterism.</p>
+    </article>
+    <hr>
+    <article>
+      <h2>Spirits Vision</h2>
+      <p>In the historical city of Libertalia, known for its thriving civilisation and bustling trade, a curious
+        character named Ze Alaric had set out on an extraordinary adventure. He was going to restore Libertalia in it's
+        former glory, as the city was in ruins, after a deadly desease killed all of the old inhabitants, and the city
+        was disbanded.</p>
+        <p>Ze was a writer by heart, and his travels had led him to the heart of the province Enithica-Novoros, where he'd
+        heard whispers of the enigmatic Boat Spirits. These spirits were said to show themselves only to the Boat
+        Messiah, and it was rumoured that they held the power to glimpse into the future.</p>
+        <P>One night, Ze found himself wandering around in past Libertalia, and just looking at everything, as his eyes
+        catched an odd light. It seemed to dance across a large empty field, but Ze didn't know what it was. He asked
+        Sloan, his business partner to take a look, but Sloan didn't see anything. Ze decided to take a look himself,
+        and he figured it were spirits. He began to approach the spirits, because he was afraid they saw him.
+        As Ze approached, the spirits began to shimmer with an ethereal light. They had awakened. Their presence felt
+        formidable and tranquil, like the calm before a storm.</p>
+        <p>Ze bowed respectfully, realizing he was in the presence of something extraordinary. The Boat Spirits recognized
+        his reverence and decided to share their wisdom with this intrepid writer and adventurer.
+        "Ze Alaric," one spirit began, its voice a soft, melodious hum. "We see in you a seeker of knowledge and a
+        wanderer of the world. You are destined to uncover the forgotten treasures of history and bring tales of the
+        past into the light of the present."</p>
+        <p>Another spirit continued, "In the city of Libertalia, where merchants and marauders alike converge, your path
+        will intertwine with those who wear masks of deceit. Beware of those who offer power at a heavy price, for not
+        all that glitters is gold."</p>
+        <p>A third spirit spoke, "But fear not, for your journey will lead you to a guardian, a loyal companion who will
+        stand by your side through trials and tribulations. Together, you shall unlock the secrets of ancient relics and
+        hidden maps."</p>
+        <p>Ze listened in awe as the Boat Spirits foretold future encounters and challenges. The spirits' voices
+        intertwined like harmonious melodies, painting a vivid picture of the twists and turns that lay ahead.
+        The prediction continued, "You shall bear witness to a clash of worlds and ideologies, as forces seek to
+        redefine the boundaries of freedom and tradition. Remember, it is in unity that true strength is found, and
+        through understanding, bridges can be built."</p>
+        <p>The Boat Spirits, their ethereal voices carrying a weight of solemnity, continued their ethereal proclamations.
+        "Ze Alaric," spoke one of the spirits solemnly, "we foresee turbulent times for those who stray from the
+        righteous path. In the shadowy corners of Enithica-Novoros, the bandits Sir Sonic and SpecialWizard shall meet a
+        fate unbecoming. Their actions will lead them not to honor or glory, but to a fate far darker. They shall
+        receive the Birch Boat, a symbol of doom, a stark reminder that the course of their actions bears no
+        achievement." The aura around Ze and the Boat Spirits darkened, casting a chilling pall over the field. Ze felt
+        a shiver run down his spine as he absorbed the ominous prediction.</p>
+        <p>Turning to more promising matters, the Boat Spirits continued, "On the brighter horizon, Saunic Spud, the
+        founder of Boaterism, shall remain a beacon of hope and wisdom. His legacy will inspire generations, bringing
+        unity and understanding in times of strife."</p>
+        <p>"And High Priest Harold Teutonicus Ad Alendir." another spirit chimed in, "His devotion to our faith shall be
+        unwavering, guiding the followers with unwavering dedication. His words will resonate like the tranquil ripples
+        on water's surface, bringing solace to those who seek it."</p>
+        <p>The spirits' light grew even more radiant as they focused on another individual, though with less intensity,
+        "Lastly, Priest Biuco Spud, while his path may be filled with more shadows than light, his resilience and
+        determination will forge a vital link between the faithful and the unknown. Through his trials, he shall unlock
+        the secrets of balance and harmony."</p>
+        <p>As dawn approached, the Boat Spirits began to fade, their glow diminishing. Their final words resonated in Ze's
+        mind, "May you be shielded from harm, and may the spirits watch over you, keeping you safe from the storms of
+        life."</p>
+        <p>With those words, the spirits vanished, returning to their deep slumber. Ze Alaric left the field, his heart
+        filled with gratitude and determination. He knew that his path would be filled with challenges and mysteries,
+        but with the blessings and guidance of the Boat Spirits, he was ready to face whatever lay ahead.</p>
+    </article>
+  </section>
+
+  <section id="curing" class="page" style="display: none">
+    <button onclick="showPage('timeline')" style="cursor: pointer;">Back to timeline</button>
+    <article>
+      <p>
+        On December the 26th, 2023, Jeremaeh had to be cured in the Hierapolis River, as he was corrupted by the flesh
+        of Bob, a demon sheep. Ze Alaric and Harold babtized him, and he was sent to Flaitheas. Here, he was cured by
+        the Spirits of Boaterism, and sent back to Thalamh. He still has signs on his body that reminds him of the
+        event.
+      </p>
+    </article>
+  </section>
+
+  <section id=timeline class="page" style="display: none">
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">November 2023</div>
+        <div class="timeline-content">
+          <p onclick="showPage('news')" style="cursor: pointer;"><u>21th: Founding of Eleysae</u></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">December 2023</div>
+        <div class="timeline-content">
+          <p onclick="showPage('curing')" style="cursor: pointer;"><u>26th: Jeremaeh is being cured by Harold and Ze
+              Alaric.</u></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">January 2024</div>
+        <div class="timeline-content">
+          <p onclick="showPage('info')" style="cursor: pointer;"><u>27th: The construction of the Eleysae Church.</u>
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">February 2024</div>
+        <div class="timeline-content">
+          <p onclick="showPage('sheeps')" style="cursor: pointer;"><u>26th: Sheeps appearance in Eleysae.</u></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">March 2024</div>
+        <div class="timeline-content">
+          <p><u>No events yet.</u></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <footer>
+    <p>Contact: <a href="mailto:zethalmc@gmail.com">ZethalMC@gmail.com</a> | Follow me on <a
+        href="https://namemc.com/profile/Zethal_.1">NameMC</a></p>
+  </footer>
+
+  <div id="imageModal" class="modal" onclick="closeImageModal()">
+    <img id="modalImage" class="modal-content" alt="Modal Image">
+  </div>
+
+
+</body>
+
+</html>
