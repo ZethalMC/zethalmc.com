@@ -6,6 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/gallery.css" />
   <noscript>
     <link rel="stylesheet" href="assets/css/noscript.css" />
   </noscript>
@@ -33,15 +34,15 @@
       </nav>
     </header>
 
-    <a href="#" class="button icon">
+    <a href="#stoneworks" class="button icon">
       <img src="images/stoneworks.png" alt="stoneworks-img" style="width: 32px; height: 32px; vertical-align: middle;">
       Stoneworks
     </a>
-    <a href="#" class="button icon">
-      <img src="images/letsurvivx.png" alt="letsurvivx-img" style="width: 32px; height: 32px; vertical-align: middle; border-radius: 20px;">
+    <a href="#letsurvivx" class="button icon">
+      <img src="images/letsurvivx.png" alt="letsurvivx-img"
+        style="width: 32px; height: 32px; vertical-align: middle; border-radius: 20px;">
       LetSurvivX
     </a>
-    
 
     <div id="main">
 
@@ -111,14 +112,63 @@
         <p>Discord is the place to get a quick reply. You can call me Zethal_, Zethal, or simply Ze.</p>
       </article>
 
+      <article id="stoneworks">
+        <h2 class="mayor">Stoneworks</h2>
+
+        <ul>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </ul>
+
+         <!-- <div class="row">
+          <div class="column">
+            <img src="images/letsurvivx.png" alt="LetSurvivX" style="width:100%" onclick="myFunction(this);">
+          </div>
+          <div class="column">
+            <img src="images/stoneworks.png" alt="Stoneworks" style="width:100%" onclick="myFunction(this);">
+          </div>
+          <div class="column">
+            <img src="images/npic01.png" alt="Mountains" style="width:100%" onclick="myFunction(this);">
+          </div>
+          <div class="column">
+            <img src="images/npic02.jpg" alt="Lights" style="width:100%" onclick="myFunction(this);">
+          </div>
+        </div>
+        
+        <div class="container">
+          <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+          <img id="expandedImg" style="width:100%">
+          <div id="imgtext"></div>
+        </div> -->
+      </article>
+
+      <article id="letsurvivx">
+        <h2 class="mayor">LetSurvivX</h2>
+
+        <ul>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </ul>
+      </article>
+
       <article id="elements">
         <h2 class="major">Elements</h2>
 
         <section>
           <h3 class="major">Text</h3>
-          <p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-          This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-          This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
+          <p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is
+            <em>emphasized</em>.
+            This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+            This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a
+              link</a>.
+          </p>
           <hr />
           <h2>Heading Level 2</h2>
           <h3>Heading Level 3</h3>
@@ -127,7 +177,10 @@
           <h6>Heading Level 6</h6>
           <hr />
           <h4>Blockquote</h4>
-          <blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
+          <blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod.
+            Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac
+            adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam
+            adipiscing eu felis.</blockquote>
           <h4>Preformatted</h4>
           <pre><code>i = 0;
 
@@ -351,7 +404,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
         </section>
 
       </article>
-    
+
     </div>
 
     <footer id="footer">
@@ -368,6 +421,15 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
+  <script>
+    function myFunction(imgs) {
+      var expandImg = document.getElementById("expandedImg");
+      var imgText = document.getElementById("imgtext");
+      expandImg.src = imgs.src;
+      imgText.innerHTML = imgs.alt;
+      expandImg.parentElement.style.display = "block";
+    }
+    </script>
 
 </body>
 
