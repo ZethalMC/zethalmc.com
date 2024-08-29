@@ -23,7 +23,7 @@ If you have any questions, suggestions, or just want to say hi, don't hesitate t
 
 - Email: [ZethalMC@gmail.com](mailto:ZethalMC@gmail.com)
 - Discord: Zethal_
-- Follow me on NameMC: [Zethal_ on NameMC](https://nl.namemc.com/profile/Zethal_.1)
-- Follow me on GitHub: [ZethalMC on GitHub](https://github.com/ZethalMC)
+- Follow me on NameMC: [Zethal](https://nl.namemc.com/profile/Zethal_.1)
+- Follow me on GitHub: [ZethalMC](https://github.com/ZethalMC)
 
 Happy coding!
