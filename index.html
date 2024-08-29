@@ -126,16 +126,16 @@
 
          <!-- <div class="row">
           <div class="column">
-            <img src="images/letsurvivx.png" alt="LetSurvivX" style="width:100%" onclick="myFunction(this);">
+            <img src="images/letsurvivx.png" alt="LetSurvivX" style="width:100%" onclick="expandImg(this);">
           </div>
           <div class="column">
-            <img src="images/stoneworks.png" alt="Stoneworks" style="width:100%" onclick="myFunction(this);">
+            <img src="images/stoneworks.png" alt="Stoneworks" style="width:100%" onclick="expandImg(this);">
           </div>
           <div class="column">
-            <img src="images/npic01.png" alt="Mountains" style="width:100%" onclick="myFunction(this);">
+            <img src="images/npic01.png" alt="Mountains" style="width:100%" onclick="expandImg(this);">
           </div>
           <div class="column">
-            <img src="images/npic02.jpg" alt="Lights" style="width:100%" onclick="myFunction(this);">
+            <img src="images/npic02.jpg" alt="Lights" style="width:100%" onclick="expandImg(this);">
           </div>
         </div>
         
@@ -421,15 +421,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <script>
-    function myFunction(imgs) {
-      var expandImg = document.getElementById("expandedImg");
-      var imgText = document.getElementById("imgtext");
-      expandImg.src = imgs.src;
-      imgText.innerHTML = imgs.alt;
-      expandImg.parentElement.style.display = "block";
-    }
-    </script>
+  <script src="assets/js/expandgallery.js"></script>
 
 </body>
 
