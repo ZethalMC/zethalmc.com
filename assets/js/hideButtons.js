@@ -1,5 +1,5 @@
   document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('a, img');
+    const navLinks = document.querySelectorAll('#header nav ul li a');
     const hideableButtons = document.querySelectorAll('.hideable');
 
     navLinks.forEach(link => {
