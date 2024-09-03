@@ -293,6 +293,11 @@ input, select, textarea {
 		text-align: right;
 	}
 
+	.center {
+		display: flex;
+		justify-content: center;
+	  }
+
 
 	form {
 		margin: 0 0 2rem 0;
