@@ -3,71 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LetSurvivX</title>
+    <title>LetSurvivX Minecraft Server</title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <header>
-        <nav>
-            <ul id="nav-list">
-                <li><a href="#" onclick="changePage('home')">Home</a></li>
-                <li><a href="#" onclick="changePage('stories')">Stories</a></li>
-                <li><a href="#" onclick="changePage('images')">Images</a></li>
-            </ul>
+        <nav class="navbar">
+            <div class="container">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#rules">Rules</a></li>
+                    <li><a href="#staff">Staff</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
-    <main id="main-content">
-        <!-- Dynamic content will be loaded here -->
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to LetSurvivX</h1>
+            <p>Join our Minecraft server and embark on exciting adventures with friends!</p>
+            <a href="#features" class="btn">Explore Features</a>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <!-- Features Section -->
+            <section id="features" class="content-section">
+                <h2>Features</h2>
+                <p>Our server offers a variety of exciting features to enhance your gameplay experience:</p>
+                <ul>
+                    <li>Survival mode</li>
+                    <li>PvP enabled</li>
+                    <li>Custom plugins</li>
+                </ul>
+            </section>
+
+            <!-- Rules Section -->
+            <section id="rules" class="content-section">
+                <h2>Rules</h2>
+                <p>To ensure a fun and fair experience for all, please follow these rules:</p>
+                <ul>
+                    <li>No griefing</li>
+                    <li>No hacking</li>
+                    <li>Respect other players</li>
+                </ul>
+            </section>
+
+            <!-- Staff Section -->
+            <section id="staff" class="content-section">
+                <h2>Staff</h2>
+                <p>Meet our dedicated server staff:</p>
+                <ul>
+                    <li><strong>Admin:</strong> JohnDoe</li>
+                    <li><strong>Moderator:</strong> JaneDoe</li>
+                </ul>
+            </section>
+        </div>
     </main>
 
-    <script>
-        // Define the content for each page
-        const pages = {
-            home: `
-                <h1>Welcome to LetSurvivX</h1>
-                <p>This is the home page of our Minecraft server.</p>
-            `,
-            stories: `
-                <h1>Stories from LetSurvivX</h1>
-                <p>Here you'll find stories from our players.</p>
-                <ul>
-                    <li><a href="#" onclick="loadStory('story1')">Story 1</a></li>
-                    <li><a href="#" onclick="loadStory('story2')">Story 2</a></li>
-                </ul>
-                <div id="story-content"></div>
-            `,
-            images: `
-                <h1>Images from LetSurvivX</h1>
-                <p>Here you'll find images from our server.</p>
-                <img src="image1.jpg" alt="Image 1">
-                <img src="image2.jpg" alt="Image 2">
-            `
-        };
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 LetSurvivX Minecraft Server. All rights reserved.</p>
+        </div>
+    </footer>
 
-        // Define the stories
-        const stories = {
-            story1: `
-                <h2>Story 1</h2>
-                <p>This is the content of story 1.</p>
-            `,
-            story2: `
-                <h2>Story 2</h2>
-                <p>This is the content of story 2.</p>
-            `
-        };
-
-        // Function to change the page
-        function changePage(page) {
-            document.getElementById('main-content').innerHTML = pages[page];
-        }
-
-        // Function to load a story
-        function loadStory(story) {
-            document.getElementById('story-content').innerHTML = stories[story];
-        }
-
-        // Set the default page to home
-        changePage('home');
-    </script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
