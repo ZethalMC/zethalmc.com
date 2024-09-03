@@ -2,47 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LetSurvivX Minecraft Server</title>
+    <title>LetSurvivX</title>
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/gallery.css" />
-    <noscript>
-      <link rel="stylesheet" href="../assets/css/noscript.css" />
-    </noscript>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="header">
-        <div>
-            <h1 class="mayor">LetSurvivX</h1>
-            <p>Explore, build, and survive with friends!</p>
-        </div>
+    <header>
+        <nav>
+            <ul id="nav-list">
+                <li><a href="#" onclick="changePage('home')">Home</a></li>
+                <li><a href="#" onclick="changePage('stories')">Stories</a></li>
+                <li><a href="#" onclick="changePage('images')">Images</a></li>
+            </ul>
+        </nav>
     </header>
+    <main id="main-content">
+        <!-- Dynamic content will be loaded here -->
+    </main>
 
-    <!-- About Section -->
-    <section class="about">
-        <div class="container">
-            <h2>About LetSurvivX</h2>
-            <p>LetSurvivX is a dynamic Minecraft server where players come together to build, explore, and survive. Our spawn village, Valoria, is a bustling hub with shops and unique architecture. Join factions like the Goldists, who gather around their mysterious altar to build their legacy.</p>
-            <p>Whether you’re looking to create massive bases, participate in community events, or simply enjoy the game with friends, LetSurvivX has something for everyone!</p>
-        </div>
-    </section>
+    <script>
+        // Define the content for each page
+        const pages = {
+            home: `
+                <h1>Welcome to LetSurvivX</h1>
+                <p>This is the home page of our Minecraft server.</p>
+            `,
+            stories: `
+                <h1>Stories from LetSurvivX</h1>
+                <p>Here you'll find stories from our players.</p>
+                <ul>
+                    <li><a href="#" onclick="loadStory('story1')">Story 1</a></li>
+                    <li><a href="#" onclick="loadStory('story2')">Story 2</a></li>
+                </ul>
+                <div id="story-content"></div>
+            `,
+            images: `
+                <h1>Images from LetSurvivX</h1>
+                <p>Here you'll find images from our server.</p>
+                <img src="image1.jpg" alt="Image 1">
+                <img src="image2.jpg" alt="Image 2">
+            `
+        };
 
-    <!-- Footer Section -->
-    <footer id="footer">
-        <div class="container">
-            <p>&copy; 2024 LetSurvivX Minecraft Server. All rights reserved.</p>
-        </div>
-    </footer>
+        // Define the stories
+        const stories = {
+            story1: `
+                <h2>Story 1</h2>
+                <p>This is the content of story 1.</p>
+            `,
+            story2: `
+                <h2>Story 2</h2>
+                <p>This is the content of story 2.</p>
+            `
+        };
 
-    <!-- JavaScript file -->
-    <script src="../assets/js/jquery.min.js"></script>
-    <script src="../assets/js/browser.min.js"></script>
-    <script src="../assets/js/breakpoints.min.js"></script>
-    <script src="../assets/js/util.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/expandgallery.js"></script>
+        // Function to change the page
+        function changePage(page) {
+            document.getElementById('main-content').innerHTML = pages[page];
+        }
+
+        // Function to load a story
+        function loadStory(story) {
+            document.getElementById('story-content').innerHTML = stories[story];
+        }
+
+        // Set the default page to home
+        changePage('home');
+    </script>
 </body>
 </html>
