@@ -125,9 +125,42 @@ body {
     left: 0;
 }
 
-.member {
+.page {
+    margin: 40px 0;
+    padding: 30px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.page h2 {
+    margin-bottom: 15px;
+    color: #ff7f50;
+}
+
+.page ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.page ul li {
+    margin-bottom: 10px;
+    padding-left: 1em;
+    position: relative;
+}
+
+.page ul li:before {
+    content: '•';
+    color: #ff7f50;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.member, .admin, .developer, .donor {
     font-family: 'Minecraft', sans-serif;
-    color: grey;
+    color: white;
 }
 
 .member-text {
@@ -138,6 +171,34 @@ body {
     color: inherit;
 }
 
+.admin-text {
+    padding-left: 2px;
+    background: linear-gradient(to right, #BA0000, #EA0000);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: inherit;
+}
+
+.developer-text {
+    padding-left: 2px;
+    background: linear-gradient(to right, #A900FF, #CB35FF);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: inherit;
+}
+
+.donor-text {
+    padding-left: 2px;
+    background: linear-gradient(to right, #08D4FB, #74F4FF);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: inherit;
+}
+
+.brackets {
+    font-family: 'Minecraft', sans-serif;
+    color: grey;
+}
 
 footer {
     background-color: #1c1c1c;

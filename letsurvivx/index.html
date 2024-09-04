@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LetSurvivX</title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
+
 <body>
     <header>
         <nav class="navbar">
             <div class="container">
                 <ul>
-                    <li><a href="#home">Home</a></li>
+                    <li><a onclick="showPage('home')">Home</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#rules">Rules</a></li>
-                    <li><a href="#staff">Staff</a></li>
+                    <li><a href="#members">Members</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <section id="home" class="title">
+    <section id="home" class="title" style="display: none;">
         <div class="title-content">
             <h1>Welcome to the LetSurvivX!</h1>
             <a href="#features" class="button">Explore Features</a>
@@ -29,7 +31,7 @@
 
     <main>
         <div class="container">
-            <section id="features" class="content-section">
+            <section id="features" class="page">
                 <h2>Features</h2>
                 <p>Our server offers a variety of exciting features to enhance your gameplay experience:</p>
                 <ul>
@@ -39,7 +41,7 @@
                 </ul>
             </section>
 
-            <section id="rules" class="content-section">
+            <section id="rules" class="page">
                 <h2>Rules</h2>
                 <p>To ensure a fun and fair experience for all, please follow these rules:</p>
                 <ul>
@@ -49,13 +51,24 @@
                 </ul>
             </section>
 
-            <section id="staff" class="content-section">
-                <h2>Staff</h2>
-                <ul>
-                    <li><strong>Admin:</strong> Zethal_, XLeviMattX</li>
-                    <li><strong>Developer:</strong> Zethal_</li>
-                    <li><p class="member">[<span class="member-text">Member</span>]</p></li>
-                </ul>
+            <section id="members" class="page" style="display: none;">
+                <h2>Members</h2>
+                <p class="developer"><span class="brackets">[</span><span class="developer-text">Developer</span><span
+                        class="brackets">]</span>&ThickSpace;Zethal_</p>
+                <p class="admin"><span class="brackets">[</span><span class="admin-text">Admin</span><span
+                        class="brackets">]</span>&ThickSpace;broembaloe</p>
+                <p class="admin"><span class="brackets">[</span><span class="admin-text">Admin</span><span
+                        class="brackets">]</span>&ThickSpace;XLeviMattX</p>
+                <p class="donor"><span class="brackets">[</span><span class="donor-text">Donor</span><span
+                        class="brackets">]</span>&ThickSpace;Levo_da_king</p>
+                <p class="member"><span class="brackets">[</span><span class="member-text">Member</span><span
+                        class="brackets">]</span>&ThickSpace;Sven4692</p>
+                <p class="member"><span class="brackets">[</span><span class="member-text">Member</span><span
+                        class="brackets">]</span>&ThickSpace;UsualBreak</p>
+                <p class="member"><span class="brackets">[</span><span class="member-text">Member</span><span
+                        class="brackets">]</span>&ThickSpace;Levinetwork_yt</p>
+                <p class="member"><span class="brackets">[</span><span class="member-text">Member</span><span
+                        class="brackets">]</span>&ThickSpace;zPqnCake &ThickSpace;(currently known as SjorsGaming69)</p>
             </section>
         </div>
     </main>
@@ -68,4 +81,5 @@
     <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
