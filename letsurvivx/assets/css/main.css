@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url(../webfonts/MinecraftiaRegular.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,9 +10,9 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, 'Geneva', Verdana, sans-serif;
     /* background-color: #121212; */
-    background-image: url(../../../images/npic01.png);
+    background-image: url(../../images/img5.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -118,6 +123,14 @@ body {
     font-weight: bold;
     position: absolute;
     left: 0;
+}
+
+.member{
+    font-family: 'Minecraft', sans-serif;
+    src: url(../webfonts/MinecraftiaRegular.ttf);
+    background: linear-gradient(to right, #00B085, #00B68A, #00BC8E, #00C393, #00C997, #00CF9C);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
 }
 
 footer {
