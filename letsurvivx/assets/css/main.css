@@ -125,13 +125,19 @@ body {
     left: 0;
 }
 
-.member{
+.member {
     font-family: 'Minecraft', sans-serif;
-    src: url(../webfonts/MinecraftiaRegular.ttf);
-    background: linear-gradient(to right, #00B085, #00B68A, #00BC8E, #00C393, #00C997, #00CF9C);
+    color: grey;
+}
+
+.member-text {
+    padding-left: 2px;
+    background: linear-gradient(to right, #00B085, #00CF9C);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+    color: inherit;
 }
+
 
 footer {
     background-color: #1c1c1c;
