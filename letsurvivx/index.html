@@ -14,41 +14,38 @@
             <div class="container">
                 <ul>
                     <li><a onclick="showPage('home')">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#rules">Rules</a></li>
-                    <li><a href="#members">Members</a></li>
+                    <li><a onclick="showPage('features')">Features</a></li>
+                    <li><a onclick="showPage('lore')">Lore</a></li>
+                    <li><a onclick="showPage('members')">Members</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <section id="home" class="title" style="display: none;">
+    <section id="home" class="title">
         <div class="title-content">
             <h1>Welcome to the LetSurvivX!</h1>
-            <a href="#features" class="button">Explore Features</a>
+            <a onclick="showPage('features')" class="button">Explore Features</a>
         </div>
     </section>
 
     <main>
         <div class="container">
-            <section id="features" class="page">
+            <section id="features" class="page" style="display: none;">
                 <h2>Features</h2>
-                <p>Our server offers a variety of exciting features to enhance your gameplay experience:</p>
+                <p>The server offers a variety of exciting features to enhance our gameplay experience:</p>
                 <ul>
                     <li>Survival mode</li>
-                    <li>PvP enabled</li>
-                    <li>Custom plugins</li>
+                    <li>Explore and build in a vast open world</li>
+                    <li>We're a really friendly community</li>
+                    <li>Regular updates with new content and features</li>
+                    <li>We have some custom plugins</li>
                 </ul>
             </section>
 
-            <section id="rules" class="page">
-                <h2>Rules</h2>
-                <p>To ensure a fun and fair experience for all, please follow these rules:</p>
-                <ul>
-                    <li>No griefing</li>
-                    <li>No hacking</li>
-                    <li>Respect other players</li>
-                </ul>
+            <section id="lore" class="page" style="display: none;">
+                <h2>Lore</h2>
+                <p>To be written yet. We're working on that.</p>
             </section>
 
             <section id="members" class="page" style="display: none;">
@@ -72,11 +69,6 @@
             </section>
         </div>
     </main>
-
-    <footer>
-        <div class="container">
-        </div>
-    </footer>
 
     <script src="assets/js/main.js"></script>
 
