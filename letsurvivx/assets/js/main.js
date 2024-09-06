@@ -25,3 +25,7 @@ function showPage(pageId) {
 function goToHomePage() {
   showPage('about');
 }
+
+window.onload = function () {
+  showPage('info');
+};
