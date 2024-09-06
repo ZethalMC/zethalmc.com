@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function() {
+  showPage('about');
+});
+
 document.querySelectorAll('.navbar a').forEach(link => {
     link.addEventListener('click', event => {
         event.preventDefault();
@@ -17,3 +21,7 @@ function showPage(pageId) {
       selectedPage.style.display = 'block';
     }
   }
+
+function goToHomePage() {
+  showPage('about');
+}
