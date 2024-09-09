@@ -1547,10 +1547,6 @@ body.is-preload #wrapper:before {
 	visibility: visible;
 }
 
-body {
-	padding: 0 0 4em 0;
-}
-
 #header {
 	-moz-transform: translateY(0);
 	-webkit-transform: translateY(0);
@@ -2149,13 +2145,4 @@ body.is-preload #main .thumb {
 
 .back-button i {
 	font-size: 1.5em;
-}
-
-#footer .copyright {
-	color: #505051;
-	font-size: 0.9em;
-}
-
-#footer .copyright a {
-	color: inherit;
 }
