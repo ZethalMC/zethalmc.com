@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'regular';
+  font-family: 'Minecraft';
   src: url('../fonts/MinecraftiaRegular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: 'regular', sans-serif;
+  font-family: 'Minecraft', sans-serif;
   background-color: #f0f0f0;
   background-image: url('Images/*');
   background-size: cover;
@@ -27,7 +27,7 @@ body {
 }
 
 header {
-  background-image: url('../images/EleysaeChurchSideZe.webp');
+  background-image: url('../../images/EleysaeChurchSideZe.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -74,8 +74,6 @@ section {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
 }
 
 h1 {
