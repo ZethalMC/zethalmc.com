@@ -1,3 +1,5 @@
+@import url(../../../../../assets/css/fontawesome-all.min.css);
+
 @font-face {
   font-family: 'Minecraft';
   src: url('../fonts/MinecraftiaRegular.ttf') format('truetype');
@@ -108,6 +110,29 @@ a {
   display: block;
   max-width: 80%;
   max-height: 80%;
+}
+
+.back-button {
+	position: fixed;
+	top: 1em;
+	left: 1em;
+	background-color: #1f2224;
+    color: #41864c;
+	padding: 0.5em 1em;
+    text-decoration: none;
+	border: none;
+	border-radius: 0.25em;
+    transition: background-color 0.3s;
+	cursor: pointer;
+	z-index: 10002;
+}
+
+.back-button:hover {
+	background-color: #242629;
+}
+
+.back-button i {
+	font-size: 1.5em;
 }
 
 footer {
