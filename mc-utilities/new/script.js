@@ -1,12 +1,10 @@
 function convertText() {
-    const button = document.getElementById("buttonConvert");
+    const convertButton = document.getElementById("buttonConvert");
 
-    // Disable button to prevent multiple clicks and give visual feedback
-    button.disabled = true;
+    convertButton.disabled = true;
 
-    // Re-enable after 3 seconds for demonstration purposes
     setTimeout(() => {
-        button.disabled = false;
+        convertButton.disabled = false;
     }, 3000);
 
     document.getElementById("error").innerHTML = "";
@@ -15,25 +13,22 @@ function convertText() {
     var title = document.getElementById("bookTitle").value;
     var author = document.getElementById("bookAuthor").value;
 
-    if (text.length == 0) {
-        document.getElementById("error").innerHTML =
-            "Error: There is no text.";
+    if (text.length === 0) {
+        document.getElementById("error").innerHTML = "Error: There is no text.";
         return;
     }
-    if (title.length == 0) {
+    if (title.length === 0) {
         document.getElementById("error").innerHTML =
             "Error: Please specify a book title.";
         return;
     }
-    if (author.length == 0) {
+    if (author.length === 0) {
         document.getElementById("error").innerHTML =
             "Error: Please specify a book author.";
         return;
     }
 
     document.getElementById("container").innerHTML = "";
-
-
 
     var slider = document.getElementById("maxChar");
     var size = slider.value;
@@ -68,7 +63,7 @@ function convertText() {
             let page = pages[i];
             if (page === undefined) break;
 
-            if (fullindex == 1) books[bookCount] = page
+            if (fullindex === 1) books[bookCount] = page;
             else books[bookCount] = books[bookCount] + "\n" + page;
 
             fullindex++;
@@ -78,17 +73,15 @@ function convertText() {
         fullindex = 1;
     }
 
+    var saveButton = document.createElement("button");
+    document.getElementById("container").appendChild(saveButton);
 
-    var button = document.createElement("button");
-    document.getElementById("container").appendChild(button);
+    if (books.length > 1) saveButton.innerHTML = "Save Stendhal Books";
+    else saveButton.innerHTML = "Save Stendhal Book";
 
-    if (books.length > 1) button.innerHTML = "Save Stendhal Books";
-    else button.innerHTML = "Save Stendhal Book";
-
-    button.addEventListener("click", (event) => {
+    saveButton.addEventListener("click", (event) => {
         saveBook();
     });
-
 
     let bookNumb = 1;
 
@@ -99,8 +92,14 @@ function convertText() {
         document.getElementById("container").appendChild(parent);
 
         result.value +=
-            "title: " + title + " " + bookNumb + "-" + books.length +
-            "\nauthor: " + author +
+            "title: " +
+            title +
+            " " +
+            bookNumb +
+            "-" +
+            books.length +
+            "\nauthor: " +
+            author +
             "\npages:\n";
 
         result.value += book;
@@ -108,39 +107,4 @@ function convertText() {
         parent.appendChild(result);
         bookNumb++;
     });
-}
-
-function maxChar() {
-    var slider = document.getElementById("maxChar");
-    var text = document.getElementById("maxCharText");
-
-    slider.oninput = function () {
-        text.value = this.value;
-    };
-}
-
-function maxCharText() {
-    var slider = document.getElementById("maxChar");
-    var text = document.getElementById("maxCharText");
-
-    slider.value = text.value;
-}
-
-function saveBook() {
-    var books = document.getElementById("container").children;
-
-    for (var i = 1; i < books.length; i++) {
-        let textarea = books[i].children[0];
-        let title = document.getElementById("bookTitle").value;
-        let text = textarea.value;
-
-        const a = document.createElement("a");
-        const file = new Blob([text], { type: "text/plain" });
-
-        a.href = URL.createObjectURL(file);
-        a.download = title + " " + i + "-" + (books.length - 1) + ".stendhal";
-        a.click();
-
-        URL.revokeObjectURL(a.href);
-    }
 }
