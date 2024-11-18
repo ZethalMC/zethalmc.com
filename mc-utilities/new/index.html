@@ -1,67 +1,52 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Book Converter</title>
-	<meta name="description" content="A utility to convert ebooks or other files to Stendhal compatible books." />
-	<meta name="author" content="Zethal_" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book Converter</title>
+    <meta name="description" content="A utility to convert ebooks or other files to Stendhal compatible books." />
+    <meta name="author" content="Zethal_" />
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-	<h2>Book Converter</h2>
-	This script will allow you to convert any piece of text (ebooks, novels,
-	plays, dialogues and more) to the (Stendhal) book format compatible in
-	game.<br />
-	<i>Please note this will trim every line breaks from the original text to
-		avoid bugs. Therefore, chapters transitions might be esthetically
-		unpleasant.<br />
-		I recommend to put each chapter title in bold as this script leaves a few
-		free characters per page to occasionally style the text in game for this
-		purpose.</i><br /><br />
+    <div class="container">
+        <header>
+            <h1>Book Converter</h1>
+            <p>This tool allows you to convert ebooks, articles, and more to Stendhal-compatible books in Minecraft.</p>
+            <p class="note">Note: Line breaks are trimmed to avoid bugs. For chapter transitions, use bold titles.</p>
+        </header>
 
-	<h3>How to?</h3>
+        <section class="how-to">
+            <h3>How to Use</h3>
+            <p>Select your text, fill in the book title and author, then click "Convert". The tool will create books based on Minecraft's limitations.</p>
+            <p>After conversion, click the "Save Stendhal Books" button to download your converted files. Remember to place them in the correct folder in Minecraft!</p>
+        </section>
 
-	First, choose any text you would like to convert. It can be an ebook, an 
-	article, or anything else, as long as it is text.<br />
-	Then, you can type in the respective fields the name of the book and your
-	nickname in game in the author field.<br /><br />
+        <section class="settings">
+            <h5>Settings</h5>
+            <label for="maxChar">Max characters per page:</label>
+            <input id="maxChar" type="range" min="1" max="250" value="220" oninput="maxChar();" />
+            <input id="maxCharText" value="220" onChange="maxCharText();" />
+        </section>
 
-	Right after, you can press <strong>"Convert"</strong>. This will convert
-	your text and automatically separate it in as many books it needs, taking in
-	consideration Minecraft limitations. (If more than 100 pages, it will
-	create another book etc.)<br /><br />
+        <section class="text-input">
+            <h5>Your Text</h5>
+            <textarea id="bookText" placeholder="Paste your text here..."></textarea>
+            <input type="text" id="bookTitle" placeholder="Enter book title..." />
+            <input type="text" id="bookAuthor" placeholder="Enter author here..." />
+            <button id="buttonConvert" onclick="convertText();">Convert</button>
+        </section>
 
-	When converting your text is over, you can click the newly appeared
-	<strong>"Save Stendhal Books"</strong> button.<br />
-	This will automatically download all the books, you just have to save the
-	files when the popups appear.<br />
-	After downloading the books, do not forget to move them to
-	<strong>.minecraft\config\stendhal\books</strong> when you have the mod installed.<br />
-	In a <strong>Book & Quill</strong> in game, you can then click on the
-	<strong>"Import Book"</strong> button, and you will see your new book(s)
-	ready to be imported.
-	<br />
-
-	<h5>Settings</h5>
-	Max characters per page (default 220):
-	<input id="maxChar" type="range" min="1" max="250" value="220" style="display: inline" onInput="maxChar();" />
-	<input id="maxCharText" value="220" onChange="maxCharText();" />
-
-	<h5>Your text</h5>
-	<textarea type="text" id="bookText" placeholder="Paste your text here..."></textarea>
-	<input type="text" id="bookTitle" placeholder="Enter book title..." />
-	<input type="text" id="bookAuthor" placeholder="Enter author here..." />
-	<button id="buttonConvert" onClick="convertText();">Convert</button>
-
-	<h5>Result</h5>
-	<span id="error"></span><br /><br />
-	<span id="container"></span>
+        <section class="result">
+            <h5>Result</h5>
+            <span id="error"></span><br />
+            <span id="container"></span>
+        </section>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
-
-<script src="script.js"></script>
 
 </html>

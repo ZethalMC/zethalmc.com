@@ -1,4 +1,14 @@
 function convertText() {
+    const button = document.getElementById("buttonConvert");
+
+    // Disable button to prevent multiple clicks and give visual feedback
+    button.disabled = true;
+
+    // Re-enable after 3 seconds for demonstration purposes
+    setTimeout(() => {
+        button.disabled = false;
+    }, 3000);
+
     document.getElementById("error").innerHTML = "";
 
     var text = document.getElementById("bookText").value;
