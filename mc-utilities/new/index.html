@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Book Converter</title>
+	<meta name="description" content="A utility to convert ebooks or other files to Stendhal compatible books." />
+	<meta name="author" content="Zethal_" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+	<h2>Book Converter</h2>
+	This script will allow you to convert any piece of text (ebooks, novels,
+	plays, dialogues and more) to the (Stendhal) book format compatible in
+	game.<br />
+	<i>Please note this will trim every line breaks from the original text to
+		avoid bugs. Therefore, chapters transitions might be esthetically
+		unpleasant.<br />
+		I recommend to put each chapter title in bold as this script leaves a few
+		free characters per page to occasionally style the text in game for this
+		purpose.</i><br /><br />
+
+	<h3>How to?</h3>
+
+	First, choose any text you would like to convert. It can be an ebook, an 
+	article, or anything else, as long as it is text.<br />
+	Then, you can type in the respective fields the name of the book and your
+	nickname in game in the author field.<br /><br />
+
+	Right after, you can press <strong>"Convert"</strong>. This will convert
+	your text and automatically separate it in as many books it needs, taking in
+	consideration Minecraft limitations. (If more than 100 pages, it will
+	create another book etc.)<br /><br />
+
+	When converting your text is over, you can click the newly appeared
+	<strong>"Save Stendhal Books"</strong> button.<br />
+	This will automatically download all the books, you just have to save the
+	files when the popups appear.<br />
+	After downloading the books, do not forget to move them to
+	<strong>.minecraft\config\stendhal\books</strong> when you have the mod installed.<br />
+	In a <strong>Book & Quill</strong> in game, you can then click on the
+	<strong>"Import Book"</strong> button, and you will see your new book(s)
+	ready to be imported.
+	<br />
+
+	<h5>Settings</h5>
+	Max characters per page (default 220):
+	<input id="maxChar" type="range" min="1" max="250" value="220" style="display: inline" onInput="maxChar();" />
+	<input id="maxCharText" value="220" onChange="maxCharText();" />
+
+	<h5>Your text</h5>
+	<textarea type="text" id="bookText" placeholder="Paste your text here..."></textarea>
+	<input type="text" id="bookTitle" placeholder="Enter book title..." />
+	<input type="text" id="bookAuthor" placeholder="Enter author here..." />
+	<button id="buttonConvert" onClick="convertText();">Convert</button>
+
+	<h5>Result</h5>
+	<span id="error"></span><br /><br />
+	<span id="container"></span>
+</body>
+
+<script src="script.js"></script>
+
+</html>
