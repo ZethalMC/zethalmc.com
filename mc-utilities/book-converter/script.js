@@ -119,3 +119,22 @@ function maxCharTextHandler() {
     const output = document.getElementById("maxCharText");
     slider.value = output.value;
 }
+
+function saveBook() {
+    var books = document.getElementById("container").children;
+
+    for (var i = 1; i < books.length; i++) {
+        let textarea = books[i].children[0];
+        let title = document.getElementById("bookTitle").value;
+        let text = textarea.value;
+
+        const a = document.createElement("a");
+        const file = new Blob([text], { type: "text/plain" });
+
+        a.href = URL.createObjectURL(file);
+        a.download = title + " " + i + "-" + (books.length - 1) + ".txt";
+        a.click();
+
+        URL.revokeObjectURL(a.href);
+    }
+}
