@@ -30,7 +30,7 @@ function convertText() {
 
     document.getElementById("container").innerHTML = "";
 
-    var slider = document.getElementById("maxChar");
+    var slider = document.getElementById("maxCharSlider");
     var size = slider.value;
 
     textBooks = text.replace(/(\r\n|\n|\r)/gm, " ");
@@ -88,7 +88,6 @@ function convertText() {
     books.forEach((book) => {
         var parent = document.createElement("span");
         var result = document.createElement("textarea");
-        var slider = document.getElementById("maxChar");
         document.getElementById("container").appendChild(parent);
 
         result.value +=
@@ -107,4 +106,16 @@ function convertText() {
         parent.appendChild(result);
         bookNumb++;
     });
+}
+
+function maxCharSliderHandler() {
+    const slider = document.getElementById("maxCharSlider");
+    const output = document.getElementById("maxCharText");
+    output.value = slider.value;
+}
+
+function maxCharTextHandler() {
+    const slider = document.getElementById("maxCharSlider");
+    const output = document.getElementById("maxCharText");
+    slider.value = output.value;
 }

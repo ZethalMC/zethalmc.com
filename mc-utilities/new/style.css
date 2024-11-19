@@ -9,8 +9,20 @@ body {
 .container {
     max-width: 900px;
     padding: 20px;
-    text-align: left; /* Align text content to the left */
+    text-align: left;
 }
+
+#container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+#container button {
+    align-self: flex-start;
+}
+
 
 header {
     margin-bottom: 40px;
@@ -19,7 +31,7 @@ header {
 h1 {
     color: #ff8c00;
     font-size: 2.5em;
-    text-align: left; /* Ensure header aligns to the left */
+    text-align: left;
 }
 
 h3, h5 {
@@ -47,10 +59,6 @@ textarea, input[type="text"] {
     border-radius: 5px;
     background-color: #1E1F20;
     color: white;
-}
-
-input[type="range"] {
-    width: 100%;
 }
 
 button {
@@ -89,6 +97,10 @@ button:hover:enabled {
 textarea {
     height: 200px;
     resize: vertical;
+}
+
+input[type="range"] {
+    width: 100%;
 }
 
 input[type="text"] {

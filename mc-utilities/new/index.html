@@ -27,8 +27,8 @@
         <section class="settings">
             <h5>Settings</h5>
             <label for="maxChar">Max characters per page:</label>
-            <input id="maxChar" type="range" min="1" max="250" value="220" oninput="maxChar();" />
-            <input id="maxCharText" value="220" onChange="maxCharText();" />
+            <input id="maxCharSlider" type="range" min="1" max="250" value="220" oninput="maxCharSliderHandler();" />
+            <input id="maxCharText" value="220" onchange="maxCharTextHandler();" />
         </section>
 
         <section class="text-input">
