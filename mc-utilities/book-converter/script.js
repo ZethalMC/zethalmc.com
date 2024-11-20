@@ -132,7 +132,7 @@ function saveBook() {
         const file = new Blob([text], { type: "text/plain" });
 
         a.href = URL.createObjectURL(file);
-        a.download = title + " " + i + "-" + (books.length - 1) + ".txt";
+        a.download = title + " " + i + "-" + (books.length - 1) + ".stendhal";
         a.click();
 
         URL.revokeObjectURL(a.href);

@@ -1,9 +1,5 @@
-@font-face {
-    font-family: 'Minecraft';
-    src: url(fonts/MinecraftiaRegular.ttf);
-}
-
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #131314;
@@ -67,7 +63,6 @@ textarea, input[type="text"] {
 }
 
 button {
-    font-family: "Minecraft", sans-serif;
     font-weight: bold;
     padding: 10px 20px;
     color: white;
@@ -101,23 +96,20 @@ button:hover:enabled {
 }
 
 textarea {
-    /* font-family: "Minecraft", sans-serif; */
+    width: 900px;
     height: 200px;
     resize: vertical;
 }
 
 input[type="range"] {
-    /* font-family: "Minecraft", sans-serif; */
     width: 100%;
 }
 
 input[type="text"] {
-    /* font-family: "Minecraft", sans-serif; */
     height: 40px;
 }
 
 input[type="range"], #maxCharText {
-    /* font-family: "Minecraft", sans-serif; */
     width: 100%;
     margin-top: 10px;
     font-weight: bold;
