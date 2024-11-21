@@ -138,3 +138,21 @@ function saveBook() {
         URL.revokeObjectURL(a.href);
     }
 }
+
+const popup = document.getElementById('popup');
+const showPopupButton = document.getElementById('showPopup');
+const closePopupButton = document.getElementById('closePopup');
+
+showPopupButton.addEventListener('click', () => {
+    popup.classList.remove('hidden');
+});
+
+closePopupButton.addEventListener('click', () => {
+    popup.classList.add('hidden');
+});
+
+popup.addEventListener('click', (event) => {
+    if (event.target === popup) {
+        popup.classList.add('hidden');
+    }
+});
