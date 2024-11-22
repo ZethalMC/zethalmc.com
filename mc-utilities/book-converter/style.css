@@ -208,6 +208,12 @@ input[type="range"] {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.popup.visible {
+    opacity: 1;
 }
 
 .popup-content {
@@ -222,11 +228,11 @@ input[type="range"] {
 
 #closePopup {
     position: fixed;
-    top: 10px;
-    right: 10px;
-    border-radius: 50%;
+    top: 33%;
+    right: 25.5%;
 }
 
 .hidden {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
 }

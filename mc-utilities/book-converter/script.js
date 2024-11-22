@@ -144,15 +144,22 @@ const showPopupButton = document.getElementById('showPopup');
 const closePopupButton = document.getElementById('closePopup');
 
 showPopupButton.addEventListener('click', () => {
+    popup.classList.add('visible');
     popup.classList.remove('hidden');
 });
 
 closePopupButton.addEventListener('click', () => {
-    popup.classList.add('hidden');
+    popup.classList.remove('visible');
+    setTimeout(() => {
+        popup.classList.add('hidden');
+    }, 300);
 });
 
 popup.addEventListener('click', (event) => {
     if (event.target === popup) {
-        popup.classList.add('hidden');
+        popup.classList.remove('visible');
+        setTimeout(() => {
+            popup.classList.add('hidden');
+        }, 300);
     }
 });
