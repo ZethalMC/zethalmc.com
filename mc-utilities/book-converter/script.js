@@ -73,15 +73,38 @@ function convertText() {
         fullindex = 1;
     }
 
-    var saveButton = document.createElement("button");
-    document.getElementById("container").appendChild(saveButton);
+    createSaveButtons(books, title, author);
+} 
 
-    if (books.length > 1) saveButton.innerHTML = "Save Stendhal Books";
-    else saveButton.innerHTML = "Save Stendhal Book";
+function createSaveButtons(books, title, author) {
+    // buttons separately in a div
+    var buttonContainer = document.createElement("div");
+    buttonContainer.style.display = "flex";
+    buttonContainer.style.gap = "10px";
 
-    saveButton.addEventListener("click", (event) => {
-        saveBook();
+    // Stendhal download button
+    var saveButtonStendhal = document.createElement("button");
+    if (books.length > 1) saveButtonStendhal.innerHTML = "Save Stendhal Books";
+    else saveButtonStendhal.innerHTML = "Save Stendhal Book";
+    
+    saveButtonStendhal.addEventListener("click", (event) => {
+        saveBookStendhalFormat(books, title);
     });
+    
+    buttonContainer.appendChild(saveButtonStendhal);
+
+    // Text download button
+    var saveButtonTxt = document.createElement("button");
+    if (books.length > 1) saveButtonTxt.innerHTML = "Save as .txt Files";
+    else saveButtonTxt.innerHTML = "Save as .txt File";
+
+    saveButtonTxt.addEventListener("click", (event) => {
+        saveBookTxtFormat(books, title);
+    });
+
+    buttonContainer.appendChild(saveButtonTxt);
+
+    document.getElementById("container").appendChild(buttonContainer);
 
     let bookNumb = 1;
 
@@ -120,23 +143,24 @@ function maxCharTextHandler() {
     slider.value = output.value;
 }
 
-function saveBook() {
-    var books = document.getElementById("container").children;
+function saveBookStendhalFormat(books, title) {
+    books.forEach((book, index) => {
+        const blob = new Blob([book], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `${title}-part${index + 1}.stendhal`;
+        link.click();
+    });
+}
 
-    for (var i = 1; i < books.length; i++) {
-        let textarea = books[i].children[0];
-        let title = document.getElementById("bookTitle").value;
-        let text = textarea.value;
-
-        const a = document.createElement("a");
-        const file = new Blob([text], { type: "text/plain" });
-
-        a.href = URL.createObjectURL(file);
-        a.download = title + " " + i + "-" + (books.length - 1) + ".stendhal";
-        a.click();
-
-        URL.revokeObjectURL(a.href);
-    }
+function saveBookTxtFormat(books, title) {
+    books.forEach((book, index) => {
+        const blob = new Blob([book], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `${title}-part${index + 1}.txt`;
+        link.click();
+    });
 }
 
 const popup = document.getElementById('popup');
