@@ -1,3 +1,17 @@
+function showError(message) {
+    const errorPopup = document.getElementById("errorPopup");
+    errorPopup.innerHTML = message;
+    errorPopup.style.display = "block";
+    errorPopup.style.opacity = "1";
+
+    setTimeout(() => {
+        errorPopup.style.opacity = "0";
+        setTimeout(() => {
+            errorPopup.style.display = "none";
+        }, 500);
+    }, 5000);
+}
+
 function convertText() {
     const convertButton = document.getElementById("buttonConvert");
 
@@ -7,24 +21,22 @@ function convertText() {
         convertButton.disabled = false;
     }, 3000);
 
-    document.getElementById("error").innerHTML = "";
+    document.getElementById("errorPopup").innerHTML = "";
 
     var text = document.getElementById("bookText").value;
     var title = document.getElementById("bookTitle").value;
     var author = document.getElementById("bookAuthor").value;
 
     if (text.length === 0) {
-        document.getElementById("error").innerHTML = "Error: There is no text.";
+        showError("Error: There is no text.");
         return;
     }
     if (title.length === 0) {
-        document.getElementById("error").innerHTML =
-            "Error: Please specify a book title.";
+        showError("Error: Please specify a book title.");
         return;
     }
     if (author.length === 0) {
-        document.getElementById("error").innerHTML =
-            "Error: Please specify a book author.";
+        showError("Error: Please specify a book author.");
         return;
     }
 
