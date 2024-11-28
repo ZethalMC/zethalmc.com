@@ -42,9 +42,6 @@ function convertText() {
 
     document.getElementById("container").innerHTML = "";
 
-    var slider = document.getElementById("maxCharSlider");
-    var size = slider.value;
-
     textBooks = text.replace(/(\r\n|\n|\r)/gm, " ");
 
     let pages = [];
@@ -146,13 +143,38 @@ function createSaveButtons(books, title, author) {
 function maxCharSliderHandler() {
     const slider = document.getElementById("maxCharSlider");
     const output = document.getElementById("maxCharText");
-    output.value = slider.value;
+    const text = document.getElementById("bookText").value;
+
+    if (text.length > 0) {
+        const words = text.split(/\s+/);
+        const longestWordLength = Math.max(...words.map(word => word.length));
+
+        if (slider.value < longestWordLength) {
+            slider.value = longestWordLength;
+        }
+        output.value = slider.value;
+    }
 }
 
 function maxCharTextHandler() {
     const slider = document.getElementById("maxCharSlider");
     const output = document.getElementById("maxCharText");
-    slider.value = output.value;
+    const text = document.getElementById("bookText").value;
+
+    if (text.length > 0) {
+        const words = text.split(/\s+/);
+        const longestWordLength = Math.max(...words.map(word => word.length));
+
+        if (parseInt(output.value) > 250) {
+            showError(`You cannot place the value above 250`);
+            output.value = 250;
+            slider.value = 250;
+        } else if (parseInt(output.value) < longestWordLength) {
+            showError(`You cannot place the value below ${longestWordLength}`);
+            output.value = longestWordLength;
+            slider.value = longestWordLength;
+        }
+    }
 }
 
 function saveBookStendhalFormat(books, title) {
