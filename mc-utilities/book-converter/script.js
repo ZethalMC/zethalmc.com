@@ -14,6 +14,7 @@ function showError(message) {
 
 function convertText() {
     const convertButton = document.getElementById("buttonConvert");
+    const size = parseInt(document.getElementById("maxCharSlider").value);
 
     convertButton.disabled = true;
 
