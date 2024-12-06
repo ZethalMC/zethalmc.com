@@ -84,7 +84,7 @@ function convertText() {
     }
 
     createSaveButtons(books, title, author);
-} 
+}
 
 function createSaveButtons(books, title, author) {
     // buttons separately in a div
@@ -162,6 +162,7 @@ function maxCharTextHandler() {
     const slider = document.getElementById("maxCharSlider");
     const output = document.getElementById("maxCharText");
     const text = document.getElementById("bookText").value;
+    slider.value = output.value;
 
     if (text.length > 0) {
         const words = text.split(/\s+/);
