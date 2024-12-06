@@ -145,6 +145,7 @@ function maxCharSliderHandler() {
     const slider = document.getElementById("maxCharSlider");
     const output = document.getElementById("maxCharText");
     const text = document.getElementById("bookText").value;
+    output.value = slider.value;
 
     if (text.length > 0) {
         const words = text.split(/\s+/);
