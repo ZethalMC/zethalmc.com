@@ -283,3 +283,87 @@ input[type="range"] {
 .back-button i {
 	font-size: 1.5em;
 }
+
+.tt {
+    --tooltip-bg: #f4f3f3;
+    --tooltip-border-radius: 4px;
+    --tooltip-font-family: Menlo, Roboto Mono, monospace;
+    --tooltip-font-size: 12px;
+    --tooltip-text-color: rgb(50, 50, 50);
+    --tooltip-padding-x: 7px;
+    --tooltip-padding-y: 7px;
+    --tooltip-offset: 8px;
+    --tooltip-transition-duration: 0.3s;
+    
+    box-sizing: border-box;
+    border-radius: var(--tooltip-border-radius);
+    cursor: pointer;
+    position: relative;
+    outline: none;
+}
+
+.tooltip {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font: var(--tooltip-font-size) var(--tooltip-font-family);
+    color: var(--tooltip-text-color);
+    background: var(--tooltip-bg);
+    padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
+    border-radius: var(--tooltip-border-radius);
+    pointer-events: none;
+    transition: all var(--tooltip-transition-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.tooltip::before {
+    content: attr(data-text-initial);
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--tooltip-padding-y) / 2 * -1);
+    width: var(--tooltip-padding-y);
+    height: var(--tooltip-padding-y);
+    background: inherit;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    z-index: -999;
+    pointer-events: none;
+}
+
+.tt:hover .tooltip,
+.tt:focus:not(:focus-visible) .tooltip {
+    opacity: 1;
+    visibility: visible;
+    top: calc((100% + var(--tooltip-offset)) * -1);
+}
+
+.tt:focus:not(:focus-visible) .tooltip::before {
+    content: attr(data-text-end);
+}
+
+.tt:focus:not(:focus-visible) .clipboard {
+    display: none;
+}
+
+.tt:focus:not(:focus-visible) .checkmark {
+    display: block;
+}
+
+.tt:hover,
+.tt:focus {
+    background-color: var(--button-hover-bg);
+}
+
+.tt:active {
+    outline: var(--button-outline-width) solid var(--button-outline-color);
+}
+
+.tt:hover svg {
+    color: var(--button-hover-text-color);
+}
