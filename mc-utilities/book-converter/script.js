@@ -14,15 +14,12 @@ function showError(message) {
 
 function convertText() {
     const convertButton = document.getElementById("buttonConvert");
-    const tooltip = convertButton.querySelector('.tooltip');
     const size = parseInt(document.getElementById("maxCharSlider").value);
 
     convertButton.disabled = true;
-    tooltip.style.display = 'none';
 
     setTimeout(() => {
         convertButton.disabled = false;
-        tooltip.style.display = 'block';
     }, 3000);
 
     document.getElementById("errorPopup").innerHTML = "";
@@ -98,12 +95,14 @@ function createSaveButtons(books, title, author) {
     // Stendhal download button
     var saveButtonStendhal = document.createElement("button");
     saveButtonStendhal.className = "tt";
-    if (books.length > 1) saveButtonStendhal.innerHTML = "Save Stendhal Books";
-    else saveButtonStendhal.innerHTML = "Save Stendhal Book";
-
-    saveButtonStendhal.innerHTML += `
-      <span data-text-end="Saved!" data-text-initial="Save Stendhal Books" class="tooltip"></span>
-    `;
+    if (books.length > 1) {
+        saveButtonStendhal.innerHTML = "Save Stendhal Books";
+        saveButtonStendhal.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .Stendhal files" class="tooltip"></span>`;
+    }
+    else {
+        saveButtonStendhal.innerHTML = "Save Stendhal Book";
+        saveButtonStendhal.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .Stendhal file" class="tooltip"></span>`;
+    }
 
     saveButtonStendhal.addEventListener("click", (event) => {
         saveBookStendhalFormat(books, title);
@@ -114,12 +113,14 @@ function createSaveButtons(books, title, author) {
     // Text download button
     var saveButtonTxt = document.createElement("button");
     saveButtonTxt.className = "tt";
-    if (books.length > 1) saveButtonTxt.innerHTML = "Save as .txt Files";
-    else saveButtonTxt.innerHTML = "Save as .txt File";
-
-    saveButtonTxt.innerHTML += `
-      <span data-text-end="Saved!" data-text-initial="Save as .txt Files" class="tooltip"></span>
-    `;
+    if (books.length > 1) {
+        saveButtonTxt.innerHTML = "Save as Text Files";
+        saveButtonTxt.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .txt files" class="tooltip"></span>`;
+    }
+    else {
+        saveButtonTxt.innerHTML = "Save as .txt File";
+        saveButtonTxt.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .txt file" class="tooltip"></span>`;
+    }
 
     saveButtonTxt.addEventListener("click", (event) => {
         saveBookTxtFormat(books, title);

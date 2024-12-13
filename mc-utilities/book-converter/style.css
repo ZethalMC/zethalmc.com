@@ -110,6 +110,13 @@ button:disabled {
     box-shadow: none;
 }
 
+button:disabled:hover {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+}
+
 #error {
     font-family: Arial, sans-serif;
     color: red;
@@ -285,11 +292,11 @@ input[type="range"] {
 }
 
 .tt {
-    --tooltip-bg: #f4f3f3;
+    --tooltip-bg: #201f1e;
     --tooltip-border-radius: 4px;
-    --tooltip-font-family: Menlo, Roboto Mono, monospace;
+    --tooltip-font-family: Menlo, sans-serif;
     --tooltip-font-size: 12px;
-    --tooltip-text-color: rgb(50, 50, 50);
+    --tooltip-text-color: #ffffff;
     --tooltip-padding-x: 7px;
     --tooltip-padding-y: 7px;
     --tooltip-offset: 8px;
@@ -314,6 +321,7 @@ input[type="range"] {
     color: var(--tooltip-text-color);
     background: var(--tooltip-bg);
     padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
+    border: 1px solid #444444;
     border-radius: var(--tooltip-border-radius);
     pointer-events: none;
     transition: all var(--tooltip-transition-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -334,6 +342,7 @@ input[type="range"] {
     transform: translateX(-50%) rotate(45deg);
     z-index: -999;
     pointer-events: none;
+    border: 1px solid #444444;
 }
 
 .tt:hover .tooltip,
