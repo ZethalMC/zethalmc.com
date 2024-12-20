@@ -92,41 +92,17 @@ function createSaveButtons(books, title, author) {
     buttonContainer.style.display = "flex";
     buttonContainer.style.gap = "10px";
 
-    // Stendhal download button
-    var saveButtonStendhal = document.createElement("button");
-    saveButtonStendhal.className = "tt";
-    if (books.length > 1) {
-        saveButtonStendhal.innerHTML = "Save Stendhal Books";
-        saveButtonStendhal.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .Stendhal files" class="tooltip"></span>`;
-    }
-    else {
-        saveButtonStendhal.innerHTML = "Save Stendhal Book";
-        saveButtonStendhal.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .Stendhal file" class="tooltip"></span>`;
-    }
+    // save buttons
+    const createButton = (text, tooltipText, extension) => {
+        const button = document.createElement("button");
+        button.className = "tt";
+        button.innerHTML = text + `<span data-text-end="Saved!"data-text-initial="${tooltipText}" class="tooltip"></span>`;
+        button.addEventListener("click", () => saveBookFormat(books, title, extension));
+        buttonContainer.appendChild(button);
+    };
 
-    saveButtonStendhal.addEventListener("click", (event) => {
-        saveBookStendhalFormat(books, title);
-    });
-
-    buttonContainer.appendChild(saveButtonStendhal);
-
-    // Text download button
-    var saveButtonTxt = document.createElement("button");
-    saveButtonTxt.className = "tt";
-    if (books.length > 1) {
-        saveButtonTxt.innerHTML = "Save as Text Files";
-        saveButtonTxt.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .txt files" class="tooltip"></span>`;
-    }
-    else {
-        saveButtonTxt.innerHTML = "Save as .txt File";
-        saveButtonTxt.innerHTML += `<span data-text-end="Saved!" data-text-initial="Will save as .txt file" class="tooltip"></span>`;
-    }
-
-    saveButtonTxt.addEventListener("click", (event) => {
-        saveBookTxtFormat(books, title);
-    });
-
-    buttonContainer.appendChild(saveButtonTxt);
+    createButton(books.length > 1 ? "Save Stendhal Books" : "Save Stendhal Book", "Will save as .Stendhal files", 'stendhal');
+    createButton(books.length > 1 ? "Save as Text Files" : "Save as .txt File", "Will save as .txt files", 'txt');
 
     document.getElementById("container").appendChild(buttonContainer);
 
@@ -194,24 +170,15 @@ function maxCharTextHandler() {
     }
 }
 
-function saveBookStendhalFormat(books, title) {
+function saveBookFormat(books, title, format) {
+    const extension = format === 'stendhal' ? 'stendhal' : 'txt';
     books.forEach((book, index) => {
         const blob = new Blob([book], { type: 'text/plain' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = `${title}-part${index + 1}.stendhal`;
+        link.download = `${title} ${index + 1}-${books.length}.${extension}`;
         link.click();
-    });
-}
-
-function saveBookTxtFormat(books, title) {
-    books.forEach((book, index) => {
-        const blob = new Blob([book], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `${title}-part${index + 1}.txt`;
-        link.click();
-    });
+    })
 }
 
 const popup = document.getElementById('popup');
