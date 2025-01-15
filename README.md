@@ -15,7 +15,7 @@ This website serves as my personal portfolio, utilizing the base code from [HTML
 
 ### Future Projects
 
-I plan to continually update and expand the website with new projects. Check out the [Projects](https://zethalmc.github.io/#projects) section for the latest additions.
+I plan to continually update and expand the website with new projects. Check out the [Projects](https://www.zethalmc.com/#projects) section for the latest additions.
 
 ## Contact
 
