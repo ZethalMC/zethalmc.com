@@ -226,42 +226,6 @@ input[type="range"] {
     margin-bottom: 10px;
 }
 
-/* Popup styles */
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.popup.visible {
-    opacity: 1;
-}
-
-.popup-content {
-    background-color: #1E1F20;
-    max-width: 900px;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: left;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-#closePopup {
-    position: fixed;
-    top: 33%;
-    right: 25.5%;
-}
-
 .hidden {
     opacity: 0;
     pointer-events: none;
