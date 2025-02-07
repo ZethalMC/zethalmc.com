@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Gradient Text Generator</title>
+    <meta name="description" content="Create beautiful gradient text for Minecraft servers.">
+    <link rel="icon" href="images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="RGB-generator/style.css">
+</head>
+<body>
+    <nav>
+        <div>
+            <!-- Navigation content can be added here -->
+        </div>
+    </nav>
+
+    <main>
+        <header>
+            <h1>Minecraft Gradient Text Generator</h1>
+            <p>Create beautiful gradient text for your Minecraft server</p>
+        </header>
+
+        <div>
+            <div>
+                <label>Minecraft Format Output</label>
+                <div>
+                    <div id="output"></div>
+                    <button onclick="copyOutput()">Copy</button>
+                </div>
+            </div>
+
+            <div>
+                <label>Preview</label>
+                <div>
+                    <div id="preview"></div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Text & Formatting</h2>
+                <input type="text" id="inputText" placeholder="Your Text Here">
+                <input type="number" id="charsPerColor" value="1" min="1">
+                <div>
+                    <label><input type="checkbox" id="formatBold"> Bold</label>
+                    <label><input type="checkbox" id="formatItalic"> Italic</label>
+                    <label><input type="checkbox" id="formatUnderline"> Underline</label>
+                    <label><input type="checkbox" id="formatStrike"> Strikethrough</label>
+                </div>
+                <select id="colorFormat" onchange="updatePreview()">
+                    <option value="&#">&#rrggbb (Default)</option>
+                    <option value="&">&#rrggbb</option>
+                    <option value="MiniMessage"><#rrggbb></option>
+                    <option value="Â§">Â§xÂ§rÂ§rÂ§gÂ§gÂ§bÂ§b</option>
+                    <option value="<#"><#rrggbb></option>
+                </select>
+                <div id="colorPairs"></div>
+                <button onclick="addColorPair()">Add Color</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="RGB-generator/script.js"></script>
+</body>
+</html>
