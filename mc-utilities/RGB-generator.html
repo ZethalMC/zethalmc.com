@@ -10,56 +10,44 @@
     <link rel="stylesheet" href="RGB-generator/style.css">
 </head>
 <body>
-    <nav>
-        <div>
-            <!-- Navigation content can be added here -->
-        </div>
-    </nav>
-
-    <main>
+    <div class="container">
         <header>
             <h1>Minecraft Gradient Text Generator</h1>
             <p>Create beautiful gradient text for your Minecraft server</p>
         </header>
 
-        <div>
-            <div>
-                <label>Minecraft Format Output</label>
-                <div>
-                    <div id="output"></div>
-                    <button onclick="copyOutput()">Copy</button>
-                </div>
-            </div>
+		<section class="result">
+            <label>Minecraft Format Output</label>
+            <div id="output"></div>
+            <button onclick="copyOutput()">Copy</button>
+        </section>
 
-            <div>
-                <label>Preview</label>
-                <div>
-                    <div id="preview"></div>
-                </div>
-            </div>
+        <section class="preview">
+            <label>Preview</label>
+            <div id="preview"></div>
+        </section>
 
+        <section class="text-input">
+            <h2>Text & Formatting</h2>
+            <input type="text" id="inputText" placeholder="Your Text Here">
+            <input type="number" id="charsPerColor" value="1" min="1">
             <div>
-                <h2>Text & Formatting</h2>
-                <input type="text" id="inputText" placeholder="Your Text Here">
-                <input type="number" id="charsPerColor" value="1" min="1">
-                <div>
-                    <label><input type="checkbox" id="formatBold"> Bold</label>
-                    <label><input type="checkbox" id="formatItalic"> Italic</label>
-                    <label><input type="checkbox" id="formatUnderline"> Underline</label>
-                    <label><input type="checkbox" id="formatStrike"> Strikethrough</label>
-                </div>
-                <select id="colorFormat" onchange="updatePreview()">
-                    <option value="&#">&#rrggbb (Default)</option>
-                    <option value="&">&#rrggbb</option>
-                    <option value="MiniMessage"><#rrggbb></option>
-                    <option value="Â§">Â§xÂ§rÂ§rÂ§gÂ§gÂ§bÂ§b</option>
-                    <option value="<#"><#rrggbb></option>
-                </select>
-                <div id="colorPairs"></div>
-                <button onclick="addColorPair()">Add Color</button>
+                <label><input type="checkbox" id="formatBold"> Bold</label>
+                <label><input type="checkbox" id="formatItalic"> Italic</label>
+                <label><input type="checkbox" id="formatUnderline"> Underline</label>
+                <label><input type="checkbox" id="formatStrike"> Strikethrough</label>
             </div>
-        </div>
-    </main>
+            <select id="colorFormat" onchange="updatePreview()">
+                <option value="&#">&#rrggbb (Default)</option>
+                <option value="&">&#rrggbb</option>
+                <option value="MiniMessage"><#rrggbb></option>
+                <option value="Â§">Â§xÂ§rÂ§rÂ§gÂ§gÂ§bÂ§b</option>
+                <option value="<#"><#rrggbb></option>
+            </select>
+            <div id="colorPairs"></div>
+            <button onclick="addColorPair()">Add Color</button>
+        </section>
+	</div>
 
     <script src="RGB-generator/script.js"></script>
 </body>
