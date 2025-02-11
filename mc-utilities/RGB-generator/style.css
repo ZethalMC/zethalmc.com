@@ -1,6 +1,7 @@
 .color-input { cursor: pointer; }
 .color-container { position: relative; display: inline-block; }
-.color-label { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; text-shadow: 0 0 2px rgba(0,0,0,0.8); }
+.color-label { width: 100px; display: inline-block; }
+.color-pair { margin-bottom: 10px; }
 .gradient-text { background-image: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 body {
@@ -37,7 +38,7 @@ h2 {
 }
 
 input[type="text"], input[type="number"], input[type="color"] {
-    width: 100%;
+    width: calc(100% - 50px);
     height: 40px;
     padding: 10px;
     margin: 10px 0;
@@ -45,6 +46,7 @@ input[type="text"], input[type="number"], input[type="color"] {
     border-radius: 5px;
     background-color: #201f1e;
     color: white;
+    display: inline-block;
 }
 
 button {
