@@ -3,15 +3,22 @@ let colorPairCount = 0;
 function createColorPair() {
     const pairId = colorPairCount++;
     const colorPairHtml = `
-        <div class="color-pair" id="colorPair${pairId}">
+        <div class="grid grid-cols-2 gap-4" id="colorPair${pairId}">
             <div class="color-container">
-                <input type="color" id="color${pairId}" class="color-input" value="#6B46C1" oninput="updateColorLabel('color${pairId}')">
-                <input type="text" id="colorLabel${pairId}" class="color-label" value="#6B46C1" oninput="updateFromLabel(this, 'color${pairId}')" spellcheck="false">
+                <label class="block text-sm mb-1">Color ${pairId + 1}</label>
+                <div class="relative">
+                    <input type="color" id="color${pairId}" class="w-full h-10 rounded color-input bg-[#1e2124] border border-gray-700 text-white" 
+                           value="#6B46C1" oninput="updateColorLabel('color${pairId}')">
+                    <input type="text" id="colorLabel${pairId}" class="color-label" value="#6B46C1" 
+                           oninput="updateFromLabel(this, 'color${pairId}')" spellcheck="false">
+                </div>
             </div>
             ${pairId > 1 ? `
-            <button onclick="removeColorPair(${pairId})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
-                Remove
-            </button>
+            <div class="flex items-end">
+                <button onclick="removeColorPair(${pairId})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+                    Remove
+                </button>
+            </div>
             ` : ''}
         </div>
     `;
@@ -100,7 +107,7 @@ function interpolateColor(color1, color2, factor) {
     
     return '#' + 
         (r.toString(16).padStart(2, '0')) +
-        (g.toString (16).padStart(2, '0')) +
+        (g.toString(16).padStart(2, '0')) +
         (b.toString(16).padStart(2, '0'));
 }
 
@@ -114,65 +121,65 @@ function getFormattingCodes() {
 }
 
 function saveSettingsToCookies() {
-    const settings = {
-        inputText: document.getElementById('inputText').value,
-        charsPerColor: document.getElementById('charsPerColor').value,
-        formatBold: document.getElementById('formatBold').checked,
-        formatItalic: document.getElementById('formatItalic').checked,
-        formatUnderline: document.getElementById('formatUnderline').checked,
-        formatStrike: document.getElementById('formatStrike').checked,
-        colorFormat: document.getElementById('colorFormat').value,
-        colors: getAllColors()
-    };
+const settings = {
+inputText: document.getElementById('inputText').value,
+charsPerColor: document.getElementById('charsPerColor').value,
+formatBold: document.getElementById('formatBold').checked,
+formatItalic: document.getElementById('formatItalic').checked,
+formatUnderline: document.getElementById('formatUnderline').checked,
+formatStrike: document.getElementById('formatStrike').checked,
+colorFormat: document.getElementById('colorFormat').value,
+colors: getAllColors()
+};
 
-    document.cookie = `gradientSettings=${JSON.stringify(settings)};max-age=2592000;path=/`;
+document.cookie = `gradientSettings=${JSON.stringify(settings)};max-age=2592000;path=/`;
 }
 
 function loadSettingsFromCookies() {
-    const cookieValue = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('gradientSettings='));
+const cookieValue = document.cookie
+.split('; ')
+.find(row => row.startsWith('gradientSettings='));
 
-    if (cookieValue) {
-        try {
-            const settings = JSON.parse(cookieValue.split('=')[1]);
-            
-            document.getElementById('inputText').value = settings.inputText || 'Your Text Here';
-            document.getElementById('charsPerColor').value = settings.charsPerColor || '1';
-            document.getElementById('formatBold').checked = settings.formatBold || false;
-            document.getElementById('formatItalic').checked = settings.formatItalic || false;
-            document.getElementById('formatUnderline').checked = settings.formatUnderline || false;
-            document.getElementById('formatStrike').checked = settings.formatStrike || false;
-            document.getElementById('colorFormat').value = settings.colorFormat || '&#';
-            
-            if (settings.colors && settings.colors.length > 0) {
-                const container = document.getElementById('colorPairs');
-                container.innerHTML = '';
-                colorPairCount = 0;
-                
-                settings.colors.forEach((color, index) => {
-                    createColorPair();
-                    const colorInput = document.getElementById(`color${index}`);
-                    if (colorInput) {
-                        colorInput.value = color;
-                        updateColorLabel(`color${index}`);
-                    }
-                });
-            } else {
-                addColorPair();
-                addColorPair();
+if (cookieValue) {
+try {
+    const settings = JSON.parse(cookieValue.split('=')[1]);
+    
+    document.getElementById('inputText').value = settings.inputText || 'Your Text Here';
+    document.getElementById('charsPerColor').value = settings.charsPerColor || '1';
+    document.getElementById('formatBold').checked = settings.formatBold || false;
+    document.getElementById('formatItalic').checked = settings.formatItalic || false;
+    document.getElementById('formatUnderline').checked = settings.formatUnderline || false;
+    document.getElementById('formatStrike').checked = settings.formatStrike || false;
+    document.getElementById('colorFormat').value = settings.colorFormat || '&#';
+    
+    if (settings.colors && settings.colors.length > 0) {
+        const container = document.getElementById('colorPairs');
+        container.innerHTML = '';
+        colorPairCount = 0;
+        
+        settings.colors.forEach((color, index) => {
+            createColorPair();
+            const colorInput = document.getElementById(`color${index}`);
+            if (colorInput) {
+                colorInput.value = color;
+                updateColorLabel(`color${index}`);
             }
-            
-            updatePreview();
-        } catch (error) {
-            console.error('Error loading settings:', error);
-            addColorPair();
-            addColorPair();
-        }
+        });
     } else {
         addColorPair();
         addColorPair();
     }
+    
+    updatePreview();
+} catch (error) {
+    console.error('Error loading settings:', error);
+    addColorPair();
+    addColorPair();
+}
+} else {
+addColorPair();
+addColorPair();
+}
 }
 
 function updatePreview() {
@@ -264,25 +271,25 @@ function applyPreset() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadSettingsFromCookies();
+loadSettingsFromCookies();
 
-    const inputs = [
-        'inputText',
-        'charsPerColor',
-        'formatBold',
-        'formatItalic',
-        'formatUnderline',
-        'formatStrike',
-        'colorFormat'
-    ];
+const inputs = [
+'inputText',
+'charsPerColor',
+'formatBold',
+'formatItalic',
+'formatUnderline',
+'formatStrike',
+'colorFormat'
+];
 
-    inputs.forEach(inputId => {
-        const element = document.getElementById(inputId);
-        if (element) {
-            element.addEventListener('change', saveSettingsToCookies);
-            element.addEventListener('input', saveSettingsToCookies);
-        }
-    });
+inputs.forEach(inputId => {
+const element = document.getElementById(inputId);
+if (element) {
+    element.addEventListener('change', saveSettingsToCookies);
+    element.addEventListener('input', saveSettingsToCookies);
+}
+});
 });
 
 addColorPair();
