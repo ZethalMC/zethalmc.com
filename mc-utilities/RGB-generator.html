@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Gradient Text Generator</title>
+    <title>Gradient Text Generator</title>
     <meta name="description" content="Create beautiful gradient text for Minecraft servers.">
     <link rel="stylesheet" href="RGB-generator/style.css">
 </head>
@@ -14,7 +14,7 @@
             <p>Lorem Ipsum dolor sit amet</p>
         </header>
 
-		<section class="result">
+        <section class="result">
             <label>Minecraft Format Output</label>
             <div id="output"></div>
             <button onclick="copyOutput()">Copy</button>
@@ -28,7 +28,7 @@
         <section class="text-input">
             <h2>Text & Formatting</h2>
             <input type="text" id="inputText" placeholder="Your Text Here">
-            <input type="number" id="charsPerColor" value="2" min="2">
+            <input type="number" id="charsPerColor" value="1" min="1">
             <div>
                 <label><input type="checkbox" id="formatBold"> Bold</label>
                 <label><input type="checkbox" id="formatItalic"> Italic</label>
@@ -45,7 +45,7 @@
             <div id="colorPairs"></div>
             <button onclick="addColorPair()">Add Color</button>
         </section>
-	</div>
+    </div>
 
     <script src="RGB-generator/script.js"></script>
 </body>
