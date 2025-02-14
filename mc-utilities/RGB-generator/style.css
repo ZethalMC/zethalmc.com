@@ -79,7 +79,6 @@ button:hover:enabled {
 #output, #preview {
     overflow-wrap: break-word;
     word-wrap: break-word;
-    overflow: show;
 }
 
 select {
