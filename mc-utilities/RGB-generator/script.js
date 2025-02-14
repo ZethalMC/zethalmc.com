@@ -1,5 +1,19 @@
 let colorPairCount = 0;
 
+function showError(message) {
+    const errorPopup = document.getElementById("errorPopup");
+    errorPopup.innerHTML = message;
+    errorPopup.style.display = "block";
+    errorPopup.style.opacity = "1";
+
+    setTimeout(() => {
+        errorPopup.style.opacity = "0";
+        setTimeout(() => {
+            errorPopup.style.display = "none";
+        }, 500);
+    }, 5000);
+}
+
 function createColorPair() {
     const pairId = colorPairCount++;
     const colorPairHtml = `
