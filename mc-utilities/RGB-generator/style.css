@@ -102,3 +102,21 @@ select:focus {
     outline: none;
     border-color: #ff8c00;
 }
+
+#error {
+    font-family: Arial, sans-serif;
+    color: red;
+}
+
+#errorPopup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}

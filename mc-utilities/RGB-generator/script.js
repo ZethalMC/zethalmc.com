@@ -57,6 +57,7 @@ function updateFromLabel(label, colorId) {
         updatePreview();
     } else {
         label.style.color = '#ff6b6b';
+        showError("Invalid color format. Please use a hex format like #rrggbb.");
     }
 }
 
@@ -184,6 +185,15 @@ function updatePreview() {
     }
 
     document.getElementById('output').textContent = output;
+}
+
+function validateNumberInput(input) {
+    input.value = input.value.replace(/[^0-9]/g, '');
+    
+    if (parseInt(input.value) < 1) {
+        input.value = 1;
+        showError("You cannot set the value lower than 1 character per color!");
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {

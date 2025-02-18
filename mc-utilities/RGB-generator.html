@@ -28,7 +28,7 @@
         <section class="text-input">
             <h2>Text & Formatting</h2>
             <input type="text" id="inputText" placeholder="Your Text Here">
-            <input type="number" id="charsPerColor" value="1" min="1">
+            <input type="number" id="charsPerColor" value="1" min="1" oninput="validateNumberInput(this)">
             <div>
                 <label><input type="checkbox" id="formatBold"> Bold</label>
                 <label><input type="checkbox" id="formatItalic"> Italic</label>
