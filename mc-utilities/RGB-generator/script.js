@@ -56,8 +56,12 @@ function updateFromLabel(label, colorId) {
         label.style.color = 'white';
         updatePreview();
     } else {
-        label.style.color = '#ff6b6b';
-        showError("Invalid color format. Please use a hex format like #rrggbb.");
+        if (label.value.length === 0) {
+            showError("You have to provide a hex color!");
+            label.value = "#ff8c00";
+        } else {
+            showError("Invalid color format. Please use a hex format like #rrggbb.");
+        }
     }
 }
 
@@ -193,6 +197,9 @@ function validateNumberInput(input) {
     if (parseInt(input.value) < 1) {
         input.value = 1;
         showError("You cannot set the value lower than 1 character per color!");
+    } else if (input.value.length === 0) {
+        showError("You have to provide a value!")
+        input.value = 1;
     }
 }
 
