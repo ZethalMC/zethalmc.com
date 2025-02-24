@@ -89,7 +89,12 @@ function getAllColors() {
 
 function copyOutput() {
     const output = document.getElementById('output');
-    navigator.clipboard.writeText(output.textContent)
+    const command = document.getElementById('extraCommand').value;
+    let textToCopy = output.textContent;
+
+    // if (command) {textToCopy = command + ' ' + textToCopy;}
+
+    navigator.clipboard.writeText(textToCopy)
         .then(() => {
             const button = output.nextElementSibling;
             button.textContent = 'Copied!';
@@ -133,25 +138,30 @@ function getFormattingCodes() {
 function updatePreview() {
     const text = document.getElementById('inputText').value;
     const charsPerColor = parseInt(document.getElementById('charsPerColor').value) || 1;
+    const command = document.getElementById('extraCommand').value.trim();
     const colors = getAllColors();
     const format = document.getElementById('colorFormat').value;
     
     const preview = document.getElementById('preview');
     const gradientColors = colors.join(', ');
-    
+
     preview.style.fontWeight = document.getElementById('formatBold').checked ? 'bold' : 'normal';
     preview.style.fontStyle = document.getElementById('formatItalic').checked ? 'italic' : 'normal';
     preview.style.textDecoration = [
         document.getElementById('formatUnderline').checked ? 'underline' : '',
         document.getElementById('formatStrike').checked ? 'line-through' : ''
     ].filter(Boolean).join(' ');
-    
+
     preview.style.setProperty('--gradient', `linear-gradient(to right, ${gradientColors})`);
     preview.innerHTML = `<span class="gradient-text">${text}</span>`;
 
     const formatCodes = getFormattingCodes();
 
     let output = '';
+    if (validateCommand(command)) {
+        output += command + '\n';
+    }
+
     let currentColorIndex = 0;
     let charsInCurrentColor = 0;
     
@@ -164,8 +174,7 @@ function updatePreview() {
         const color = colors[currentColorIndex];
         const nextColor = colors[(currentColorIndex + 1) % colors.length];
         const factor = charsInCurrentColor / charsPerColor;
-        const interpolatedColor = interpolateColor(color, nextColor, factor);
-        const hex = interpolatedColor.substring(1);
+        const hex = interpolateColor(color, nextColor, factor).substring(1);
 
         switch(format) {
             case '&#':
@@ -191,6 +200,10 @@ function updatePreview() {
     document.getElementById('output').textContent = output;
 }
 
+function validateCommand(command) {
+    return command.trim() !== '';
+}
+
 function validateNumberInput(input) {
     input.value = input.value.replace(/[^0-9]/g, '');
     
@@ -213,6 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('formatItalic').addEventListener('change', updatePreview);
     document.getElementById('formatUnderline').addEventListener('change', updatePreview);
     document.getElementById('formatStrike').addEventListener('change', updatePreview);
+    document.getElementById('extraCommand').addEventListener('input', updatePreview);
     
     updatePreview();
 });
