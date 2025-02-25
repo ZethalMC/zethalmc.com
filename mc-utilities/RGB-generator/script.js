@@ -89,10 +89,7 @@ function getAllColors() {
 
 function copyOutput() {
     const output = document.getElementById('output');
-    const command = document.getElementById('extraCommand').value;
     let textToCopy = output.textContent;
-
-    // if (command) {textToCopy = command + ' ' + textToCopy;}
 
     navigator.clipboard.writeText(textToCopy)
         .then(() => {
@@ -159,7 +156,7 @@ function updatePreview() {
 
     let output = '';
     if (validateCommand(command)) {
-        output += command + '\n';
+        output += command + ' ';
     }
 
     let currentColorIndex = 0;
