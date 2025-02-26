@@ -15,6 +15,10 @@ body {
     background-attachment: fixed;
 }
 
+section {
+    margin-bottom: 30px;
+}
+
 .container {
     max-width: 60%;
     margin: 0 auto;
@@ -37,8 +41,16 @@ h2 {
     margin-top: 20px;
 }
 
+.result {
+    width: 90%;
+}
+
+.preview {
+    width: 90%;
+}
+
 input[type="text"], input[type="number"], input[type="color"] {
-    width: calc(100% - 50px);
+    width: 90%;
     height: 40px;
     padding: 10px;
     margin: 10px 0;
@@ -81,26 +93,59 @@ button:hover:enabled {
     word-wrap: break-word;
 }
 
-select {
-    width: calc(100% - 20px);
-    height: 40px;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #444444;
-    border-radius: 5px;
-    background-color: #201f1e;
-    color: white;
-    cursor: pointer;
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"%3E%3Cpolygon points="0,0 20,0 10,10" fill="%23ff8c00" /%3E%3C/svg%3E');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 20px;
+.custom-select {
+    position: relative;
+    width: 90%;
 }
 
-select:focus {
-    outline: none;
-    border-color: #ff8c00;
+.custom-select select {
+    display: none;
+}
+
+.select-selected {
+    background-color: #201f1e;
+}
+
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+.select-items div,.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+.select-items {
+    position: absolute;
+    background-color: #201f1e;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 #error {
