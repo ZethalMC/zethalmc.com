@@ -134,7 +134,8 @@ function getFormattingCodes() {
 
 function updatePreview() {
     const text = document.getElementById('inputText').value;
-    const charsPerColor = parseInt(document.getElementById('charsPerColor').value) || 1;
+    // const charsPerColor = parseInt(document.getElementById('charsPerColor').value) || 1;
+    const charsPerColor = 1;
     const command = document.getElementById('extraCommand').value.trim();
     const colors = getAllColors();
     const format = document.getElementById('colorFormat').value;
@@ -218,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addColorPair();
 
     document.getElementById('inputText').addEventListener('input', updatePreview);
-    document.getElementById('charsPerColor').addEventListener('input', updatePreview);
+    // document.getElementById('charsPerColor').addEventListener('input', updatePreview);
     document.getElementById('formatBold').addEventListener('change', updatePreview);
     document.getElementById('formatItalic').addEventListener('change', updatePreview);
     document.getElementById('formatUnderline').addEventListener('change', updatePreview);

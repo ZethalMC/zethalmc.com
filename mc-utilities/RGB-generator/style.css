@@ -4,6 +4,11 @@
 .color-pair { margin-bottom: 10px; }
 .gradient-text { background-image: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
+@font-face {
+    font-family: 'Minecraft';
+    src: url(../fonts/MinecraftiaRegular.ttf);
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -43,6 +48,10 @@ h2 {
 
 .result {
     width: 90%;
+}
+
+#preview {
+    font-family: 'Minecraft', sans-serif;
 }
 
 .preview {

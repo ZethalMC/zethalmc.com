@@ -14,44 +14,45 @@
             <p>Lorem Ipsum dolor sit amet</p>
         </header>
 
-        <section class="result">
-            <h2>Minecraft Format Output</h2>
-            <div id="output" class="output-box" contenteditable="false"></div>
-            <button onclick="copyOutput()">Copy</button>
-        </section>
+        <main>
+            <section class="result">
+                <h2>Minecraft Format Output</h2>
+                <div id="output" class="output-box" contenteditable="false"></div>
+                <button onclick="copyOutput()">Copy</button>
+            </section>
 
-        <section class="preview">
-            <h2>Preview</h2>
-            <div id="preview" class="preview-box" contenteditable="false"></div>
-        </section>
+            <section class="preview">
+                <h2>Preview</h2>
+                <div id="preview" class="preview-box" contenteditable="false"></div>
+            </section>
 
-        <section class="text-input">
-            <h2>Text & Formatting</h2>
-            <input type="text" id="inputText" placeholder="Your text here">
-            <input type="number" id="charsPerColor" value="1" min="1" oninput="validateNumberInput(this)">
-            <div>
-                <label><input type="checkbox" id="formatBold"> Bold</label>
-                <label><input type="checkbox" id="formatItalic"> Italic</label>
-                <label><input type="checkbox" id="formatUnderline"> Underline</label>
-                <label><input type="checkbox" id="formatStrike"> Strikethrough</label>
-            </div>
-            <div class="custom-select">
-                <select id="colorFormat" onchange="updatePreview()">
-                    <option value="&#">&#rrggbb (Default)</option>
-                    <option value="&">&#rrggbb</option>
-                    <option value="MiniMessage"><#rrggbb></option>
-                    <option value="Â§">Â§xÂ§rÂ§rÂ§gÂ§gÂ§bÂ§b</option>
-                    <option value="<#"><#rrggbb></option>
-                </select>
-            </div>
-            <div id="colorPairs"></div>
-            <button onclick="addColorPair()">Add Color</button>
-        </section>
+            <section class="text-input">
+                <h2>Text & Formatting</h2>
+                <input type="text" id="inputText" placeholder="Your text here">
+                <div>
+                    <label><input type="checkbox" id="formatBold"> Bold</label>
+                    <label><input type="checkbox" id="formatItalic"> Italic</label>
+                    <label><input type="checkbox" id="formatUnderline"> Underline</label>
+                    <label><input type="checkbox" id="formatStrike"> Strikethrough</label>
+                </div>
+                <div class="custom-select">
+                    <select id="colorFormat" onchange="updatePreview()">
+                        <option value="&#">&#rrggbb (Default)</option>
+                        <option value="&">&#rrggbb</option>
+                        <option value="MiniMessage"><#rrggbb></option>
+                        <option value="Â§">Â§xÂ§rÂ§rÂ§gÂ§gÂ§bÂ§b</option>
+                        <option value="<#"><#rrggbb></option>
+                    </select>
+                </div>
+                <div id="colorPairs"></div>
+                <button onclick="addColorPair()">Add Color</button>
+            </section>
 
-        <section>
-            <h2>Potential Extra Command</h2>
-            <input type="text" id="extraCommand" placeholder="Add your potential extra command here">
-        </section>
+            <section>
+                <h2>Potential Extra Command</h2>
+                <input type="text" id="extraCommand" placeholder="Your extra command here">
+            </section>
+        </main>
     </div>
 
     <div id="errorPopup"></div>
