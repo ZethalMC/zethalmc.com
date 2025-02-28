@@ -23,6 +23,11 @@
                 <h2>Minecraft Format Output</h2>
                 <div id="output" class="output-box" contenteditable="false"></div>
                 <button onclick="copyOutput()">Copy</button>
+                <button onclick="toggleExtraCommand()">Toggle Extra Command</button>
+                <div id="extraCommandSection" class="toggle-section" style="display: none;">
+                    <h2>Extra Command</h2>
+                    <input type="text" id="extraCommand" placeholder="Your extra command here">
+                </div>
             </section>
 
             <section class="preview">
@@ -56,10 +61,6 @@
                 <button onclick="addColorPair()">Add Color</button>
             </section>
 
-            <section>
-                <h2>Potential Extra Command</h2>
-                <input type="text" id="extraCommand" placeholder="Your extra command here">
-            </section>
         </main>
     </div>
 

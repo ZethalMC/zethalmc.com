@@ -14,6 +14,11 @@ function showError(message) {
     }, 5000);
 }
 
+function toggleExtraCommand() {
+    const section = document.getElementById('extraCommandSection');
+    section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+}
+
 function createColorPair() {
     const pairId = colorPairCount++;
     const colorPairHtml = `
