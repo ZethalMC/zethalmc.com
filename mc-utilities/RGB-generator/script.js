@@ -17,6 +17,7 @@ function showError(message) {
 function toggleExtraCommand() {
     const section = document.getElementById('extraCommandSection');
     section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+    updatePreview();
 }
 
 function createColorPair() {
@@ -50,12 +51,12 @@ function updateColorLabel(inputId) {
 function updateFromLabel(label, colorId) {
     const colorInput = document.getElementById(colorId);
     let value = label.value.trim();
-    
+
     if (value.length === 6 && !value.startsWith('#')) {
         value = '#' + value;
         label.value = value;
     }
-    
+
     if (validateHexColor(value)) {
         colorInput.value = value;
         label.style.color = 'white';
@@ -110,19 +111,19 @@ function validateHexColor(hex) {
 }
 
 function interpolateColor(color1, color2, factor) {
-    const r1 = parseInt(color1.substring(1,3), 16);
-    const g1 = parseInt(color1.substring(3,5), 16);
-    const b1 = parseInt(color1.substring(5,7), 16);
-    
-    const r2 = parseInt(color2.substring(1,3), 16);
-    const g2 = parseInt(color2.substring(3,5), 16);
-    const b2 = parseInt(color2.substring(5,7), 16);
-    
+    const r1 = parseInt(color1.substring(1, 3), 16);
+    const g1 = parseInt(color1.substring(3, 5), 16);
+    const b1 = parseInt(color1.substring(5, 7), 16);
+
+    const r2 = parseInt(color2.substring(1, 3), 16);
+    const g2 = parseInt(color2.substring(3, 5), 16);
+    const b2 = parseInt(color2.substring(5, 7), 16);
+
     const r = Math.round(r1 + (r2 - r1) * factor);
     const g = Math.round(g1 + (g2 - g1) * factor);
     const b = Math.round(b1 + (b2 - b1) * factor);
-    
-    return '#' + 
+
+    return '#' +
         (r.toString(16).padStart(2, '0')) +
         (g.toString(16).padStart(2, '0')) +
         (b.toString(16).padStart(2, '0'));
@@ -141,10 +142,11 @@ function updatePreview() {
     const text = document.getElementById('inputText').value;
     // const charsPerColor = parseInt(document.getElementById('charsPerColor').value) || 1;
     const charsPerColor = 1;
-    const command = document.getElementById('extraCommand').value.trim();
     const colors = getAllColors();
     const format = document.getElementById('colorFormat').value;
-    
+    const command = document.getElementById('extraCommand').value.trim();
+    const extraCommandSection = document.getElementById('extraCommandSection');
+
     const preview = document.getElementById('preview');
     const gradientColors = colors.join(', ');
 
@@ -161,13 +163,14 @@ function updatePreview() {
     const formatCodes = getFormattingCodes();
 
     let output = '';
-    if (validateCommand(command)) {
+
+    if (extraCommandSection.style.display === 'block' && validateCommand(command)) {
         output += command + ' ';
     }
 
     let currentColorIndex = 0;
     let charsInCurrentColor = 0;
-    
+
     for (let i = 0; i < text.length; i++) {
         if (charsInCurrentColor >= charsPerColor) {
             currentColorIndex = (currentColorIndex + 1) % colors.length;
@@ -179,7 +182,7 @@ function updatePreview() {
         const factor = charsInCurrentColor / charsPerColor;
         const hex = interpolateColor(color, nextColor, factor).substring(1);
 
-        switch(format) {
+        switch (format) {
             case '&#':
                 output += '&#' + hex + formatCodes + text[i];
                 break;
@@ -196,7 +199,7 @@ function updatePreview() {
                 output += '<#' + hex + '>' + text[i];
                 break;
         }
-        
+
         charsInCurrentColor++;
     }
 
@@ -209,7 +212,7 @@ function validateCommand(command) {
 
 function validateNumberInput(input) {
     input.value = input.value.replace(/[^0-9]/g, '');
-    
+
     if (parseInt(input.value) < 1) {
         input.value = 1;
         showError("You cannot set the value lower than 1 character per color!");
@@ -219,7 +222,7 @@ function validateNumberInput(input) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     addColorPair();
     addColorPair();
 
@@ -230,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('formatUnderline').addEventListener('change', updatePreview);
     document.getElementById('formatStrike').addEventListener('change', updatePreview);
     document.getElementById('extraCommand').addEventListener('input', updatePreview);
-    
+
     updatePreview();
 });
 
@@ -250,7 +253,7 @@ for (i = 0; i < l; i++) {
     for (j = 1; j < ll; j++) {
         c = document.createElement("DIV");
         c.innerHTML = selElmnt.options[j].innerHTML;
-        c.addEventListener("click", function(e) {
+        c.addEventListener("click", function (e) {
             var y, i, k, s, h, sl, yl;
             s = this.parentNode.parentNode.getElementsByTagName("select")[0];
             sl = s.length;
@@ -273,7 +276,7 @@ for (i = 0; i < l; i++) {
         b.appendChild(c);
     }
     x[i].appendChild(b);
-    a.addEventListener("click", function(e) {
+    a.addEventListener("click", function (e) {
         e.stopPropagation();
         closeAllSelect(this);
         this.nextSibling.classList.toggle("select-hide");
