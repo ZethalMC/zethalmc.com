@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/minecraft-3');
+@import url('https://fonts.cdnfonts.com/css/minecraftia');
 
 .color-input { cursor: pointer; }
 .color-container { position: relative; display: inline-block; }
@@ -48,7 +48,7 @@ h2 {
 }
 
 #preview {
-    font-family: 'Minecraft', sans-serif;
+    font-family: 'Minecraftia', sans-serif;
 }
 
 .preview {
