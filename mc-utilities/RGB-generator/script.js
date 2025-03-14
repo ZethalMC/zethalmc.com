@@ -130,11 +130,28 @@ function interpolateColor(color1, color2, factor) {
 }
 
 function getFormattingCodes() {
+    const format = document.getElementById('colorFormat').value;
     let codes = '';
-    if (document.getElementById('formatBold').checked) codes += '&l';
-    if (document.getElementById('formatItalic').checked) codes += '&o';
-    if (document.getElementById('formatUnderline').checked) codes += '&n';
-    if (document.getElementById('formatStrike').checked) codes += '&m';
+    
+    switch (format) {
+        case '&#':
+        case '&':
+        // case 'MiniMessage':
+        case '<#':
+        case '<##':
+        case '&x':
+            if (document.getElementById('formatBold').checked) codes += '&l';
+            if (document.getElementById('formatItalic').checked) codes += '&o';
+            if (document.getElementById('formatUnderline').checked) codes += '&n';
+            if (document.getElementById('formatStrike').checked) codes += '&m';
+            break;
+        case 'Â§':
+            if (document.getElementById('formatBold').checked) codes += '§l';
+            if (document.getElementById('formatItalic').checked) codes += '§o';
+            if (document.getElementById('formatUnderline').checked) codes += '§n';
+            if (document.getElementById('formatStrike').checked) codes += '§m';
+            break;
+    }
     return codes;
 }
 
@@ -187,16 +204,22 @@ function updatePreview() {
                 output += '&#' + hex + formatCodes + text[i];
                 break;
             case '&':
-                output += '&#' + hex + text[i];
+                output += '&' + hex + formatCodes + text[i];
                 break;
-            case 'MiniMessage':
-                output += '<#' + hex + '>' + text[i];
-                break;
+            // case 'MiniMessage':
+            //     output += '<#' + hex + '>' + formatCodes + text[i];
+            //     break;
             case 'Â§':
-                output += 'Â§x' + hex.split('').map(c => 'Â§' + c).join('') + text[i];
+                output += 'Â§x' + hex.split('').map(c => 'Â§' + c).join('') + formatCodes + text[i];
+                break;
+            case '&x':
+                output += '&x' + hex.split('').map(c => '&' + c).join('') + formatCodes + text[i];
                 break;
             case '<#':
-                output += '<#' + hex + '>' + text[i];
+                output += '<#' + hex + '>' + formatCodes + text[i];
+                break;
+            case '<##':
+                output += '<##' + hex + '>' + formatCodes + text[i];
                 break;
         }
 
@@ -271,6 +294,7 @@ for (i = 0; i < l; i++) {
                     break;
                 }
             }
+            updatePreview();
             h.click();
         });
         b.appendChild(c);
