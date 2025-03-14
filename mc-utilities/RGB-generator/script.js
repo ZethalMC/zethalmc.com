@@ -191,7 +191,8 @@ function updatePreview() {
     }
 
     if (format === 'MiniMessage') {
-        output += `<gradient:${colors[0].substring(1)}:${colors[1].substring(1)}>${text}</gradient>`;
+        const closingTags = formatCodes.split('>').filter(t => t).map(t => t.replace('<', '</') + '>').reverse().join('');
+        output += `${formatCodes}<gradient:${colors[0].substring(1)}:${colors[1].substring(1)}>${text}</gradient>${closingTags}`;
     } else {
         let currentColorIndex = 0;
         let charsInCurrentColor = 0;
