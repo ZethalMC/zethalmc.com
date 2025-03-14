@@ -136,7 +136,6 @@ function getFormattingCodes() {
     switch (format) {
         case '&#':
         case '&':
-        // case 'MiniMessage':
         case '<#':
         case '<##':
         case '&x':
@@ -150,6 +149,12 @@ function getFormattingCodes() {
             if (document.getElementById('formatItalic').checked) codes += '§o';
             if (document.getElementById('formatUnderline').checked) codes += '§n';
             if (document.getElementById('formatStrike').checked) codes += '§m';
+            break;
+        case 'MiniMessage':
+            if (document.getElementById('formatBold').checked) codes += '<b>';
+            if (document.getElementById('formatItalic').checked) codes += '<i>';
+            if (document.getElementById('formatUnderline').checked) codes += '<u>';
+            if (document.getElementById('formatStrike').checked) codes += '<st>';
             break;
     }
     return codes;
@@ -185,45 +190,46 @@ function updatePreview() {
         output += command + ' ';
     }
 
-    let currentColorIndex = 0;
-    let charsInCurrentColor = 0;
+    if (format === 'MiniMessage') {
+        output += `<gradient:${colors[0].substring(1)}:${colors[1].substring(1)}>${text}</gradient>`;
+    } else {
+        let currentColorIndex = 0;
+        let charsInCurrentColor = 0;
 
-    for (let i = 0; i < text.length; i++) {
-        if (charsInCurrentColor >= charsPerColor) {
-            currentColorIndex = (currentColorIndex + 1) % colors.length;
-            charsInCurrentColor = 0;
+        for (let i = 0; i < text.length; i++) {
+            if (charsInCurrentColor >= charsPerColor) {
+                currentColorIndex = (currentColorIndex + 1) % colors.length;
+                charsInCurrentColor = 0;
+            }
+
+            const color = colors[currentColorIndex];
+            const nextColor = colors[(currentColorIndex + 1) % colors.length];
+            const factor = charsInCurrentColor / charsPerColor;
+            const hex = interpolateColor(color, nextColor, factor).substring(1);
+
+            switch (format) {
+                case '&#':
+                    output += '&#' + hex + formatCodes + text[i];
+                    break;
+                case '&':
+                    output += '&' + hex + formatCodes + text[i];
+                    break;
+                case 'Â§':
+                    output += 'Â§x' + hex.split('').map(c => 'Â§' + c).join('') + formatCodes + text[i];
+                    break;
+                case '&x':
+                    output += '&x' + hex.split('').map(c => '&' + c).join('') + formatCodes + text[i];
+                    break;
+                case '<#':
+                    output += '<#' + hex + '>' + formatCodes + text[i];
+                    break;
+                case '<##':
+                    output += '<##' + hex + '>' + formatCodes + text[i];
+                    break;
+            }
+
+            charsInCurrentColor++;
         }
-
-        const color = colors[currentColorIndex];
-        const nextColor = colors[(currentColorIndex + 1) % colors.length];
-        const factor = charsInCurrentColor / charsPerColor;
-        const hex = interpolateColor(color, nextColor, factor).substring(1);
-
-        switch (format) {
-            case '&#':
-                output += '&#' + hex + formatCodes + text[i];
-                break;
-            case '&':
-                output += '&' + hex + formatCodes + text[i];
-                break;
-            // case 'MiniMessage':
-            //     output += '<#' + hex + '>' + formatCodes + text[i];
-            //     break;
-            case 'Â§':
-                output += 'Â§x' + hex.split('').map(c => 'Â§' + c).join('') + formatCodes + text[i];
-                break;
-            case '&x':
-                output += '&x' + hex.split('').map(c => '&' + c).join('') + formatCodes + text[i];
-                break;
-            case '<#':
-                output += '<#' + hex + '>' + formatCodes + text[i];
-                break;
-            case '<##':
-                output += '<##' + hex + '>' + formatCodes + text[i];
-                break;
-        }
-
-        charsInCurrentColor++;
     }
 
     document.getElementById('output').textContent = output;
