@@ -156,12 +156,6 @@ function getFormattingCodes() {
             if (document.getElementById('formatUnderline').checked) codes += '<u>';
             if (document.getElementById('formatStrike').checked) codes += '<st>';
             break;
-        case '[C':
-            if (document.getElementById('formatBold').checked) codes += '[BOLD]';
-            if (document.getElementById('formatItalic').checked) codes += '[ITALIC]';
-            if (document.getElementById('formatUnderline').checked) codes += '[UNDERLINE]';
-            if (document.getElementById('formatStrike').checked) codes += '[STRIKETHROUGH]';
-            break;
     }
     return codes;
 }
@@ -191,28 +185,28 @@ function updatePreview() {
     const formatCodes = getFormattingCodes();
 
     let output = '';
-    let currentColorIndex = 0;
-    let charsInCurrentColor = 0;
-
-    const color = colors[currentColorIndex];
-    const nextColor = colors[(currentColorIndex + 1) % colors.length];
-    const factor = charsInCurrentColor / charsPerColor;
-    const hex = interpolateColor(color, nextColor, factor).substring(1);
 
     if (extraCommandSection.style.display === 'block' && validateCommand(command)) {
         output += command + ' ';
-    } if (format === 'MiniMessage') {
-        const closingTags = formatCodes.replace('<', '</');
+    }
+
+    if (format === 'MiniMessage') {
+        const closingTags = formatCodes.split('>').filter(t => t).map(t => t.replace('<', '</') + '>').reverse().join('');
         output += `${formatCodes}<gradient:${colors[0].substring(1)}:${colors[1].substring(1)}>${text}</gradient>${closingTags}`;
-    } if (format === '[C') {
-        const closingTags = formatCodes.replace('[', '[/');
-        output += `${formatCodes}[COLOR:${hex}]${text}[/COLOR]${closingTags}`;
     } else {
+        let currentColorIndex = 0;
+        let charsInCurrentColor = 0;
+
         for (let i = 0; i < text.length; i++) {
             if (charsInCurrentColor >= charsPerColor) {
                 currentColorIndex = (currentColorIndex + 1) % colors.length;
                 charsInCurrentColor = 0;
             }
+
+            const color = colors[currentColorIndex];
+            const nextColor = colors[(currentColorIndex + 1) % colors.length];
+            const factor = charsInCurrentColor / charsPerColor;
+            const hex = interpolateColor(color, nextColor, factor).substring(1);
 
             switch (format) {
                 case '&#':
@@ -232,9 +226,6 @@ function updatePreview() {
                     break;
                 case '<##':
                     output += '<##' + hex + '>' + formatCodes + text[i];
-                    break;
-                case '[C':
-                    output += '[COLOR=#' + hex +']' + text[i] + '[/COLOR]';
                     break;
             }
 
