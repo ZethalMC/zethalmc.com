@@ -203,6 +203,20 @@ function updatePreview() {
 
         const span = document.createElement('span');
         span.style.color = color;
+
+        if (document.getElementById('formatBold').checked) {
+            span.style.fontWeight = 'bold';
+        }
+        if (document.getElementById('formatItalic').checked) {
+            span.style.fontStyle = 'italic';
+        }
+        if (document.getElementById('formatUnderline').checked) {
+            span.style.textDecoration = 'underline';
+        }
+        if (document.getElementById('formatStrike').checked) {
+            span.style.textDecoration = 'line-through';
+        }
+
         span.textContent = text[i];
         preview.appendChild(span);
     }
@@ -220,39 +234,53 @@ function updatePreview() {
         const color = interpolateColor(colors[colorIndex], colors[nextColorIndex], colorRatio);
         const hexColor = color.substring(1);
 
+        let formattedText = text[i];
+        if (document.getElementById('formatBold').checked) {
+            formattedText = `&l${formattedText}`;
+        }
+        if (document.getElementById('formatItalic').checked) {
+            formattedText = `&o${formattedText}`;
+        }
+        if (document.getElementById('formatUnderline').checked) {
+            formattedText = `&n${formattedText}`;
+        }
+        if (document.getElementById('formatStrike').checked) {
+            formattedText = `&m${formattedText}`;
+        }
+
         switch (format) {
             case '&#':
-                output += `&#${hexColor}${text[i]}`;
+                output += `&#${hexColor}${formattedText}`;
                 break;
             case '&':
-                output += `&${hexColor}${text[i]}`;
+                output += `&${hexColor}${formattedText}`;
                 break;
             case 'Â§':
-                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${text[i]}`;
+                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${formattedText}`;
                 break;
             case '&x':
-                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${text[i]}`;
+                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${formattedText}`;
                 break;
             case '<#':
-                output += `<#${hexColor}>${text[i]}`;
+                output += `<#${hexColor}>${formattedText}`;
                 break;
             case '<##':
-                output += `<##${hexColor}>${text[i]}`;
+                output += `<##${hexColor}>${formattedText}`;
                 break;
             case '[C':
-                output += `[COLOR=${hexColor}]${text[i]}[/COLOR]`;
+                output += `[COLOR=${hexColor}]${formattedText}[/COLOR]`;
                 break;
             case 'MiniMessage':
                 if (i === 0) {
                     output += `<gradient:${hexColor}:${colors[colorCount - 1].substring(1)}>`;
                 }
-                output += text[i];
+                output += formattedText;
                 if (i === text.length - 1) {
                     output += `</gradient>`;
                 }
                 break;
             default:
-                output += `&${hexColor}${text[i]}`;
+                output += `&${hexColor}${formattedText}`;
         }
     }
 
@@ -261,33 +289,48 @@ function updatePreview() {
 
 function generateOutputForSingleCharacter(character, hexColor, format) {
     let output = '';
+    const formattedCharacter = character;
+
+    if (document.getElementById('formatBold').checked) {
+        formattedCharacter = `&l${formattedCharacter}`;
+    }
+    if (document.getElementById('formatItalic').checked) {
+        formattedCharacter = `&o${formattedCharacter}`;
+    }
+    if (document.getElementById('formatUnderline').checked) {
+        formattedCharacter = `&n${formattedCharacter}`;
+    }
+    if (document.getElementById('formatStrike').checked) {
+        formattedCharacter = `&m${formattedCharacter}`;
+    }
+
     switch (format) {
         case '&#':
-            output += `&#${hexColor}${character}`;
+            output += `&#${hexColor}${formattedCharacter}`;
             break;
         case '&':
-            output += `&${hexColor}${character}`;
+            output += `&${hexColor}${formattedCharacter}`;
             break;
         case 'Â§':
-            output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${character}`;
+            output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${formattedCharacter}`;
             break;
         case '&x':
-            output += `&x${hexColor.split('').map(c => '&' + c).join('')}${character}`;
+            output += `&x${hexColor.split('').map(c => '&' + c).join('')}${formattedCharacter}`;
             break;
         case '<#':
-            output += `<#${hexColor}>${character}`;
+            output += `<#${hexColor}>${formattedCharacter}`;
             break;
         case '<##':
-            output += `<##${hexColor}>${character}`;
+            output += `<##${hexColor}>${formattedCharacter}`;
             break;
         case '[C':
-            output += `[COLOR=${hexColor}]${character}[/COLOR]`;
+            output += `[COLOR=${hexColor}]${formattedCharacter}[/COLOR]`;
             break;
         case 'MiniMessage':
-            output += `<gradient:${hexColor}:${hexColor}>${character}</gradient>`;
+            output += `<gradient:${hexColor}:${hexColor}>${formattedCharacter}</gradient>`;
             break;
         default:
-            output += `&${hexColor}${character}`;
+            output += `&${hexColor}${formattedCharacter}`;
     }
     return output;
 }
@@ -313,7 +356,6 @@ document.addEventListener('DOMContentLoaded', function () {
     addColorPair();
 
     document.getElementById('inputText').addEventListener('input', updatePreview);
-    // document.getElementById('charsPerColor').addEventListener('input', updatePreview);
     document.getElementById('formatBold').addEventListener('change', updatePreview);
     document.getElementById('formatItalic').addEventListener('change', updatePreview);
     document.getElementById('formatUnderline').addEventListener('change', updatePreview);
