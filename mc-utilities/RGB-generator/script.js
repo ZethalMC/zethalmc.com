@@ -132,7 +132,7 @@ function interpolateColor(color1, color2, factor) {
 function getFormattingCodes() {
     const format = document.getElementById('colorFormat').value;
     let codes = '';
-    
+
     switch (format) {
         case '&#':
         case '&':
@@ -433,3 +433,144 @@ function closeAllSelect(elmnt) {
 }
 
 document.addEventListener("click", closeAllSelect);
+
+// feedback popup
+const DISCORD_FEEDBACK_WEBHOOK_URL = "https://discord.com/api/webhooks/1354062580095782984/lChk-_8-ltoG4PXnJZaWaFAFHilWzs_t-PHpZQa-0rRCG82ESNY2sV61BIv0849NsSOH";
+const DISCORD_CONTACT_WEBHOOK_URL = "https://discord.com/api/webhooks/1354099421884846130/9r1YIgKTzDS_YUe195-IGzb9R-ljOrFBjTRZjGRZD17ZlnaLXh_MPkqAk5g-I_jFcrAp";
+const DISCORD_BUG_WEBHOOK_URL = "https://discord.com/api/webhooks/1354062580095782984/lChk-_8-ltoG4PXnJZaWaFAFHilWzs_t-PHpZQa-0rRCG82ESNY2sV61BIv0849NsSOH";
+
+function togglePopup() {
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    const isVisible = popup.classList.contains('show');
+
+    if (isVisible) {
+        popup.classList.remove('show');
+        overlay.style.display = 'none';
+    } else {
+        popup.classList.add('show');
+        overlay.style.display = 'block';
+    }
+}
+
+document.querySelectorAll('.checkbox-container input').forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+        toggleCheckbox(this.id);
+    });
+});
+
+function toggleCheckbox(checkedId) {
+    const contactCheckbox = document.getElementById('contactCheckbox');
+    const bugCheckbox = document.getElementById('bugCheckbox');
+    const textBoxTitle = document.getElementById('textBoxTitle');
+    const textBox = document.getElementById('textBox');
+    const notificationElement = document.getElementById('notification');
+
+    const contactContainer = contactCheckbox.closest('.checkbox-container');
+    const bugContainer = bugCheckbox.closest('.checkbox-container');
+
+    if (checkedId === 'contactCheckbox') {
+        if (contactCheckbox.checked) {
+            bugCheckbox.checked = false;
+            bugContainer.classList.remove('checked');
+        } else {
+            contactContainer.classList.remove('checked');
+        }
+    } else if (checkedId === 'bugCheckbox') {
+        if (bugCheckbox.checked) {
+            contactCheckbox.checked = false;
+            contactContainer.classList.remove('checked');
+        } else {
+            bugContainer.classList.remove('checked');
+        }
+    }
+
+    if (contactCheckbox.checked) {
+        textBoxTitle.textContent = "Contact Reason:";
+        textBox.placeholder = "Enter the reason...";
+        contactContainer.classList.add('checked');
+    } else if (bugCheckbox.checked) {
+        textBoxTitle.textContent = "Bug Report:";
+        textBox.placeholder = "Describe the bug in detail...";
+        bugContainer.classList.add('checked');
+    } else {
+        textBoxTitle.textContent = "Your Feedback:";
+        textBox.placeholder = "Enter your feedback here...";
+    }
+}
+
+async function submitFeedback() {
+    const discordUsername = document.getElementById('discord').value.trim();
+    const feedbackText = document.getElementById('textBox').value.trim();
+    const isContactForm = document.getElementById('contactCheckbox').checked;
+    const isBugReport = document.getElementById('bugCheckbox').checked;
+
+    if (!discordUsername || !feedbackText) {
+        showNotification('Please fill in all fields.');
+        return;
+    }
+
+    const payload = {
+        embeds: [{
+            title: isContactForm ? "User Contact" : (isBugReport ? "RGB-Generator Bug Report" : "RGB-Generator Feedback"),
+            color: isBugReport ? 0xff0000 : 3066993,
+            fields: [
+                {
+                    name: "Discord Username",
+                    value: discordUsername,
+                    inline: true
+                },
+                {
+                    name: "Message",
+                    value: feedbackText,
+                    inline: false
+                }
+            ]
+        }]
+    };
+
+    const webhookUrl = isContactForm ? DISCORD_CONTACT_WEBHOOK_URL : (isBugReport ? DISCORD_BUG_WEBHOOK_URL : DISCORD_FEEDBACK_WEBHOOK_URL);
+
+    try {
+        await fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (isBugReport) {
+            showNotification('Bug report submitted successfully! Thank you for pointing it out!');
+        } else if (isContactForm) {
+            showNotification('Contact request submitted successfully! I\'ll get back to you soon!');
+        } else {
+            showNotification('Feedback submitted successfully! Thank you for your input!');
+        }
+
+        document.getElementById('discord').value = '';
+        document.getElementById('textBox').value = '';
+    } catch (error) {
+        console.error('Error sending message:', error);
+        showNotification('Failed to submit message. Please try again later.');
+    }
+}
+
+function showNotification(message) {
+    const notificationElement = document.getElementById('notification');
+    notificationElement.textContent = message;
+
+    notificationElement.style.display = 'block';
+
+    requestAnimationFrame(() => {
+        notificationElement.classList.add('show');
+    });
+
+    setTimeout(() => {
+        notificationElement.classList.remove('show');
+
+        setTimeout(() => {
+            notificationElement.style.display = 'none';
+        }, 400);
+    }, 3000);
+}
