@@ -186,6 +186,7 @@ button:hover:enabled {
 }
 
 .format-checkbox-item {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 8px;
@@ -196,11 +197,23 @@ button:hover:enabled {
 }
 
 .format-checkbox-item input[type="checkbox"] {
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: relative;
+    opacity: 1;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.format-checkbox-item label:hover {
+    cursor: pointer;
+}
+
+.format-checkbox-item input[type="checkbox"]:checked + .label-text {
+    color: #ff8c00;
+}
+
+.format-checkbox-item input[type="checkbox"]:checked {
+    accent-color: #ff8c00;
 }
 
 .format-checkbox-item:hover {
