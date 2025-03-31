@@ -138,7 +138,7 @@ button:disabled:hover {
 
 .popup {
     display: none;
-    position: absolute;
+    position: fixed;
     bottom: 70px;
     right: 20px;
     background: #201f1e;
