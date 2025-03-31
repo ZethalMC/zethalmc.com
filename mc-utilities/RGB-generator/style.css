@@ -179,6 +179,39 @@ button:hover:enabled {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.format-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.format-checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #282828;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.format-checkbox-item input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.format-checkbox-item:hover {
+    background-color: #333333;
+    border-color: #ff8c00;
+}
+
+.format-checkbox-item input:checked ~ .label-text {
+    color: #ff8c00;
+}
+
 .feedback-button {
     position: fixed;
     bottom: 20px;

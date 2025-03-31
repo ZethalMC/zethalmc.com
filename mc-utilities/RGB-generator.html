@@ -43,11 +43,23 @@
             <section class="text-input">
                 <h2>Text & Formatting</h2>
                 <input type="text" id="inputText" placeholder="Your text here">
-                <div>
-                    <label><input type="checkbox" id="formatBold"> Bold</label>
-                    <label><input type="checkbox" id="formatItalic"> Italic</label>
-                    <label><input type="checkbox" id="formatUnderline"> Underline</label>
-                    <label><input type="checkbox" id="formatStrike"> Strikethrough</label>
+                <div class="format-checkbox" style="display: flex; gap: 10px;">
+                    <div class="format-checkbox-item">
+                        <input type="checkbox" id="formatBold">
+                        <span class="label-text">Bold</span>
+                    </div>
+                    <div class="format-checkbox-item">
+                        <input type="checkbox" id="formatItalic">
+                        <span class="label-text">Italic</span>
+                    </div>
+                    <div class="format-checkbox-item">
+                        <input type="checkbox" id="formatUnderline">
+                        <span class="label-text">Underline</span>
+                    </div>
+                    <div class="format-checkbox-item">
+                        <input type="checkbox" id="formatStrike">
+                        <span class="label-text">Strikethrough</span>
+                    </div>
                 </div>
                 <div class="custom-select">
                     <select id="colorFormat" onchange="updatePreview()">
