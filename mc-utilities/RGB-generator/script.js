@@ -1,15 +1,15 @@
 let colorPairCount = 0;
 
-function showError(message) {
-    const errorPopup = document.getElementById("errorPopup");
-    errorPopup.innerHTML = message;
-    errorPopup.style.display = "block";
-    errorPopup.style.opacity = "1";
+function showNotif(message) {
+    const notifPopup = document.getElementById("notifPopup");
+    notifPopup.innerHTML = message;
+    notifPopup.style.display = "block";
+    notifPopup.style.opacity = "1";
 
     setTimeout(() => {
-        errorPopup.style.opacity = "0";
+        notifPopup.style.opacity = "0";
         setTimeout(() => {
-            errorPopup.style.display = "none";
+            notifPopup.style.display = "none";
         }, 500);
     }, 5000);
 }
@@ -63,10 +63,10 @@ function updateFromLabel(label, colorId) {
         updatePreview();
     } else {
         if (label.value.length === 0) {
-            showError("You have to provide a hex color!");
+            showNotif("You have to provide a hex color!");
             label.value = "#ff8c00";
         } else {
-            showError("Invalid color format. Please use a hex format like #rrggbb.");
+            showNotif("Invalid color format. Please use a hex format like #rrggbb.");
         }
     }
 }
@@ -329,9 +329,9 @@ function validateNumberInput(input) {
 
     if (parseInt(input.value) < 1) {
         input.value = 1;
-        showError("You cannot set the value lower than 1 character per color!");
+        showNotif("You cannot set the value lower than 1 character per color!");
     } else if (input.value.length === 0) {
-        showError("You have to provide a value!")
+        showNotif("You have to provide a value!")
         input.value = 1;
     }
 }

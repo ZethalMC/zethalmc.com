@@ -387,12 +387,12 @@ button:hover:enabled {
     border-color: #ff8c00 !important;
 }
 
-#error {
+#notif {
     font-family: Arial, sans-serif;
     color: red;
 }
 
-#errorPopup {
+#notifPopup {
     position: fixed;
     top: 20px;
     right: 20px;
