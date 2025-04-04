@@ -23,15 +23,25 @@
 
         <section class="instructions">
             <h3>Instructions</h3>
-                    To get started, select any text that you wish to convert. This can include ebooks, articles, or any other type of written content, as long as it consists of text.<br />
-                    Next, fill in the designated fields with the title of the book and your in-game nickname in the author section.<br /><br />
-                    Once you've done that, simply click on the <strong>"Convert"</strong> button. This action will process your text and automatically divide it into the necessary number of pages, adhering to Minecraft's book character limitations. (If your content exceeds 100 pages, additional books will be created as needed.) 
-                    <p class="note">Note: Line breaks are trimmed to avoid bugs. It is suggested to use bold for each chapter title in game, as this script allows for some extra characters per page to occasionally style the text for this purpose.</p><br />
+            To get started, select any text that you wish to convert. This can include ebooks, articles, or any other
+            type of written content, as long as it consists of text.<br />
+            Next, fill in the designated fields with the title of the book and your in-game nickname in the author
+            section.<br /><br />
+            Once you've done that, simply click on the <strong>"Convert"</strong> button. This action will process your
+            text and automatically divide it into the necessary number of pages, adhering to Minecraft's book character
+            limitations. (If your content exceeds 100 pages, additional books will be created as needed.)
+            <p class="note">Note: Line breaks are trimmed to avoid bugs. It is suggested to use bold for each chapter
+                title in game, as this script allows for some extra characters per page to occasionally style the text
+                for this purpose.</p><br />
 
-                    After the conversion is complete, a new button labeled <strong>"Save Stendhal Books"</strong> will appear. Clicking this will download all your converted books in a <code>.Stendhal</code> format. Just remember to save the files when prompted by the popups.
-                    Once you have downloaded the books, make sure to place them inside the <code>.minecraft\config\stendhal\books</code> directory if you have the Stendhal mod installed.<br /><br />
-                    
-                    In-game, use a Book & Quill, and click on the <strong>"Import Book"</strong> button to find your new book(s) ready to import.
+            After the conversion is complete, a new button labeled <strong>"Save Stendhal Books"</strong> will appear.
+            Clicking this will download all your converted books in a <code>.Stendhal</code> format. Just remember to
+            save the files when prompted by the popups.
+            Once you have downloaded the books, make sure to place them inside the
+            <code>.minecraft\config\stendhal\books</code> directory if you have the Stendhal mod installed.<br /><br />
+
+            In-game, use a Book & Quill, and click on the <strong>"Import Book"</strong> button to find your new book(s)
+            ready to import.
         </section>
 
         <section class="settings">
@@ -54,6 +64,31 @@
             <div id="errorPopup"></div>
             <span id="container"></span>
         </section>
+    </div>
+
+    <button class="feedback-button" onclick="togglePopup()">Feedback</button>
+
+    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+
+    <div class="popup" id="popup">
+        <h1>Feedback Form</h1>
+        <label for="discord">Discord Username and ID:</label>
+        <input type="text" id="discord" placeholder="Discord Username / ID" required>
+
+        <label for="textBox" id="textBoxTitle">Your Feedback:</label>
+        <textarea id="textBox" rows="5" placeholder="Enter your feedback here..." required></textarea>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="contactCheckbox" onclick="toggleCheckbox('contactCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('contactCheckbox')">Contact me?</span>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="bugCheckbox" onclick="toggleCheckbox('bugCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('bugCheckbox')">Bug?</span>
+        </div>
+
+        <button onclick="submitFeedback()">Submit Feedback</button>
+        <div class="notification" id="notification"></div>
     </div>
 
     <script src="book-converter/script.js"></script>
