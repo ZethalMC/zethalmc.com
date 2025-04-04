@@ -188,103 +188,90 @@ function updatePreview() {
 
     if (colorCount === 1) {
         preview.innerHTML = `<span style="color: ${colors[0]}">${text}</span>`;
+    } else {
+        let output = '';
+        if (extraCommandSection.style.display === 'block' && validateCommand(command)) {
+            output += command + ' ';
+        }
+
+        for (let i = 0; i < text.length; i++) {
+            const ratio = i / (text.length - 1);
+            const colorIndex = Math.floor(ratio * (colorCount - 1));
+            const nextColorIndex = Math.min(colorIndex + 1, colorCount - 1);
+            const colorRatio = (ratio * (colorCount - 1)) - colorIndex;
+
+            const color = interpolateColor(colors[colorIndex], colors[nextColorIndex], colorRatio);
+
+            let formattedText = text[i];
+            if (document.getElementById('formatBold').checked) {
+                formattedText = `&l${formattedText}`;
+            }
+            if (document.getElementById('formatItalic').checked) {
+                formattedText = `&o${formattedText}`;
+            }
+            if (document.getElementById('formatUnderline').checked) {
+                formattedText = `&n${formattedText}`;
+            }
+            if (document.getElementById('formatStrike').checked) {
+                formattedText = `&m${formattedText}`;
+            }
+
+            switch (format) {
+                case '&#':
+                    output += `&#${color.substring(1)}${formattedText}`;
+                    break;
+                case '&':
+                    output += `&${color.substring(1)}${formattedText}`;
+                    break;
+                case 'Â§':
+                    output += `Â§x${color.substring(1)}${formattedText}`;
+                    break;
+                case '&x':
+                    output += `&x${color.substring(1)}${formattedText}`;
+                    break;
+                case '<#':
+                    output += `<#${color.substring(1)}>${formattedText}`;
+                    break;
+                case '<##':
+                    output += `<##${color.substring(1)}>${formattedText}`;
+                    break;
+                case '[C':
+                    output += `[COLOR=${color.substring(1)}]${formattedText}[/COLOR]`;
+                    break;
+                case 'MiniMessage':
+                    if (i === 0) {
+                        const hexColors = colors.map(color => color.substring(1)).join(':');
+                        output += `<gradient:${hexColors}>`;
+                    }
+                    output += formattedText;
+                    if (i === text.length - 1) {
+                        output += `</gradient>`;
+                    }
+                    break;
+            }
+
+            const span = document.createElement('span');
+            span.style.color = color;
+
+            if (document.getElementById('formatBold').checked) {
+                span.style.fontWeight = 'bold';
+            }
+            if (document.getElementById('formatItalic').checked) {
+                span.style.fontStyle = 'italic';
+            }
+            if (document.getElementById('formatUnderline').checked) {
+                span.style.textDecoration = 'underline';
+            }
+            if (document.getElementById('formatStrike').checked) {
+                span.style.textDecoration = 'line-through';
+            }
+
+            span.textContent = text[i];
+            preview.appendChild(span);
+        }
+
+        document.getElementById('output').textContent = output;
     }
-
-    const textLength = text.length;
-
-    for (let i = 0; i < textLength; i++) {
-        const ratio = i / (textLength - 1);
-
-        const colorIndex = Math.floor(ratio * (colorCount - 1));
-        const nextColorIndex = Math.min(colorIndex + 1, colorCount - 1);
-        const colorRatio = (ratio * (colorCount - 1)) - colorIndex;
-
-        const color = interpolateColor(colors[colorIndex], colors[nextColorIndex], colorRatio);
-
-        const span = document.createElement('span');
-        span.style.color = color;
-
-        if (document.getElementById('formatBold').checked) {
-            span.style.fontWeight = 'bold';
-        }
-        if (document.getElementById('formatItalic').checked) {
-            span.style.fontStyle = 'italic';
-        }
-        if (document.getElementById('formatUnderline').checked) {
-            span.style.textDecoration = 'underline';
-        }
-        if (document.getElementById('formatStrike').checked) {
-            span.style.textDecoration = 'line-through';
-        }
-
-        span.textContent = text[i];
-        preview.appendChild(span);
-    }
-
-    let output = '';
-    if (extraCommandSection.style.display === 'block' && validateCommand(command)) {
-        output += command + ' ';
-    }
-
-    for (let i = 0; i < text.length; i++) {
-        const ratio = i / (textLength - 1);
-        const colorIndex = Math.floor(ratio * (colorCount - 1));
-        const nextColorIndex = Math.min(colorIndex + 1, colorCount - 1);
-        const colorRatio = (ratio * (colorCount - 1)) - colorIndex;
-        const color = interpolateColor(colors[colorIndex], colors[nextColorIndex], colorRatio);
-        const hexColor = color.substring(1);
-
-        let formattedText = text[i];
-        if (document.getElementById('formatBold').checked) {
-            formattedText = `&l${formattedText}`;
-        }
-        if (document.getElementById('formatItalic').checked) {
-            formattedText = `&o${formattedText}`;
-        }
-        if (document.getElementById('formatUnderline').checked) {
-            formattedText = `&n${formattedText}`;
-        }
-        if (document.getElementById('formatStrike').checked) {
-            formattedText = `&m${formattedText}`;
-        }
-
-        switch (format) {
-            case '&#':
-                output += `&#${hexColor}${formattedText}`;
-                break;
-            case '&':
-                output += `&${hexColor}${formattedText}`;
-                break;
-            case 'Â§':
-                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${formattedText}`;
-                break;
-            case '&x':
-                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${formattedText}`;
-                break;
-            case '<#':
-                output += `<#${hexColor}>${formattedText}`;
-                break;
-            case '<##':
-                output += `<##${hexColor}>${formattedText}`;
-                break;
-            case '[C':
-                output += `[COLOR=${hexColor}]${formattedText}[/COLOR]`;
-                break;
-            case 'MiniMessage':
-                if (i === 0) {
-                    output += `<gradient:${hexColor}:${colors[colorCount - 1].substring(1)}>`;
-                }
-                output += formattedText;
-                if (i === text.length - 1) {
-                    output += `</gradient>`;
-                }
-                break;
-            default:
-                output += `&${hexColor}${formattedText}`;
-        }
-    }
-
-    document.getElementById('output').textContent = output;
 }
 
 function generateOutputForSingleCharacter(character, hexColor, format) {
