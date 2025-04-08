@@ -186,33 +186,39 @@ function updatePreview() {
         return;
     }
 
-    if (format === 'MiniMessage' && colorCount > 1) {
-        const segmentLength = Math.ceil(text.length / (colorCount - 1));
-        let output = '';
-        let currentIndex = 0;
-
-        for (let i = 0; i < colorCount - 1; i++) {
-            const start = currentIndex;
-            const end = Math.min(currentIndex + segmentLength, text.length);
-            const segment = text.slice(start, end);
-            const hexColorStart = colors[i].substring(1);
-            const hexColorEnd = colors[i + 1].substring(1);
-
-            output += `<gradient:${hexColorStart}:${hexColorEnd}>${segment}</gradient>`;
-            currentIndex += segmentLength;
-        }
-
-        if (currentIndex < text.length) {
-            output += text.slice(currentIndex);
-        }
-
-        document.getElementById('output').textContent = output;
-        preview.innerHTML = output;
-        return;
-    }
-
     if (colorCount === 1) {
         preview.innerHTML = `<span style="color: ${colors[0]}">${text}</span>`;
+    }
+
+    const textLength = text.length;
+
+    for (let i = 0; i < textLength; i++) {
+        const ratio = i / (textLength - 1);
+
+        const colorIndex = Math.floor(ratio * (colorCount - 1));
+        const nextColorIndex = Math.min(colorIndex + 1, colorCount - 1);
+        const colorRatio = (ratio * (colorCount - 1)) - colorIndex;
+
+        const color = interpolateColor(colors[colorIndex], colors[nextColorIndex], colorRatio);
+
+        const span = document.createElement('span');
+        span.style.color = color;
+
+        if (document.getElementById('formatBold').checked) {
+            span.style.fontWeight = 'bold';
+        }
+        if (document.getElementById('formatItalic').checked) {
+            span.style.fontStyle = 'italic';
+        }
+        if (document.getElementById('formatUnderline').checked) {
+            span.style.textDecoration = 'underline';
+        }
+        if (document.getElementById('formatStrike').checked) {
+            span.style.textDecoration = 'line-through';
+        }
+
+        span.textContent = text[i];
+        preview.appendChild(span);
     }
 
     let output = '';
@@ -221,7 +227,7 @@ function updatePreview() {
     }
 
     for (let i = 0; i < text.length; i++) {
-        const ratio = i / (text.length - 1);
+        const ratio = i / (textLength - 1);
         const colorIndex = Math.floor(ratio * (colorCount - 1));
         const nextColorIndex = Math.min(colorIndex + 1, colorCount - 1);
         const colorRatio = (ratio * (colorCount - 1)) - colorIndex;
@@ -263,6 +269,15 @@ function updatePreview() {
                 break;
             case '[C':
                 output += `[COLOR=${hexColor}]${formattedText}[/COLOR]`;
+                break;
+            case 'MiniMessage':
+                if (i === 0) {
+                    output += `<gradient:${hexColor}:${colors[colorCount - 1].substring(1)}>`;
+                }
+                output += formattedText;
+                if (i === text.length - 1) {
+                    output += `</gradient>`;
+                }
                 break;
             default:
                 output += `&${hexColor}${formattedText}`;
