@@ -85,6 +85,7 @@ function removeColorPair(id) {
     element.remove();
     colorPairCount--;
     document.getElementById('addColorButton').disabled = colorPairCount >= 6;
+    updatePreview();
 }
 
 function getAllColors() {
