@@ -272,7 +272,7 @@ function updatePreview() {
                 break;
             case 'MiniMessage':
                 if (i === 0) {
-                    output += `<gradient:${hexColor}:${colors[colorCount - 1].substring(1)}>`;
+                    output += `<gradient:${colors.join(':')}>`;
                 }
                 output += formattedText;
                 if (i === text.length - 1) {
