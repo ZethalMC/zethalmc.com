@@ -36,6 +36,7 @@ function createColorPair() {
         </div>
     `;
     document.getElementById('colorPairs').insertAdjacentHTML('beforeend', colorPairHtml);
+    document.getElementById('addColorButton').disabled = colorPairCount >= 6;
 }
 
 function updateColorLabel(inputId) {
@@ -72,14 +73,18 @@ function updateFromLabel(label, colorId) {
 }
 
 function addColorPair() {
-    createColorPair();
-    updatePreview();
+    if (colorPairCount < 6) {
+        createColorPair();
+        updatePreview();
+    }
+    document.getElementById('addColorButton').disabled = colorPairCount >= 6;
 }
 
 function removeColorPair(id) {
     const element = document.getElementById(`colorPair${id}`);
     element.remove();
-    updatePreview();
+    colorPairCount--;
+    document.getElementById('addColorButton').disabled = colorPairCount >= 6;
 }
 
 function getAllColors() {
