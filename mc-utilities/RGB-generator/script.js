@@ -140,28 +140,24 @@ function updatePreview() {
     
     preview.innerHTML = '';
     
-    // Handle empty text case first
     if (text.length === 0) {
         document.getElementById('output').textContent = '';
         return;
     }
 
-    // Always use first color for single-character text
     if (text.length === 1) {
-        const color = colors[0] || '#FFFFFF'; // Fallback to white
+        const color = colors[0] || '#FFFFFF';
         const hexColor = color.startsWith('#') ? color.substring(1) : color;
         
-        // Update preview
         preview.innerHTML = `<span style="color: ${color}">${text}</span>`;
         
-        // Generate output
         const formatting = getFormattingCodes();
         let stylePrefix = '';
         let styleSuffix = '';
         
         switch(format) {
             case 'MiniMessage':
-                stylePrefix = `<${formatting.wrapperOpening}><color:${hexColor}>`;
+                stylePrefix = `${formatting.wrapperOpening}<color:${hexColor}>`;
                 styleSuffix = `</color>${formatting.wrapperClosing}`;
                 break;
             case '[C':
@@ -174,7 +170,6 @@ function updatePreview() {
         
         output = stylePrefix + text + styleSuffix;
         
-        // Add command prefix if applicable
         if (extraCommandSection.style.display === 'block' && validateCommand(command)) {
             output = command + ' ' + output;
         }
@@ -183,7 +178,6 @@ function updatePreview() {
         return;
     }
 
-    // Handle normal cases (multiple characters)
     const colorCount = colors.length;
     const textLength = text.length;
     const formatting = getFormattingCodes();
@@ -213,7 +207,7 @@ function updatePreview() {
         
         switch(format) {
             case 'MiniMessage':
-                output += `<${stylePrefix}><color:${hexColor}>${text}</color>${styleSuffix}`;
+                output += `${stylePrefix}<color:${hexColor}>${text}</color>${styleSuffix}`;
                 break;
             case '[C':
                 output += `${stylePrefix}[COLOR=${hexColor}]${text}[/COLOR]${styleSuffix}`;
