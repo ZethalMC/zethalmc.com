@@ -161,7 +161,7 @@ function updatePreview() {
                 styleSuffix = `</color>${formatting.wrapperClosing}`;
                 break;
             case '[C':
-                stylePrefix = `[COLOR=${hexColor}]`;
+                stylePrefix = `[COLOR=#${hexColor}]`;
                 styleSuffix = '[/COLOR]';
                 break;
             default:
@@ -210,7 +210,7 @@ function updatePreview() {
                 output += `${stylePrefix}<color:${hexColor}>${text}</color>${styleSuffix}`;
                 break;
             case '[C':
-                output += `${stylePrefix}[COLOR=${hexColor}]${text}[/COLOR]${styleSuffix}`;
+                output += `${stylePrefix}[COLOR=#${hexColor}]${text}[/COLOR]${styleSuffix}`;
                 break;
             case 'Â§':
                 output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${text}`;
@@ -287,7 +287,7 @@ function updatePreview() {
                     output += `<##${hexColor}>${styleCodes}${text[i]}`;
                     break;
                 case '[C':
-                    output += `[COLOR=${hexColor}]${text[i]}[/COLOR]`;
+                    output += `[COLOR=#${hexColor}]${text[i]}[/COLOR]`;
                     break;
                 case 'MiniMessage':
                     output += text[i];
