@@ -181,6 +181,11 @@ function updatePreview() {
         }
         
         document.getElementById('output').textContent = output;
+        
+        if (output.length > 255) {
+            showNotif("Warning: The output exceeds 255 characters.");
+        }
+        
         return;
     }
 
@@ -310,6 +315,10 @@ function updatePreview() {
     }
 
     document.getElementById('output').textContent = output;
+
+    if (output.length > 255) {
+        showNotif("Warning: The output exceeds 255 characters.");
+    }
 }
 
 function getFormattingCodes() {
