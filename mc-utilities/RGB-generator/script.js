@@ -163,8 +163,8 @@ function updatePreview() {
         
         switch(format) {
             case 'MiniMessage':
-                stylePrefix = `${formatting.wrapperOpening}<color:${hexColor}>`;
-                styleSuffix = `</color>${formatting.wrapperClosing}`;
+                stylePrefix = `${formatting.wrapperOpening}<gradient:${hexColor}>`;
+                styleSuffix = `</gradient>${formatting.wrapperClosing}`;
                 break;
             case '[C':
                 stylePrefix = `[COLOR=#${hexColor}]`;
@@ -217,20 +217,30 @@ function updatePreview() {
         preview.innerHTML = `<span style="color: ${color}">${text}</span>`;
         
         switch(format) {
-            case 'MiniMessage':
-                output += `${stylePrefix}<color:${hexColor}>${text}</color>${styleSuffix}`;
+            case '&#':
+                output += `&#${hexColor}${styleCodes}${text[i]}`;
+                break;
+            case '&':
+                output += `&${hexColor}${styleCodes}${text[i]}`;
+                break;
+            case 'Â§':
+                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${styleCodes}${text[i]}`;
+                break;
+            case '&x':
+                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${styleCodes}${text[i]}`;
+                break;
+            case '<#':
+                output += `<#${hexColor}>${styleCodes}${text[i]}`;
+                break;
+            case '<##':
+                output += `<##${hexColor}>${styleCodes}${text[i]}`;
                 break;
             case '[C':
                 output += `${stylePrefix}[COLOR=#${hexColor}]${text}[/COLOR]${styleSuffix}`;
                 break;
-            case 'Â§':
-                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${text}`;
+            case 'MiniMessage':
+                output += `${stylePrefix}<gradient:${hexColor}>${text}</gradient>${styleSuffix}`;
                 break;
-            case '&x':
-                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${text}`;
-                break;
-            default:
-                output += `${stylePrefix}&${hexColor}${formatting.perCharacter}${text}${styleSuffix}`;
         }
     } 
     else if (colorCount > 1) {
@@ -303,8 +313,6 @@ function updatePreview() {
                 case 'MiniMessage':
                     output += text[i];
                     break;
-                default:
-                    output += `&${hexColor}${styleCodes}${text[i]}`;
             }
         }
 
