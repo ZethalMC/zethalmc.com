@@ -151,6 +151,8 @@ function updatePreview() {
         return;
     }
 
+    let styleCodes = '';
+
     if (text.length === 1) {
         const color = colors[0] || '#FFFFFF';
         const hexColor = color.startsWith('#') ? color.substring(1) : color;
@@ -162,6 +164,24 @@ function updatePreview() {
         let styleSuffix = '';
         
         switch(format) {
+            case '&#':
+                output += `&#${hexColor}${styleCodes}${text[0]}`;
+                break;
+            case '&':
+                output += `&${hexColor}${styleCodes}${text[0]}`;
+                break;
+            case 'Â§':
+                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${styleCodes}${text[0]}`;
+                break;
+            case '&x':
+                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${styleCodes}${text[0]}`;
+                break;
+            case '<#':
+                output += `<#${hexColor}>${styleCodes}${text[0]}`;
+                break;
+            case '<##':
+                output += `<##${hexColor}>${styleCodes}${text[0]}`;
+                break;
             case 'MiniMessage':
                 stylePrefix = `${formatting.wrapperOpening}<gradient:${hexColor}>`;
                 styleSuffix = `</gradient>${formatting.wrapperClosing}`;
@@ -170,8 +190,6 @@ function updatePreview() {
                 stylePrefix = `[COLOR=#${hexColor}]`;
                 styleSuffix = '[/COLOR]';
                 break;
-            default:
-                stylePrefix = `&${hexColor}${formatting.perCharacter}`;
         }
         
         output = stylePrefix + text + styleSuffix;
@@ -218,22 +236,22 @@ function updatePreview() {
         
         switch(format) {
             case '&#':
-                output += `&#${hexColor}${styleCodes}${text[i]}`;
+                output += `&#${hexColor}${styleCodes}${text}`;
                 break;
             case '&':
-                output += `&${hexColor}${styleCodes}${text[i]}`;
+                output += `&${hexColor}${styleCodes}${text}`;
                 break;
             case 'Â§':
-                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${styleCodes}${text[i]}`;
+                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${styleCodes}${text}`;
                 break;
             case '&x':
-                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${styleCodes}${text[i]}`;
+                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${styleCodes}${text}`;
                 break;
             case '<#':
-                output += `<#${hexColor}>${styleCodes}${text[i]}`;
+                output += `<#${hexColor}>${styleCodes}${text}`;
                 break;
             case '<##':
-                output += `<##${hexColor}>${styleCodes}${text[i]}`;
+                output += `<##${hexColor}>${styleCodes}${text}`;
                 break;
             case '[C':
                 output += `${stylePrefix}[COLOR=#${hexColor}]${text}[/COLOR]${styleSuffix}`;
