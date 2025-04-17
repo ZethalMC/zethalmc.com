@@ -1,23 +1,64 @@
+function showNotif(message) {
+    const notifPopup = document.getElementById("notifPopup");
+    notifPopup.innerHTML = message;
+    notifPopup.style.display = "block";
+    notifPopup.style.opacity = "1";
+
+    setTimeout(() => {
+        notifPopup.style.opacity = "0";
+        setTimeout(() => {
+            notifPopup.style.display = "none";
+        }, 500);
+    }, 5000);
+}
+
 const dateInput = document.getElementById('date');
 const timeInput = document.getElementById('time');
-const typeInput = document.getElementById('t');
-const output = document.getElementById('code');
-const copy = document.getElementById('copy');
+const outputElements = {
+    't': document.getElementById('code-t'),
+    'T': document.getElementById('code-T'),
+    'd': document.getElementById('code-d'),
+    'D': document.getElementById('code-D'),
+    'f': document.getElementById('code-f'),
+    'F': document.getElementById('code-F'),
+    'R': document.getElementById('code-R'),
+};
+const previewElements = {
+    't': document.getElementById('preview-t'),
+    'T': document.getElementById('preview-T'),
+    'd': document.getElementById('preview-d'),
+    'D': document.getElementById('preview-D'),
+    'f': document.getElementById('preview-f'),
+    'F': document.getElementById('preview-F'),
+    'R': document.getElementById('preview-R'),
+};
+const copyAll = document.getElementById('copy');
 const current = document.getElementById('current');
-const preview = document.getElementById('preview');
 
 dateInput.onchange = updateOutput;
 timeInput.onchange = updateOutput;
-typeInput.onchange = updateOutput;
-output.onclick = function() { this.select(); }
-copy.onclick = async () => {
-    updateOutput();
+
+copyAll.onclick = async () => {
+    const allCodes = Object.values(outputElements).map(el => el.value).join('\n');
     try {
-        await navigator.clipboard.writeText(output.value);
+        await navigator.clipboard.writeText(allCodes);
     } catch (e) {
-        alert(e);
+        showNotif(e.message);
     }
 }
+
+document.querySelectorAll('.copy-btn').forEach(button => {
+    button.onclick = async () => {
+        const type = button.getAttribute('data-type');
+        const codeToCopy = outputElements[type].value;
+        try {
+            await navigator.clipboard.writeText(codeToCopy);
+            showNotif(`Copied <t:${codeToCopy}> to clipboard!`);
+        } catch (e) {
+            showNotif(e.message);
+        }
+    };
+});
 
 const onload = _ => {
     const now = new Date();
@@ -61,16 +102,19 @@ function automaticRelativeDifference(d) {
 
 function updateOutput() {
     const selectedDate = new Date(dateInput.valueAsNumber + timeInput.valueAsNumber + new Date(dateInput.valueAsNumber + timeInput.valueAsNumber).getTimezoneOffset() * 60000);
-    console.log(selectedDate);
+    console.log(selectedDate)
     const ts = selectedDate.getTime().toString();
-    output.value = `<t:${ts.substr(0, ts.length - 3)}:${typeInput.value}>`;
 
-    if (['R'].includes(typeInput.value)) {
-        const formatter = new Intl.RelativeTimeFormat(navigator.language || 'en', typeFormats[typeInput.value] || {});
-        const format = automaticRelativeDifference(selectedDate);
-        preview.textContent = formatter.format(format.duration, format.unit);
-    } else {
-        const formatter = new Intl.DateTimeFormat(navigator.language || 'en', typeFormats[typeInput.value] || {});
-        preview.textContent = formatter.format(selectedDate);
+    for (const type in typeFormats) {
+        outputElements[type].value = `<t:${ts.substr(0, ts.length - 3)}:${type}>`;
+        const formatter = type === 'R' 
+            ? new Intl.RelativeTimeFormat(navigator.language || 'en', typeFormats[type] || {})
+            : new Intl.DateTimeFormat(navigator.language || 'en', typeFormats[type] || {});
+        
+        const previewText = type === 'R' 
+            ? formatter.format(automaticRelativeDifference(selectedDate).duration, automaticRelativeDifference(selectedDate).unit)
+            : formatter.format(selectedDate);
+        
+        previewElements[type].textContent = previewText;
     }
 }
