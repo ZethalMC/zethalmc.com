@@ -48,7 +48,7 @@ copyAll.onclick = async () => {
     const allCodes = Object.values(outputElements).map(el => el.value).join('\n');
     try {
         await navigator.clipboard.writeText(allCodes);
-        showNotif("Copied all codes to clipboard!");
+        showNotif("Copied all timestamps to clipboard!");
     } catch (e) {
         showNotif(e.message);
     }
