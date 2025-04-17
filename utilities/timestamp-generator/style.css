@@ -41,6 +41,18 @@ input:focus, select:focus, button:focus {
     border-color: #ff5800;
 }
 
+input[type="date"],
+input[type="time"] {
+    color: #ffffff;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
 button {
     font-weight: bold;
     padding: 8px;
