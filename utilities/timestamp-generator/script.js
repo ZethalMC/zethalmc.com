@@ -89,23 +89,53 @@ const typeFormats = {
 function automaticRelativeDifference(d) {
     const diff = -((new Date().getTime() - d.getTime()) / 1000) | 0;
     const absDiff = Math.abs(diff);
-    if (absDiff > 86400 * 30 * 10) {
+    if (absDiff > 86400 * 30 * 12) {
         return { duration: Math.round(diff / (86400 * 365)), unit: 'years' };
     }
-    if (absDiff > 86400 * 25) {
+    if (absDiff > 86400 * 29) {
         return { duration: Math.round(diff / (86400 * 30)), unit: 'months' };
     }
-    if (absDiff > 3600 * 21) {
+    if (absDiff > 3600 * 23) {
         return { duration: Math.round(diff / 86400), unit: 'days' };
     }
-    if (absDiff > 60 * 44) {
+    if (absDiff > 60 * 59) {
         return { duration: Math.round(diff / 3600), unit: 'hours' };
     }
-    if (absDiff > 30) {
+    if (absDiff > 59) {
         return { duration: Math.round(diff / 60), unit: 'minutes' };
     }
     return { duration: diff, unit: 'seconds' };
 }
+
+function updateRelativeTime() {
+    const selectedDate = new Date(dateInput.valueAsNumber + timeInput.valueAsNumber + new Date(dateInput.valueAsNumber + timeInput.valueAsNumber).getTimezoneOffset() * 60000);
+    const diff = automaticRelativeDifference(selectedDate);
+    const absDiff = Math.abs(diff.duration);
+
+    let updateInterval;
+
+    if (absDiff < 60) {
+        updateInterval = 1000;
+    } else if (absDiff < 3600) {
+        updateInterval = 60000;
+    } else if (absDiff < 86400) {
+        updateInterval = 3600000;
+    } else if (absDiff < 2592000) {
+        updateInterval = 86400000;
+    } else if (absDiff < 31536000) {
+        updateInterval = 2592000000;
+    } else {
+        updateInterval = 31536000000;
+    }
+
+    const formatter = new Intl.RelativeTimeFormat(navigator.language || 'en', typeFormats['R']);
+    previewElements['R'].textContent = formatter.format(diff.duration, diff.unit);
+
+    clearInterval(relativeTimeInterval);
+    relativeTimeInterval = setInterval(updateRelativeTime, updateInterval);
+}
+
+let relativeTimeInterval = setInterval(updateRelativeTime, 1000);
 
 function updateOutput() {
     const selectedDate = new Date(dateInput.valueAsNumber + timeInput.valueAsNumber + new Date(dateInput.valueAsNumber + timeInput.valueAsNumber).getTimezoneOffset() * 60000);
@@ -124,4 +154,6 @@ function updateOutput() {
 
         previewElements[type].textContent = previewText;
     }
+    updateRelativeTime();
 }
+setInterval(updateRelativeTime, 1000);
