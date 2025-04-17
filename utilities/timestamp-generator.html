@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<title>ZethalMC - Discord Timestamp Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="timestamp-generator/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<div class="container">
+    <h1>Discord Timestamp Generator</h1>
+    <p>Get a dynamic date-time display in your Discord messages. Choose your desired date and time, and then copy the generated timestamp(s) below.</p>
+</div>
+<div class="container" id="container">
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <span>Date</span><input type="date" id="date">
+        <span>Time</span><input type="time" id="time">
+        <button id="current"><i class="fa-solid fa-calendar-week"></i> Use current time</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Preview</th>
+                <th>Timestamp</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Short Time</td>
+                <td><span id="preview-t"></span></td>
+                <td><input type="text" readonly id="code-t" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="t">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Time</td>
+                <td><span id="preview-T"></span></td>
+                <td><input type="text" readonly id="code-T" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="T">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Short Date</td>
+                <td><span id="preview-d"></span></td>
+                <td><input type="text" readonly id="code-d" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="d">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Date</td>
+                <td><span id="preview-D"></span></td>
+                <td><input type="text" readonly id="code-D" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="D">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Date with Short Time</td>
+                <td><span id="preview-f"></span></td>
+                <td><input type="text" readonly id="code-f" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="f">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Date with Day of Week and Short Time</td>
+                <td><span id="preview-F"></span></td>
+                <td><input type="text" readonly id="code-F" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="F">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Relative</td>
+                <td><span id="preview-R"></span></td>
+                <td><input type="text" readonly id="code-R" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="R">Copy</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button id="copy">Copy all to clipboard</button>
+</div>
+
+<button class="feedback-button" onclick="togglePopup()">Feedback</button>
+
+    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+
+    <div class="popup" id="popup">
+        <h1>Feedback Form</h1>
+        <label for="discord">Discord Username and ID:</label>
+        <input type="text" id="discord" placeholder="Discord Username / ID" required>
+
+        <label for="textBox" id="textBoxTitle">Your Feedback:</label>
+        <textarea id="textBox" rows="5" placeholder="Enter your feedback here..." required></textarea>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="contactCheckbox" onclick="toggleCheckbox('contactCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('contactCheckbox')">Contact me?</span>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="bugCheckbox" onclick="toggleCheckbox('bugCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('bugCheckbox')">Bug?</span>
+        </div>
+
+        <button onclick="submitFeedback()">Submit Feedback</button>
+        <div class="notification" id="notification"></div>
+    </div>
+
+<div id="notifPopup"></div>
+
+<script src="timestamp-generator/script.js"></script>

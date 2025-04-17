@@ -259,7 +259,7 @@ async function submitFeedback() {
 
     const payload = {
         embeds: [{
-            title: isContactForm ? "User  Contact" : (isBugReport ? "Bug Report" : "Feedback"),
+            title: isContactForm ? "User Contact" : (isBugReport ? "Book Converter Bug Report" : "Book Converter Feedback"),
             color: isBugReport ? 0xff0000 : 3066993,
             fields: [
                 {
