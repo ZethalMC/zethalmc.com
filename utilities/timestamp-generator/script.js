@@ -60,7 +60,7 @@ document.querySelectorAll('.copy-btn').forEach(button => {
         const codeToCopy = outputElements[type].value;
         try {
             await navigator.clipboard.writeText(codeToCopy);
-            showNotif(`Copied <t:${codeToCopy}> to clipboard!`);
+            showNotif(`Copied timestamp to clipboard!`);
         } catch (e) {
             showNotif(e.message);
         }
