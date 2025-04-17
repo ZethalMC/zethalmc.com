@@ -73,6 +73,31 @@
     <button id="copy">Copy all to clipboard</button>
 </div>
 
+<button class="feedback-button" onclick="togglePopup()">Feedback</button>
+
+    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+
+    <div class="popup" id="popup">
+        <h1>Feedback Form</h1>
+        <label for="discord">Discord Username and ID:</label>
+        <input type="text" id="discord" placeholder="Discord Username / ID" required>
+
+        <label for="textBox" id="textBoxTitle">Your Feedback:</label>
+        <textarea id="textBox" rows="5" placeholder="Enter your feedback here..." required></textarea>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="contactCheckbox" onclick="toggleCheckbox('contactCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('contactCheckbox')">Contact me?</span>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="bugCheckbox" onclick="toggleCheckbox('bugCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('bugCheckbox')">Bug?</span>
+        </div>
+
+        <button onclick="submitFeedback()">Submit Feedback</button>
+        <div class="notification" id="notification"></div>
+    </div>
+
 <div id="notifPopup"></div>
 
 <script src="timestamp-generator/script.js"></script>
