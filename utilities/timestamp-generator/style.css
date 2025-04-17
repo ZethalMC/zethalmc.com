@@ -29,7 +29,7 @@ body {
 
 input, select, button {
     background: #201f1e;
-    color: #ff8c00;
+    color: #ffffff;
     border: 1px solid #ff8c00;
     border-radius: 5px;
     padding: 10px;
@@ -43,12 +43,19 @@ input:focus, select:focus, button:focus {
 
 button {
     font-weight: bold;
+    padding: 8px;
+    font-size: 16px;
+    background-color: #ff8c00;
+    color: #201f1e;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 button:hover {
     background-color: #ff5800;
+    border-color: #ff5800;
 }
 
 h1 {
