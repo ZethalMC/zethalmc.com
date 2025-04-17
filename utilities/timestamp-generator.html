@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<title>Discord Timestamp Generator</title>
+<title>ZethalMC - Discord Timestamp Generator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="timestamp-generator/style.css">
 
@@ -12,60 +12,64 @@
         <span>Date</span><input type="date" id="date">
         <span>Time</span><input type="time" id="time">
     </div>
-    
-    <div class="type-section">
-        <h3>Short Time</h3>
-        <span id="preview-t"></span>
-        <input type="text" readonly id="code-t" title="Press Ctrl/Cmd+C to copy">
-        <button class="copy-btn" data-type="t">Copy</button>
-    </div>
-    
-    <div class="type-section">
-        <h3>Long Time</h3>
-        <span id="preview-T"></span>
-        <input type="text" readonly id="code-T" title="Press Ctrl/Cmd+C to copy">
-        <button class="copy-btn" data-type="T">Copy</button>
-    </div>
-    
-    <div class="type-section">
-        <h3>Short Date</h3>
-        <span id="preview-d"></span>
-        <input type="text" readonly id="code-d" title="Press Ctrl/Cmd+C to copy">
-        <button class="copy-btn" data-type="d">Copy</button>
-    </div>
-    
-    <div class="type-section">
-        <h3>Long Date</h3>
-        <span id="preview-D"></span>
-        <input type="text" readonly id="code-D" title="Press Ctrl/Cmd+C to copy">
-        <button class="copy-btn" data-type="D">Copy</button>
-    </div>
-    
-    <div class="type-section">
-        <h3>Long Date with Short Time</h3>
-        <span id="preview-f"></span>
-        <input type="text" readonly id="code-f" title="Press Ctrl/Cmd+C to copy">
-        <button class="copy-btn" data-type="f">Copy</button>
-    </div>
-    
-    <div class="type-section">
-        <h3>Long Date with Day of Week and Short Time</h3>
-        <span id="preview-F"></span>
-        <input type="text" readonly id="code-F" title="Press Ctrl/Cmd+C to copy">
-        <button class="copy-btn" data-type="F">Copy</button>
-    </div>
-    
-    <div class="type-section">
-        <h3>Relative</h3>
-        <span id="preview-R"></span>
-        <input type="text" readonly id="code-R" title="Press Ctrl/Cmd+C to copy">
-        <button class="copy-btn" data-type="R">Copy</button>
-    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Preview</th>
+                <th>Code</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Short Time</td>
+                <td><span id="preview-t"></span></td>
+                <td><input type="text" readonly id="code-t" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="t">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Time</td>
+                <td><span id="preview-T"></span></td>
+                <td><input type="text" readonly id="code-T" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="T">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Short Date</td>
+                <td><span id="preview-d"></span></td>
+                <td><input type="text" readonly id="code-d" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="d">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Date</td>
+                <td><span id="preview-D"></span></td>
+                <td><input type="text" readonly id="code-D" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="D">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Date with Short Time</td>
+                <td><span id="preview-f"></span></td>
+                <td><input type="text" readonly id="code-f" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="f">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Long Date with Day of Week and Short Time</td>
+                <td><span id="preview-F"></span></td>
+                <td><input type="text" readonly id="code-F" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="F">Copy</button></td>
+            </tr>
+            <tr>
+                <td>Relative</td>
+                <td><span id="preview-R"></span></td>
+                <td><input type="text" readonly id="code-R" title="Press Ctrl/Cmd+C to copy"></td>
+                <td><button class="copy-btn" data-type="R">Copy</button></td>
+            </tr>
+        </tbody>
+    </table>
 
     <button id="copy">Copy all to clipboard</button>
     <button id="current">Reset to current time</button>
 </div>
-
-<div id="notifPopup"></div>
 
 <script src="timestamp-generator/script.js"></script>

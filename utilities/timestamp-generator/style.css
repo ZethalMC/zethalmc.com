@@ -67,6 +67,54 @@ h3, h5 {
     color: #ff8c00;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ff8c00; /* Match border color with theme */
+}
+
+th {
+    background-color: #201f1e; /* Dark background for header */
+    color: #ff8c00; /* Light text color for header */
+    font-weight: bold;
+}
+
+td {
+    background-color: #2a2928; /* Darker background for table rows */
+    color: #ff8c00; /* Light text color for table rows */
+}
+
+td input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    background-color: #201f1e; /* Match input background with theme */
+    color: #ff8c00; /* Light text color for input */
+    border: 1px solid #ff8c00; /* Match border color with theme */
+    border-radius: 5px;
+}
+
+td button {
+    padding: 8px;
+    font-size: 16px;
+    background-color: #ff8c00; /* Button color matching theme */
+    color: #201f1e; /* Dark text color for button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+td button:hover {
+    background-color: #ff5800; /* Darker shade on hover */
+}
+
 .note {
     font-size: 0.9em;
     color: #ff8c00;

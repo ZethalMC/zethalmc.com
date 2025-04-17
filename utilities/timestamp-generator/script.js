@@ -38,10 +38,17 @@ const current = document.getElementById('current');
 dateInput.onchange = updateOutput;
 timeInput.onchange = updateOutput;
 
+document.querySelectorAll('input[type="text"]').forEach(input => {
+    input.onclick = function () {
+        this.select();
+    };
+});
+
 copyAll.onclick = async () => {
     const allCodes = Object.values(outputElements).map(el => el.value).join('\n');
     try {
         await navigator.clipboard.writeText(allCodes);
+        showNotif("Copied all codes to clipboard!");
     } catch (e) {
         showNotif(e.message);
     }
@@ -107,14 +114,14 @@ function updateOutput() {
 
     for (const type in typeFormats) {
         outputElements[type].value = `<t:${ts.substr(0, ts.length - 3)}:${type}>`;
-        const formatter = type === 'R' 
+        const formatter = type === 'R'
             ? new Intl.RelativeTimeFormat(navigator.language || 'en', typeFormats[type] || {})
             : new Intl.DateTimeFormat(navigator.language || 'en', typeFormats[type] || {});
-        
-        const previewText = type === 'R' 
+
+        const previewText = type === 'R'
             ? formatter.format(automaticRelativeDifference(selectedDate).duration, automaticRelativeDifference(selectedDate).unit)
             : formatter.format(selectedDate);
-        
+
         previewElements[type].textContent = previewText;
     }
 }
