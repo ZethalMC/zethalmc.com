@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<title>Discord Timestamp Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="timestamp-generator/style.css">
+
+<div class="container">
+    <h1>Discord Timestamp Generator</h1>
+    <p>Get a dynamic date-time display in your Discord messages. Choose your time and copy the code below.</p>
+</div>
+<div class="container" id="container">
+    <span>Date</span><input type="date" id="date">
+    <span>Time</span><input type="time" id="time">
+    <span>Type</span>
+    <select id="t">
+        <option value="t">short time</option>
+        <option value="T">long time</option>
+        <option value="d">short date</option>
+        <option value="D">long date</option>
+        <option value="f">long date with short time</option>
+        <option value="F">long date with day of week and short time</option>
+        <option value="R" selected>relative</option>
+    </select>
+    <span>Output</span><span id="preview"></span>
+    <input type="text" readonly id="code" title="Press Ctrl/Cmd+C to copy">
+    <button id="copy">Copy to clipboard</button>
+    <button id="current">Reset to current time</button>
+</div>
+
+<script src="timestamp-generator/script.js"></script>

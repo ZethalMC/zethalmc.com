@@ -1,0 +1,99 @@
+@import url(../../assets/css/fontawesome-all.min.css);
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #131314;
+    color: white;
+    background: linear-gradient(45deg, hsla(0, 0%, 0%, 1) 0%, hsla(29, 34%, 14%, 1) 35%, hsla(29, 100%, 9%, 1) 100%);
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+
+.container {
+    max-width: 55%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+    border-radius: 8px;
+	background-color: none;
+}
+
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+}
+
+input, select, button {
+    background: #201f1e;
+    color: #ff8c00;
+    border: 1px solid #ff8c00;
+    border-radius: 5px;
+    padding: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+input:focus, select:focus, button:focus {
+    outline: none;
+    border-color: #ff5800;
+}
+
+button {
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff5800;
+}
+
+h1 {
+    color: #ff8c00;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+h2 {
+    color: #FDB44E;
+    font-size: 1em;
+    margin: 0;
+}
+
+h3, h5 {
+    color: #ff8c00;
+}
+
+.note {
+    font-size: 0.9em;
+    color: #ff8c00;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+#current {
+    align-self: flex-start;
+}
+
+#preview {
+    color: #ff8c00;
+}
+
+#code {
+    font-family: monospace;
+    background-color: #201f1e;
+    color: #ff8c00;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+@media (max-width: 50rem) {
+    .container {
+        width: 90%;
+    }
+}
