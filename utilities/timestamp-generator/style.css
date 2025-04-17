@@ -144,10 +144,6 @@ section {
     margin-bottom: 30px;
 }
 
-#current {
-    align-self: flex-start;
-}
-
 #preview {
     color: #ff8c00;
 }
