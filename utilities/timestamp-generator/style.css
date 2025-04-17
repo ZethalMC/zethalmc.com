@@ -76,35 +76,37 @@ table {
 th, td {
     padding: 10px;
     text-align: left;
-    border: 1px solid #ff8c00; /* Match border color with theme */
+    border: 1px solid #ff8c00;
 }
 
 th {
-    background-color: #201f1e; /* Dark background for header */
-    color: #ff8c00; /* Light text color for header */
+    background-color: #201f1e;
+    color: #ff8c00;
     font-weight: bold;
 }
 
 td {
-    background-color: #2a2928; /* Darker background for table rows */
-    color: #ff8c00; /* Light text color for table rows */
+    background-color: #2a2928;
+    color: #ff8c00;
 }
 
 td input[type="text"] {
+    max-width: 200px;
     width: 100%;
     padding: 8px;
     font-size: 16px;
-    background-color: #201f1e; /* Match input background with theme */
-    color: #ff8c00; /* Light text color for input */
-    border: 1px solid #ff8c00; /* Match border color with theme */
+    background-color: #201f1e;
+    color: #ff8c00;
+    border: 1px solid #ff8c00;
     border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 td button {
     padding: 8px;
     font-size: 16px;
-    background-color: #ff8c00; /* Button color matching theme */
-    color: #201f1e; /* Dark text color for button */
+    background-color: #ff8c00;
+    color: #201f1e;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -112,7 +114,7 @@ td button {
 }
 
 td button:hover {
-    background-color: #ff5800; /* Darker shade on hover */
+    background-color: #ff5800;
 }
 
 .note {
