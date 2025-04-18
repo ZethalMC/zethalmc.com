@@ -17,7 +17,7 @@ body {
     padding: 20px;
     text-align: left;
     border-radius: 8px;
-	background-color: none;
+    background-color: none;
 }
 
 #container {
@@ -27,7 +27,9 @@ body {
     gap: 20px;
 }
 
-input, select, button {
+input,
+select,
+button {
     background: #201f1e;
     color: #ffffff;
     border: 1px solid #ff8c00;
@@ -36,7 +38,9 @@ input, select, button {
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-input:focus, select:focus, button:focus {
+input:focus,
+select:focus,
+button:focus {
     outline: none;
     border-color: #ff5800;
 }
@@ -82,7 +86,8 @@ h2 {
     margin: 0;
 }
 
-h3, h5 {
+h3,
+h5 {
     color: #ff8c00;
 }
 
@@ -92,7 +97,8 @@ table {
     margin-top: 20px;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     text-align: left;
     border: 1px solid #ff8c00;
@@ -348,7 +354,7 @@ section {
 }
 
 /* Media Queries for Mobile Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .container {
         max-width: 90%;
         padding: 10px;
@@ -362,7 +368,9 @@ section {
         font-size: 0.9em;
     }
 
-    input, select, button {
+    input,
+    select,
+    button {
         width: 100%;
         padding: 12px;
     }
@@ -374,10 +382,28 @@ section {
     td button {
         width: 100%;
     }
-}
 
-@media (max-width: 50rem) {
-    .container {
+    .popup {
         width: 90%;
+        padding: 20px;
+    }
+
+    .feedback-button {
+        width: 80%;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto;
+    }
+
+    #container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .use-current-time {
+        margin-top: 10px;
+        width: 100%;
     }
 }
