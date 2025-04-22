@@ -211,7 +211,6 @@ function toggleCheckbox(checkedId) {
     const bugCheckbox = document.getElementById('bugCheckbox');
     const textBoxTitle = document.getElementById('textBoxTitle');
     const textBox = document.getElementById('textBox');
-    const notificationElement = document.getElementById('notification');
 
     const contactContainer = contactCheckbox.closest('.checkbox-container');
     const bugContainer = bugCheckbox.closest('.checkbox-container');
