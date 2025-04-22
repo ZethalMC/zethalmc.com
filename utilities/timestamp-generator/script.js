@@ -188,7 +188,6 @@ function toggleCheckbox(checkedId) {
     const bugCheckbox = document.getElementById('bugCheckbox');
     const textBoxTitle = document.getElementById('textBoxTitle');
     const textBox = document.getElementById('textBox');
-    const notificationElement = document.getElementById('notification');
 
     const contactContainer = contactCheckbox.closest('.checkbox-container');
     const bugContainer = bugCheckbox.closest('.checkbox-container');
@@ -278,4 +277,23 @@ async function submitFeedback() {
         console.error('Error sending message:', error);
         showNotification('Failed to submit message. Please try again later.');
     }
+}
+
+function showNotification(message) {
+    const notificationElement = document.getElementById('notification');
+    notificationElement.textContent = message;
+
+    notificationElement.style.display = 'block';
+
+    requestAnimationFrame(() => {
+        notificationElement.classList.add('show');
+    });
+
+    setTimeout(() => {
+        notificationElement.classList.remove('show');
+
+        setTimeout(() => {
+            notificationElement.style.display = 'none';
+        }, 400);
+    }, 3000);
 }
