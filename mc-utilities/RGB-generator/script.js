@@ -142,13 +142,24 @@ function updatePreview() {
     const command = document.getElementById('extraCommand').value.trim();
     const preview = document.getElementById('preview');
     let output = '';
-    
+
     preview.innerHTML = '';
-    
+    const gradientColors = colors.join(', ');
+
     if (text.length === 0) {
         document.getElementById('output').textContent = '';
         return;
     }
+
+    preview.style.fontWeight = document.getElementById('formatBold').checked ? 'bold' : 'normal';
+    preview.style.fontStyle = document.getElementById('formatItalic').checked ? 'italic' : 'normal';
+    preview.style.textDecoration = [
+        document.getElementById('formatUnderline').checked ? 'underline' : '',
+        document.getElementById('formatStrike').checked ? 'line-through' : ''
+    ].filter(Boolean).join(' ');
+
+    preview.style.setProperty('--gradient', `linear-gradient(to right, ${gradientColors})`);
+    preview.innerHTML = `<span class="gradient-text">${text}</span>`;
 
     const formatCodes = getFormattingCodes();
 
@@ -181,20 +192,30 @@ function updatePreview() {
     }
 
     document.getElementById('output').textContent = output;
+    preview.innerHTML = `<span class="gradient-text">${text}</span>`;
 
     if (output.length > 255) {
         showNotif("Warning: The output exceeds 255 characters.");
     }
 }
 
+function getAllColors() {
+    const colors = [];
+    for (let i = 0; i < colorPairCount; i++) {
+        const colorElement = document.getElementById(`color${i}`);
+        if (colorElement) {
+            colors.push(colorElement.value);
+        }
+    }
+    return colors.length > 0 ? colors : ['#6B46C1', '#9F7AEA'];
+}
+
 function getFormattingCodes() {
     let codes = '';
-
     if (document.getElementById('formatBold').checked) codes += '&l';
     if (document.getElementById('formatItalic').checked) codes += '&o';
     if (document.getElementById('formatUnderline').checked) codes += '&n';
     if (document.getElementById('formatStrike').checked) codes += '&m';
-
     return codes;
 }
 
