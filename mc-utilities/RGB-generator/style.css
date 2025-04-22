@@ -1,21 +1,31 @@
 @import url('https://fonts.cdnfonts.com/css/minecraftia');
 
-.color-input {
-    cursor: pointer;
+.color-pair {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #282828;
+    border-radius: 8px;
+    border: 1px solid #444444;
+    width: 50%;
 }
 
 .color-container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    gap: 10px;
+}
+
+.color-input {
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .color-label {
     width: 100px;
-    display: inline-block;
-}
-
-.color-pair {
-    margin-bottom: 10px;
 }
 
 .gradient-text {
