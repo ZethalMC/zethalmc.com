@@ -140,83 +140,273 @@ function updatePreview() {
     const colors = getAllColors();
     const format = document.getElementById('colorFormat').value;
     const command = document.getElementById('extraCommand').value.trim();
+    const extraCommandSection = document.getElementById('extraCommandSection');
     const preview = document.getElementById('preview');
     let output = '';
-
+    
     preview.innerHTML = '';
-    const gradientColors = colors.join(', ');
-
+    
     if (text.length === 0) {
         document.getElementById('output').textContent = '';
         return;
     }
 
-    preview.style.fontWeight = document.getElementById('formatBold').checked ? 'bold' : 'normal';
-    preview.style.fontStyle = document.getElementById('formatItalic').checked ? 'italic' : 'normal';
-    preview.style.textDecoration = [
-        document.getElementById('formatUnderline').checked ? 'underline' : '',
-        document.getElementById('formatStrike').checked ? 'line-through' : ''
-    ].filter(Boolean).join(' ');
+    let styleCodes = '';
 
-    preview.style.setProperty('--gradient', `linear-gradient(to right, ${gradientColors})`);
-    preview.innerHTML = `<span class="gradient-text">${text}</span>`;
-
-    const formatCodes = getFormattingCodes();
-
-    let currentColorIndex = 0;
-
-    for (let i = 0; i < text.length; i++) {
-        const color = colors[currentColorIndex];
-        const hex = color.substring(1);
-
-        switch (format) {
+    if (text.length === 1) {
+        const color = colors[0] || '#FFFFFF';
+        const hexColor = color.startsWith('#') ? color.substring(1) : color;
+        
+        preview.innerHTML = `<span style="color: ${color}">${text}</span>`;
+        
+        const formatting = getFormattingCodes();
+        let stylePrefix = '';
+        let styleSuffix = '';
+        
+        switch(format) {
             case '&#':
-                output += '&#' + hex + formatCodes + text[i];
+                output += `&#${hexColor}${styleCodes}${text[0]}`;
                 break;
             case '&':
-                output += '&' + hex + formatCodes + text[i];
+                output += `&${hexColor}${styleCodes}${text[0]}`;
+                break;
+            case 'Â§':
+                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${styleCodes}${text[0]}`;
+                break;
+            case '&x':
+                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${styleCodes}${text[0]}`;
                 break;
             case '<#':
-                output += '<#' + hex + '>' + formatCodes + text[i];
+                output += `<#${hexColor}>${styleCodes}${text[0]}`;
                 break;
-            case "<##":
-                output += '<##' + hex + '>' + formatCodes + text[i];
+            case '<##':
+                output += `<##${hexColor}>${styleCodes}${text[0]}`;
+                break;
+            case 'MiniMessage':
+                stylePrefix = `${formatting.wrapperOpening}<gradient:${hexColor}>`;
+                styleSuffix = `</gradient>${formatting.wrapperClosing}`;
+                break;
+            case '[C':
+                stylePrefix = `[COLOR=#${hexColor}]`;
+                styleSuffix = '[/COLOR]';
                 break;
         }
-
-        currentColorIndex = (currentColorIndex + 1) % colors.length;
+        
+        output = stylePrefix + text + styleSuffix;
+        
+        if (extraCommandSection.style.display === 'block' && validateCommand(command)) {
+            output = command + ' ' + output;
+        }
+        
+        document.getElementById('output').textContent = output;
+        
+        if (output.length > 255) {
+            showNotif("Warning: The output exceeds 255 characters.");
+        }
+        
+        return;
     }
 
-    if (command) {
-        output = command + ' ' + output;
+    const colorCount = colors.length;
+    const textLength = text.length;
+    const formatting = getFormattingCodes();
+    let stylePrefix = '';
+    let styleSuffix = '';
+
+    switch(format) {
+        case 'MiniMessage':
+            stylePrefix = formatting.wrapperOpening;
+            styleSuffix = formatting.wrapperClosing;
+            break;
+        case '[C':
+            stylePrefix = formatting.wrapperOpening;
+            styleSuffix = formatting.wrapperClosing;
+            break;
+    }
+
+    if (extraCommandSection.style.display === 'block' && validateCommand(command)) {
+        output += command + ' ';
+    }
+
+    if (colorCount === 1) {
+        const color = colors[0] || '#FFFFFF';
+        const hexColor = color.startsWith('#') ? color.substring(1) : color;
+        
+        preview.innerHTML = `<span style="color: ${color}">${text}</span>`;
+        
+        switch(format) {
+            case '&#':
+                output += `&#${hexColor}${styleCodes}${text}`;
+                break;
+            case '&':
+                output += `&${hexColor}${styleCodes}${text}`;
+                break;
+            case 'Â§':
+                output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${styleCodes}${text}`;
+                break;
+            case '&x':
+                output += `&x${hexColor.split('').map(c => '&' + c).join('')}${styleCodes}${text}`;
+                break;
+            case '<#':
+                output += `<#${hexColor}>${styleCodes}${text}`;
+                break;
+            case '<##':
+                output += `<##${hexColor}>${styleCodes}${text}`;
+                break;
+            case '[C':
+                output += `${stylePrefix}[COLOR=#${hexColor}]${text}[/COLOR]${styleSuffix}`;
+                break;
+            case 'MiniMessage':
+                output += `${stylePrefix}<gradient:${hexColor}>${text}</gradient>${styleSuffix}`;
+                break;
+        }
+    } 
+    else if (colorCount > 1) {
+        for (let i = 0; i < textLength; i++) {
+            const ratio = i / (textLength - 1);
+            const colorIndex = Math.floor(ratio * (colorCount - 1));
+            const nextColorIndex = Math.min(colorIndex + 1, colorCount - 1);
+            const colorRatio = (ratio * (colorCount - 1)) - colorIndex;
+            
+            const color1 = colors[colorIndex];
+            const color2 = colors[nextColorIndex];
+            const color = interpolateColor(color1, color2, colorRatio);
+            
+            const span = document.createElement('span');
+            span.style.color = color;
+            
+            if (document.getElementById('formatBold').checked) span.style.fontWeight = 'bold';
+            if (document.getElementById('formatItalic').checked) span.style.fontStyle = 'italic';
+            if (document.getElementById('formatUnderline').checked) span.style.textDecoration = 'underline';
+            if (document.getElementById('formatStrike').checked) span.style.textDecoration = 'line-through';
+            
+            span.textContent = text[i];
+            preview.appendChild(span);
+        }
+
+        output += stylePrefix;
+        
+        if (format === 'MiniMessage') {
+            output += `<gradient:${colors.map(c => c.startsWith('#') ? c.substring(1) : c).join(':')}>`;
+        }
+
+        for (let i = 0; i < textLength; i++) {
+            const ratio = i / (textLength - 1);
+            const colorIndex = Math.floor(ratio * (colorCount - 1));
+            const nextColorIndex = Math.min(colorIndex + 1, colorCount - 1);
+            const colorRatio = (ratio * (colorCount - 1)) - colorIndex;
+            
+            const color1 = colors[colorIndex];
+            const color2 = colors[nextColorIndex];
+            const color = interpolateColor(color1, color2, colorRatio);
+            const hexColor = color.startsWith('#') ? color.substring(1) : color;
+            
+            let styleCodes = '';
+            if (!['MiniMessage', '[C'].includes(format)) {
+                styleCodes = formatting.perCharacter;
+            }
+
+            switch(format) {
+                case '&#':
+                    output += `&#${hexColor}${styleCodes}${text[i]}`;
+                    break;
+                case '&':
+                    output += `&${hexColor}${styleCodes}${text[i]}`;
+                    break;
+                case 'Â§':
+                    output += `Â§x${hexColor.split('').map(c => 'Â§' + c).join('')}${styleCodes}${text[i]}`;
+                    break;
+                case '&x':
+                    output += `&x${hexColor.split('').map(c => '&' + c).join('')}${styleCodes}${text[i]}`;
+                    break;
+                case '<#':
+                    output += `<#${hexColor}>${styleCodes}${text[i]}`;
+                    break;
+                case '<##':
+                    output += `<##${hexColor}>${styleCodes}${text[i]}`;
+                    break;
+                case '[C':
+                    output += `[COLOR=#${hexColor}]${text[i]}[/COLOR]`;
+                    break;
+                case 'MiniMessage':
+                    output += text[i];
+                    break;
+            }
+        }
+
+        if (format === 'MiniMessage') {
+            output += `</gradient>`;
+        }
+        output += styleSuffix;
     }
 
     document.getElementById('output').textContent = output;
-    preview.innerHTML = `<span class="gradient-text">${text}</span>`;
 
     if (output.length > 255) {
         showNotif("Warning: The output exceeds 255 characters.");
     }
 }
 
-function getAllColors() {
-    const colors = [];
-    for (let i = 0; i < colorPairCount; i++) {
-        const colorElement = document.getElementById(`color${i}`);
-        if (colorElement) {
-            colors.push(colorElement.value);
+function getFormattingCodes() {
+    const format = document.getElementById('colorFormat').value;
+    const result = {
+        perCharacter: '',
+        wrapperOpening: '',
+        wrapperClosing: ''
+    };
+
+    if (!['MiniMessage', '[C'].includes(format)) {
+        if (document.getElementById('formatBold').checked) result.perCharacter += '&l';
+        if (document.getElementById('formatItalic').checked) result.perCharacter += '&o';
+        if (document.getElementById('formatUnderline').checked) result.perCharacter += '&n';
+        if (document.getElementById('formatStrike').checked) result.perCharacter += '&m';
+    }
+
+    if (format === 'Â§') {
+        if (document.getElementById('formatBold').checked) result.perCharacter += '§l';
+        if (document.getElementById('formatItalic').checked) result.perCharacter += '§o';
+        if (document.getElementById('formatUnderline').checked) result.perCharacter += '§n';
+        if (document.getElementById('formatStrike').checked) result.perCharacter += '§m';
+    }
+
+    if (format === 'MiniMessage') {
+        if (document.getElementById('formatBold').checked) {
+            result.wrapperOpening += '<b>';
+            result.wrapperClosing = '</b>' + result.wrapperClosing;
+        }
+        if (document.getElementById('formatItalic').checked) {
+            result.wrapperOpening += '<i>';
+            result.wrapperClosing = '</i>' + result.wrapperClosing;
+        }
+        if (document.getElementById('formatUnderline').checked) {
+            result.wrapperOpening += '<u>';
+            result.wrapperClosing = '</u>' + result.wrapperClosing;
+        }
+        if (document.getElementById('formatStrike').checked) {
+            result.wrapperOpening += '<st>';
+            result.wrapperClosing = '</st>' + result.wrapperClosing;
         }
     }
-    return colors.length > 0 ? colors : ['#6B46C1', '#9F7AEA'];
-}
+    else if (format === '[C') {
+        if (document.getElementById('formatBold').checked) {
+            result.wrapperOpening += '[BOLD]';
+            result.wrapperClosing = '[/BOLD]' + result.wrapperClosing;
+        }
+        if (document.getElementById('formatItalic').checked) {
+            result.wrapperOpening += '[ITALIC]';
+            result.wrapperClosing = '[/ITALIC]' + result.wrapperClosing;
+        }
+        if (document.getElementById('formatUnderline').checked) {
+            result.wrapperOpening += '[UNDERLINE]';
+            result.wrapperClosing = '[/UNDERLINE]' + result.wrapperClosing;
+        }
+        if (document.getElementById('formatStrike').checked) {
+            result.wrapperOpening += '[STRIKETHROUGH]';
+            result.wrapperClosing = '[/STRIKETHROUGH]' + result.wrapperClosing;
+        }
+    }
 
-function getFormattingCodes() {
-    let codes = '';
-    if (document.getElementById('formatBold').checked) codes += '&l';
-    if (document.getElementById('formatItalic').checked) codes += '&o';
-    if (document.getElementById('formatUnderline').checked) codes += '&n';
-    if (document.getElementById('formatStrike').checked) codes += '&m';
-    return codes;
+    return result;
 }
 
 function validateCommand(command) {
@@ -249,6 +439,75 @@ document.addEventListener('DOMContentLoaded', function () {
     updatePreview();
 });
 
+// https://www.w3schools.com/howto/howto_custom_select.asp
+var x, i, j, l, ll, selElmnt, a, b, c;
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    ll = selElmnt.length;
+    a = document.createElement("DIV");
+    a.setAttribute("class", "select-selected");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    b = document.createElement("DIV");
+    b.setAttribute("class", "select-items select-hide");
+    for (j = 1; j < ll; j++) {
+        c = document.createElement("DIV");
+        c.innerHTML = selElmnt.options[j].innerHTML;
+        c.addEventListener("click", function (e) {
+            var y, i, k, s, h, sl, yl;
+            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            sl = s.length;
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < sl; i++) {
+                if (s.options[i].innerHTML == this.innerHTML) {
+                    s.selectedIndex = i;
+                    h.innerHTML = this.innerHTML;
+                    y = this.parentNode.getElementsByClassName("same-as-selected");
+                    yl = y.length;
+                    for (k = 0; k < yl; k++) {
+                        y[k].removeAttribute("class");
+                    }
+                    this.setAttribute("class", "same-as-selected");
+                    break;
+                }
+            }
+            updatePreview();
+            h.click();
+        });
+        b.appendChild(c);
+    }
+    x[i].appendChild(b);
+    a.addEventListener("click", function (e) {
+        e.stopPropagation();
+        closeAllSelect(this);
+        this.nextSibling.classList.toggle("select-hide");
+        this.classList.toggle("select-arrow-active");
+    });
+}
+function closeAllSelect(elmnt) {
+    var x, y, i, xl, yl, arrNo = [];
+    x = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    xl = x.length;
+    yl = y.length;
+    for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+            arrNo.push(i)
+        } else {
+            y[i].classList.remove("select-arrow-active");
+        }
+    }
+    for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i)) {
+            x[i].classList.add("select-hide");
+        }
+    }
+}
+
+document.addEventListener("click", closeAllSelect);
+
 // feedback popup
 const DISCORD_FEEDBACK_WEBHOOK_URL = "https://l.webhook.party/hook/5vNGcwWcRkk9wS0uEBAw9AOYZRBTgCLaoCktm1hLzCDNu%2F3Q%2BSFeZc6G8p0g5Eu7dKNDrvgboUj8eD%2BKFTLrpPupkkeVO9J5IcUwMm%2BKJcIonGa7NVTzrIU8f78XGXhsBT6gY7d%2FTuXVbQPwpeCVXresFynpiBWaMB1ucJjh%2Bhe2loq95v%2BVdrhXWT%2FdytoSQ2sdAwIYK0nFZtPDUrnrvjStbx521Khi%2BEXzGWM%2F1D8uMcOfL9nHEmprnMTX3g3BOHXa07gk7J1dxgrG%2BgV3%2BuBXFJhM%2Flk1C08fiiLG5A6u%2FZ7HWaTn4QMlb9FiUt7w0RGZ0QyKJG1Tdh6hAZAC%2BbtsHK597sonjTNPm3NAAeWlMBYPJkW%2F2iNOyEhRjSCMnqHwVbS1XLw%3D/zaIFZR3Syq8uYqO%2F";
 const DISCORD_CONTACT_WEBHOOK_URL = "https://l.webhook.party/hook/CXBW6bGVtjK4dImq%2B1vSN303vR35GKywkL%2B1dVN0EousD0IGTESd7FfMcKYr7FMt0nyDnVc9Ybk%2BKOx5tu%2B1kZuDI9V%2FftZNhx0HFxHi4O7m0a7npUKg%2FymcbZksrWmzv0gVHS4DXug3VrFhkTnzlxfOnReDg%2BfP8wWm9T99rV73LSU711Y7NNhHDoR6%2B3y%2FFGeiq5pbPjbbkomQbGQDmq5mqUtWntbTHCWZKaHkOw5jahID%2F%2FTMjPiiVQrId7sAuyQH0XIz2R5vMcU41i26%2Frh54hCCSmabR2rqaXCeGYKBsL%2BJ5JfwrhtSB0zuKrlvy%2Fa5qWfRzYPkT4uBMl%2BFTPBzX1K9SPs0Uk5EfCGieq%2BAfTI8Ujzq4pqk5zmJBj7v80fUgyELvsE%3D/7Qyj2VD70Wh9jm%2BX";
@@ -279,6 +538,7 @@ function toggleCheckbox(checkedId) {
     const bugCheckbox = document.getElementById('bugCheckbox');
     const textBoxTitle = document.getElementById('textBoxTitle');
     const textBox = document.getElementById('textBox');
+    const notificationElement = document.getElementById('notification');
 
     const contactContainer = contactCheckbox.closest('.checkbox-container');
     const bugContainer = bugCheckbox.closest('.checkbox-container');

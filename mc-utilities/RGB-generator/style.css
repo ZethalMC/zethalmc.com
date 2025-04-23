@@ -1,21 +1,31 @@
 @import url('https://fonts.cdnfonts.com/css/minecraftia');
 
-.color-input {
-    cursor: pointer;
+.color-pair {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #282828;
+    border-radius: 8px;
+    border: 1px solid #444444;
+    width: 50%;
 }
 
 .color-container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    gap: 10px;
+}
+
+.color-input {
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .color-label {
     width: 100px;
-    display: inline-block;
-}
-
-.color-pair {
-    margin-bottom: 10px;
 }
 
 .gradient-text {
@@ -128,61 +138,28 @@ button:disabled {
     word-wrap: break-word;
 }
 
-.custom-select {
-    position: relative;
+select {
     width: 90%;
-}
-
-.custom-select select {
-    display: none;
-}
-
-.select-selected {
-    background-color: #201f1e;
-}
-
-.select-selected:after {
-    position: absolute;
-    content: "";
-    top: 14px;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border: 6px solid transparent;
-    border-color: #fff transparent transparent transparent;
-}
-
-.select-selected.select-arrow-active:after {
-    border-color: transparent transparent #fff transparent;
-    top: 7px;
-}
-
-.select-items div,
-.select-selected {
-    color: #ffffff;
     padding: 8px 16px;
-    border: 1px solid transparent;
-    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-    cursor: pointer;
-    user-select: none;
-}
-
-.select-items {
-    position: absolute;
     background-color: #201f1e;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 99;
+    color: #ffffff;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,5" fill="%23ffffff"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
 }
 
-.select-hide {
-    display: none;
+select:hover {
+    border-color: #ff8c00;
 }
 
-.select-items div:hover,
-.same-as-selected {
-    background-color: rgba(0, 0, 0, 0.1);
+select:focus {
+    outline: none;
+    border-color: #ff8c00;
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
 }
 
 .format-checkbox {
