@@ -132,28 +132,28 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .fun-stuff {
+  .funny-things {
     background: linear-gradient(to bottom right, #ff616d 0%, #ffc171 100%);
   }
-  .fun-stuff .title, .fun-stuff .description {
+  .funny-things .title, .funny-things .description {
     background: -webkit-linear-gradient(#ff616d, #ffc171);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .just-trying {
+  .learning {
     background: linear-gradient(to bottom right, #37cfdc 0%, #5a88e5 100%);
   }
-  .just-trying .title, .just-trying .description {
+  .learning .title, .learning .description {
     background: -webkit-linear-gradient(#37cfdc, #5a88e5);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .intense-work {
+  .real-work {
     background: linear-gradient(to bottom right, #58ac30 0%, #a7df62 100%);
   }
-  .intense-work .title, .intense-work .description {
+  .real-work .title, .real-work .description {
     background: -webkit-linear-gradient(#58ac30, #a7df62);
     background-clip: text;
     -webkit-background-clip: text;
