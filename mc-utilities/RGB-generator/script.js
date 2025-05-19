@@ -1,253 +1,253 @@
-let colorPairCount = 0;
+// let colorPairCount = 0;
 
-function showNotif(message) {
-    const notifPopup = document.getElementById("notifPopup");
-    notifPopup.innerHTML = message;
-    notifPopup.style.display = "block";
-    notifPopup.style.opacity = "1";
+// function showNotif(message) {
+//     const notifPopup = document.getElementById("notifPopup");
+//     notifPopup.innerHTML = message;
+//     notifPopup.style.display = "block";
+//     notifPopup.style.opacity = "1";
 
-    setTimeout(() => {
-        notifPopup.style.opacity = "0";
-        setTimeout(() => {
-            notifPopup.style.display = "none";
-        }, 500);
-    }, 5000);
-}
+//     setTimeout(() => {
+//         notifPopup.style.opacity = "0";
+//         setTimeout(() => {
+//             notifPopup.style.display = "none";
+//         }, 500);
+//     }, 5000);
+// }
 
-function toggleExtraCommand() {
-    const section = document.getElementById('extraCommandSection');
-    section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
-    updatePreview();
-}
+// function toggleExtraCommand() {
+//     const section = document.getElementById('extraCommandSection');
+//     section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+//     updatePreview();
+// }
 
-function createColorPair() {
-    const pairId = colorPairCount++;
-    const colorPairHtml = `
-        <div class="color-pair" id="colorPair${pairId}">
-            <div class="color-container">
-                <input type="color" id="color${pairId}" class="color-input" value="#ff8c00" oninput="updateColorLabel('color${pairId}')">
-                <input type="text" id="colorLabel${pairId}" class="color-label" value="#ff8c00" oninput="updateFromLabel(this, 'color${pairId}')" spellcheck="false">
-            </div>
-            ${pairId > 1 ? `
-            <button onclick="removeColorPair(${pairId})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
-                Remove
-            </button>
-            ` : ''}
-        </div>
-    `;
-    document.getElementById('colorPairs').insertAdjacentHTML('beforeend', colorPairHtml);
-    document.getElementById('addColorButton').disabled = colorPairCount >= 6;
-}
+// function createColorPair() {
+//     const pairId = colorPairCount++;
+//     const colorPairHtml = `
+//         <div class="color-pair" id="colorPair${pairId}">
+//             <div class="color-container">
+//                 <input type="color" id="color${pairId}" class="color-input" value="#ff8c00" oninput="updateColorLabel('color${pairId}')">
+//                 <input type="text" id="colorLabel${pairId}" class="color-label" value="#ff8c00" oninput="updateFromLabel(this, 'color${pairId}')" spellcheck="false">
+//             </div>
+//             ${pairId > 1 ? `
+//             <button onclick="removeColorPair(${pairId})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+//                 Remove
+//             </button>
+//             ` : ''}
+//         </div>
+//     `;
+//     document.getElementById('colorPairs').insertAdjacentHTML('beforeend', colorPairHtml);
+//     document.getElementById('addColorButton').disabled = colorPairCount >= 6;
+// }
 
-function updateColorLabel(inputId) {
-    const input = document.getElementById(inputId);
-    const labelId = 'colorLabel' + inputId.replace('color', '');
-    const label = document.getElementById(labelId);
-    if (input && label) {
-        label.value = input.value.toUpperCase();
-        updatePreview();
-    }
-}
+// function updateColorLabel(inputId) {
+//     const input = document.getElementById(inputId);
+//     const labelId = 'colorLabel' + inputId.replace('color', '');
+//     const label = document.getElementById(labelId);
+//     if (input && label) {
+//         label.value = input.value.toUpperCase();
+//         updatePreview();
+//     }
+// }
 
-function updateFromLabel(label, colorId) {
-    const colorInput = document.getElementById(colorId);
-    let value = label.value.trim();
+// function updateFromLabel(label, colorId) {
+//     const colorInput = document.getElementById(colorId);
+//     let value = label.value.trim();
 
-    if (value.length === 6 && !value.startsWith('#')) {
-        value = '#' + value;
-        label.value = value;
-    }
+//     if (value.length === 6 && !value.startsWith('#')) {
+//         value = '#' + value;
+//         label.value = value;
+//     }
 
-    if (validateHexColor(value)) {
-        colorInput.value = value;
-        label.style.color = 'white';
-        updatePreview();
-    } else {
-        if (label.value.length === 0) {
-            showNotif("You have to provide a hex color!");
-            label.value = "#ff8c00";
-        } else {
-            showNotif("Invalid color format. Please use a hex format like #rrggbb.");
-        }
-    }
-}
+//     if (validateHexColor(value)) {
+//         colorInput.value = value;
+//         label.style.color = 'white';
+//         updatePreview();
+//     } else {
+//         if (label.value.length === 0) {
+//             showNotif("You have to provide a hex color!");
+//             label.value = "#ff8c00";
+//         } else {
+//             showNotif("Invalid color format. Please use a hex format like #rrggbb.");
+//         }
+//     }
+// }
 
-function addColorPair() {
-    if (colorPairCount < 6) {
-        createColorPair();
-        updatePreview();
-    }
-    document.getElementById('addColorButton').disabled = colorPairCount >= 6;
-}
+// function addColorPair() {
+//     if (colorPairCount < 6) {
+//         createColorPair();
+//         updatePreview();
+//     }
+//     document.getElementById('addColorButton').disabled = colorPairCount >= 6;
+// }
 
-function removeColorPair(id) {
-    const element = document.getElementById(`colorPair${id}`);
-    element.remove();
-    colorPairCount--;
-    document.getElementById('addColorButton').disabled = colorPairCount >= 6;
-    updatePreview();
-}
+// function removeColorPair(id) {
+//     const element = document.getElementById(`colorPair${id}`);
+//     element.remove();
+//     colorPairCount--;
+//     document.getElementById('addColorButton').disabled = colorPairCount >= 6;
+//     updatePreview();
+// }
 
-function getAllColors() {
-    const colors = [];
-    for (let i = 0; i < colorPairCount; i++) {
-        const colorElement = document.getElementById(`color${i}`);
-        if (colorElement) {
-            colors.push(colorElement.value);
-        }
-    }
-    return colors.length > 0 ? colors : ['#6B46C1', '#9F7AEA'];
-}
+// function getAllColors() {
+//     const colors = [];
+//     for (let i = 0; i < colorPairCount; i++) {
+//         const colorElement = document.getElementById(`color${i}`);
+//         if (colorElement) {
+//             colors.push(colorElement.value);
+//         }
+//     }
+//     return colors.length > 0 ? colors : ['#6B46C1', '#9F7AEA'];
+// }
 
-function copyOutput() {
-    const output = document.getElementById('output');
-    let textToCopy = output.textContent;
+// function copyOutput() {
+//     const output = document.getElementById('output');
+//     let textToCopy = output.textContent;
 
-    navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-            const button = output.nextElementSibling;
-            button.textContent = 'Copied!';
-            setTimeout(() => button.textContent = 'Copy', 2000);
-        })
-        .catch(err => console.error('Failed to copy text: ', err));
-}
+//     navigator.clipboard.writeText(textToCopy)
+//         .then(() => {
+//             const button = output.nextElementSibling;
+//             button.textContent = 'Copied!';
+//             setTimeout(() => button.textContent = 'Copy', 2000);
+//         })
+//         .catch(err => console.error('Failed to copy text: ', err));
+// }
 
-function validateHexColor(hex) {
-    return /^#[0-9A-Fa-f]{6}$/.test(hex);
-}
+// function validateHexColor(hex) {
+//     return /^#[0-9A-Fa-f]{6}$/.test(hex);
+// }
 
-function interpolateColor(color1, color2, factor) {
-    const r1 = parseInt(color1.substring(1, 3), 16);
-    const g1 = parseInt(color1.substring(3, 5), 16);
-    const b1 = parseInt(color1.substring(5, 7), 16);
+// function interpolateColor(color1, color2, factor) {
+//     const r1 = parseInt(color1.substring(1, 3), 16);
+//     const g1 = parseInt(color1.substring(3, 5), 16);
+//     const b1 = parseInt(color1.substring(5, 7), 16);
 
-    const r2 = parseInt(color2.substring(1, 3), 16);
-    const g2 = parseInt(color2.substring(3, 5), 16);
-    const b2 = parseInt(color2.substring(5, 7), 16);
+//     const r2 = parseInt(color2.substring(1, 3), 16);
+//     const g2 = parseInt(color2.substring(3, 5), 16);
+//     const b2 = parseInt(color2.substring(5, 7), 16);
 
-    const r = Math.round(r1 + (r2 - r1) * factor);
-    const g = Math.round(g1 + (g2 - g1) * factor);
-    const b = Math.round(b1 + (b2 - b1) * factor);
+//     const r = Math.round(r1 + (r2 - r1) * factor);
+//     const g = Math.round(g1 + (g2 - g1) * factor);
+//     const b = Math.round(b1 + (b2 - b1) * factor);
 
-    return '#' +
-        (r.toString(16).padStart(2, '0')) +
-        (g.toString(16).padStart(2, '0')) +
-        (b.toString(16).padStart(2, '0'));
-}
+//     return '#' +
+//         (r.toString(16).padStart(2, '0')) +
+//         (g.toString(16).padStart(2, '0')) +
+//         (b.toString(16).padStart(2, '0'));
+// }
 
-function updatePreview() {
-    const text = document.getElementById('inputText').value;
-    const colors = getAllColors();
-    const format = document.getElementById('colorFormat').value;
-    const command = document.getElementById('extraCommand').value.trim();
-    const preview = document.getElementById('preview');
-    let output = '';
+// function updatePreview() {
+//     const text = document.getElementById('inputText').value;
+//     const colors = getAllColors();
+//     const format = document.getElementById('colorFormat').value;
+//     const command = document.getElementById('extraCommand').value.trim();
+//     const preview = document.getElementById('preview');
+//     let output = '';
 
-    preview.innerHTML = '';
-    const gradientColors = colors.join(', ');
+//     preview.innerHTML = '';
+//     const gradientColors = colors.join(', ');
 
-    if (text.length === 0) {
-        document.getElementById('output').textContent = '';
-        return;
-    }
+//     if (text.length === 0) {
+//         document.getElementById('output').textContent = '';
+//         return;
+//     }
 
-    preview.style.fontWeight = document.getElementById('formatBold').checked ? 'bold' : 'normal';
-    preview.style.fontStyle = document.getElementById('formatItalic').checked ? 'italic' : 'normal';
-    preview.style.textDecoration = [
-        document.getElementById('formatUnderline').checked ? 'underline' : '',
-        document.getElementById('formatStrike').checked ? 'line-through' : ''
-    ].filter(Boolean).join(' ');
+//     preview.style.fontWeight = document.getElementById('formatBold').checked ? 'bold' : 'normal';
+//     preview.style.fontStyle = document.getElementById('formatItalic').checked ? 'italic' : 'normal';
+//     preview.style.textDecoration = [
+//         document.getElementById('formatUnderline').checked ? 'underline' : '',
+//         document.getElementById('formatStrike').checked ? 'line-through' : ''
+//     ].filter(Boolean).join(' ');
 
-    preview.style.setProperty('--gradient', `linear-gradient(to right, ${gradientColors})`);
-    preview.innerHTML = `<span class="gradient-text">${text}</span>`;
+//     preview.style.setProperty('--gradient', `linear-gradient(to right, ${gradientColors})`);
+//     preview.innerHTML = `<span class="gradient-text">${text}</span>`;
 
-    const formatCodes = getFormattingCodes();
+//     const formatCodes = getFormattingCodes();
 
-    let currentColorIndex = 0;
+//     let currentColorIndex = 0;
 
-    for (let i = 0; i < text.length; i++) {
-        const color = colors[currentColorIndex];
-        const hex = color.substring(1);
+//     for (let i = 0; i < text.length; i++) {
+//         const color = colors[currentColorIndex];
+//         const hex = color.substring(1);
 
-        switch (format) {
-            case '&#':
-                output += '&#' + hex + formatCodes + text[i];
-                break;
-            case '&':
-                output += '&' + hex + formatCodes + text[i];
-                break;
-            case '<#':
-                output += '<#' + hex + '>' + formatCodes + text[i];
-                break;
-            case "<##":
-                output += '<##' + hex + '>' + formatCodes + text[i];
-                break;
-        }
+//         switch (format) {
+//             case '&#':
+//                 output += '&#' + hex + formatCodes + text[i];
+//                 break;
+//             case '&':
+//                 output += '&' + hex + formatCodes + text[i];
+//                 break;
+//             case '<#':
+//                 output += '<#' + hex + '>' + formatCodes + text[i];
+//                 break;
+//             case "<##":
+//                 output += '<##' + hex + '>' + formatCodes + text[i];
+//                 break;
+//         }
 
-        currentColorIndex = (currentColorIndex + 1) % colors.length;
-    }
+//         currentColorIndex = (currentColorIndex + 1) % colors.length;
+//     }
 
-    if (command) {
-        output = command + ' ' + output;
-    }
+//     if (command) {
+//         output = command + ' ' + output;
+//     }
 
-    document.getElementById('output').textContent = output;
-    preview.innerHTML = `<span class="gradient-text">${text}</span>`;
+//     document.getElementById('output').textContent = output;
+//     preview.innerHTML = `<span class="gradient-text">${text}</span>`;
 
-    if (output.length > 255) {
-        showNotif("Warning: The output exceeds 255 characters.");
-    }
-}
+//     if (output.length > 255) {
+//         showNotif("Warning: The output exceeds 255 characters.");
+//     }
+// }
 
-function getAllColors() {
-    const colors = [];
-    for (let i = 0; i < colorPairCount; i++) {
-        const colorElement = document.getElementById(`color${i}`);
-        if (colorElement) {
-            colors.push(colorElement.value);
-        }
-    }
-    return colors.length > 0 ? colors : ['#6B46C1', '#9F7AEA'];
-}
+// function getAllColors() {
+//     const colors = [];
+//     for (let i = 0; i < colorPairCount; i++) {
+//         const colorElement = document.getElementById(`color${i}`);
+//         if (colorElement) {
+//             colors.push(colorElement.value);
+//         }
+//     }
+//     return colors.length > 0 ? colors : ['#6B46C1', '#9F7AEA'];
+// }
 
-function getFormattingCodes() {
-    let codes = '';
-    if (document.getElementById('formatBold').checked) codes += '&l';
-    if (document.getElementById('formatItalic').checked) codes += '&o';
-    if (document.getElementById('formatUnderline').checked) codes += '&n';
-    if (document.getElementById('formatStrike').checked) codes += '&m';
-    return codes;
-}
+// function getFormattingCodes() {
+//     let codes = '';
+//     if (document.getElementById('formatBold').checked) codes += '&l';
+//     if (document.getElementById('formatItalic').checked) codes += '&o';
+//     if (document.getElementById('formatUnderline').checked) codes += '&n';
+//     if (document.getElementById('formatStrike').checked) codes += '&m';
+//     return codes;
+// }
 
-function validateCommand(command) {
-    return command.trim() !== '';
-}
+// function validateCommand(command) {
+//     return command.trim() !== '';
+// }
 
-function validateNumberInput(input) {
-    input.value = input.value.replace(/[^0-9]/g, '');
+// function validateNumberInput(input) {
+//     input.value = input.value.replace(/[^0-9]/g, '');
 
-    if (parseInt(input.value) < 1) {
-        input.value = 1;
-        showNotif("You cannot set the value lower than 1 character per color!");
-    } else if (input.value.length === 0) {
-        showNotif("You have to provide a value!")
-        input.value = 1;
-    }
-}
+//     if (parseInt(input.value) < 1) {
+//         input.value = 1;
+//         showNotif("You cannot set the value lower than 1 character per color!");
+//     } else if (input.value.length === 0) {
+//         showNotif("You have to provide a value!")
+//         input.value = 1;
+//     }
+// }
 
-document.addEventListener('DOMContentLoaded', function () {
-    addColorPair();
-    addColorPair();
+// document.addEventListener('DOMContentLoaded', function () {
+//     addColorPair();
+//     addColorPair();
 
-    document.getElementById('inputText').addEventListener('input', updatePreview);
-    document.getElementById('formatBold').addEventListener('change', updatePreview);
-    document.getElementById('formatItalic').addEventListener('change', updatePreview);
-    document.getElementById('formatUnderline').addEventListener('change', updatePreview);
-    document.getElementById('formatStrike').addEventListener('change', updatePreview);
-    document.getElementById('extraCommand').addEventListener('input', updatePreview);
+//     document.getElementById('inputText').addEventListener('input', updatePreview);
+//     document.getElementById('formatBold').addEventListener('change', updatePreview);
+//     document.getElementById('formatItalic').addEventListener('change', updatePreview);
+//     document.getElementById('formatUnderline').addEventListener('change', updatePreview);
+//     document.getElementById('formatStrike').addEventListener('change', updatePreview);
+//     document.getElementById('extraCommand').addEventListener('input', updatePreview);
 
-    updatePreview();
-});
+//     updatePreview();
+// });
 
 // feedback popup
 const DISCORD_FEEDBACK_WEBHOOK_URL = "https://l.webhook.party/hook/5vNGcwWcRkk9wS0uEBAw9AOYZRBTgCLaoCktm1hLzCDNu%2F3Q%2BSFeZc6G8p0g5Eu7dKNDrvgboUj8eD%2BKFTLrpPupkkeVO9J5IcUwMm%2BKJcIonGa7NVTzrIU8f78XGXhsBT6gY7d%2FTuXVbQPwpeCVXresFynpiBWaMB1ucJjh%2Bhe2loq95v%2BVdrhXWT%2FdytoSQ2sdAwIYK0nFZtPDUrnrvjStbx521Khi%2BEXzGWM%2F1D8uMcOfL9nHEmprnMTX3g3BOHXa07gk7J1dxgrG%2BgV3%2BuBXFJhM%2Flk1C08fiiLG5A6u%2FZ7HWaTn4QMlb9FiUt7w0RGZ0QyKJG1Tdh6hAZAC%2BbtsHK597sonjTNPm3NAAeWlMBYPJkW%2F2iNOyEhRjSCMnqHwVbS1XLw%3D/zaIFZR3Syq8uYqO%2F";

@@ -14,69 +14,16 @@
 <body>
     <div class="container">
         <header>
-            <h1>Gradient Generator</h1>
-            <p>A tool for creating beautiful gradient text specifically for Minecraft servers with renaming plugins.
-                <br>You
-                can select colors, customize text format and generate output in various formats, making it compatible
-                with
-                most plugins.
-            </p>
+            <h1>RGB Generator</h1>
+            <p>A tool for creating beautiful gradient text specifically for Minecraft servers with renaming plugins.</p>
         </header>
-
         <main>
             <section class="result">
-                <h2>Minecraft Format Output</h2>
-                <div id="output" class="output-box" contenteditable="false"></div>
-                <button onclick="copyOutput()">Copy</button>
-                <button onclick="toggleExtraCommand()">Toggle Extra Command</button>
-                <div id="extraCommandSection" class="toggle-section" style="display: none;">
-                    <h2>Extra Command</h2>
-                    <input type="text" id="extraCommand" placeholder="Your extra command here">
-                </div>
+                <h2>Maintenance Mode</h2>
+                <p>Unfortunately, the RGB Generator is currently unavailable due to some errors that need to be addressed.</p>
+                <p>But don't worry, I'm working hard to fix the issues and get the utility back up and running as soon as possible.</p>
+                <p>In the meantime, I appreciate your patience and understanding. If you have any questions or concerns, feel free to reach out to me through the feedback form below.</p>
             </section>
-
-            <section class="preview">
-                <h2>Preview</h2>
-                <div id="preview" class="preview-box" contenteditable="false"></div>
-            </section>
-
-            <section class="text-input">
-                <h2>Text & Formatting</h2>
-                <input type="text" id="inputText" placeholder="Your text here">
-                <div class="format-checkbox" style="display: flex; gap: 10px;">
-                    <div class="format-checkbox-item">
-                        <input type="checkbox" id="formatBold">
-                        <span class="label-text">Bold</span>
-                    </div>
-                    <div class="format-checkbox-item">
-                        <input type="checkbox" id="formatItalic">
-                        <span class="label-text">Italic</span>
-                    </div>
-                    <div class="format-checkbox-item">
-                        <input type="checkbox" id="formatUnderline">
-                        <span class="label-text">Underline</span>
-                    </div>
-                    <div class="format-checkbox-item">
-                        <input type="checkbox" id="formatStrike">
-                        <span class="label-text">Strikethrough</span>
-                    </div>
-                </div>
-                    <select id="colorFormat" onchange="updatePreview()">
-                        <option value="&#">&#rrggbb (Default)</option>
-                        <option value="&">&rrggbb</option>
-                        <!-- <option value="MiniMessage">MiniMessage</option> -->
-                        <!-- <option value="Â§">Â§xÂ§rÂ§rÂ§gÂ§gÂ§bÂ§b</option> -->
-                        <!-- <option value="&x">&x&r&r&g&g&b&b</option> -->
-                        <option value="<#"><#rrggbb></option>
-                        <option value="<##"><##rrggbb></option>
-                        <!-- <option value="BBCode">[COLOR=#rrggbb][/COLOR]</option> -->
-                    </select>
-                <div id="colorPairs"></div>
-                <button id="addColorButton" onclick="addColorPair()">Add Color</button>
-            </section>
-
-        </main>
-    </div>
 
     <button class="feedback-button" onclick="togglePopup()">Feedback</button>
 
