@@ -156,9 +156,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const ingredientRows = ingredientsContainer.querySelectorAll(".ingredient-row");
         let ingredients = [];
         for (const row of ingredientRows) {
-            const item = row.querySelector(".ingredient-item").value.trim();
+            let item = row.querySelector(".ingredient-item").value.trim();
             const amount = row.querySelector(".ingredient-amount").value.trim();
             if (item && amount) {
+                item = item.toUpperCase();
                 ingredients.push(`${item}/${amount}`);
             }
         }
