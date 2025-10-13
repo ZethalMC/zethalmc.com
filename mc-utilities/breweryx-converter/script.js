@@ -2,6 +2,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("brewForm");
     const output = document.getElementById("output");
 
+    // Optional fields picker
+    const optionalSelect = document.getElementById('optionalSelect');
+    const addOptionalBtn = document.getElementById('addOptionalBtn');
+
+    addOptionalBtn.addEventListener('click', () => {
+        const val = optionalSelect.value;
+        if (!val) return;
+        // show the optional block with matching data-optional-id
+        const block = document.querySelector(`.optional-block[data-optional-id="${val}"]`);
+        if (block) {
+            block.hidden = false;
+            // disable option so it can't be added twice
+            const opt = optionalSelect.querySelector(`option[value="${val}"]`);
+            if (opt) opt.disabled = true;
+            optionalSelect.value = '';
+        }
+    });
+
+    // Handle remove buttons for optional blocks (event delegation)
+    document.addEventListener('click', (e) => {
+        if (e.target.classList && e.target.classList.contains('removeOptionalBtn')) {
+            const id = e.target.dataset.removeId;
+            const block = document.querySelector(`.optional-block[data-optional-id="${id}"]`);
+            if (block) {
+                // clear inputs inside the block
+                const inputs = block.querySelectorAll('input, select, textarea');
+                inputs.forEach(i => {
+                    if (i.type === 'checkbox' || i.type === 'radio') i.checked = false;
+                    else i.value = '';
+                });
+                block.hidden = true;
+                // re-enable option in select
+                const opt = optionalSelect.querySelector(`option[value="${id}"]`);
+                if (opt) opt.disabled = false;
+            }
+        }
+    });
+
     // Ingredients
     const ingredientsContainer = document.getElementById("ingredientsContainer");
     const addIngredientBtn = document.getElementById("addIngredientBtn");
