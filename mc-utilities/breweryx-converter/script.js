@@ -404,4 +404,45 @@ document.addEventListener("DOMContentLoaded", () => {
         // Output with .yml code block
         output.textContent = `${yml}`;
     });
+
+    // Copy output to clipboard
+    const copyBtn = document.getElementById('copyOutputBtn');
+    function fallbackCopy(text, btn) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            const old = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => (btn.textContent = old), 1400);
+        } catch (err) {
+            alert('Copy failed');
+        }
+        ta.remove();
+    }
+
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const text = output.textContent || '';
+            if (!text) {
+                alert('Nothing to copy');
+                return;
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const old = copyBtn.textContent;
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => (copyBtn.textContent = old), 1400);
+                }).catch(() => {
+                    fallbackCopy(text, copyBtn);
+                });
+            } else {
+                fallbackCopy(text, copyBtn);
+            }
+        });
+    }
 });
