@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("brewForm");
     const output = document.getElementById("output");
+    const copyBtn = document.getElementById('copyOutputBtn');
+
+    function updateCopyButtonState() {
+        if (!copyBtn) return;
+        try {
+            copyBtn.disabled = !output.textContent.trim();
+        } catch (e) {
+            // ignore
+        }
+    }
 
     // Optional fields picker
     const optionalSelect = document.getElementById('optionalSelect');
@@ -403,10 +413,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Output with .yml code block
         output.textContent = `${yml}`;
+        updateCopyButtonState();
     });
 
     // Copy output to clipboard
-    const copyBtn = document.getElementById('copyOutputBtn');
     function fallbackCopy(text, btn) {
         const ta = document.createElement('textarea');
         ta.value = text;
@@ -445,4 +455,5 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+    updateCopyButtonState();
 });
