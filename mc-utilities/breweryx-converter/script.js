@@ -9,31 +9,26 @@ document.addEventListener("DOMContentLoaded", () => {
     addOptionalBtn.addEventListener('click', () => {
         const val = optionalSelect.value;
         if (!val) return;
-        // show the optional block with matching data-optional-id
         const block = document.querySelector(`.optional-block[data-optional-id="${val}"]`);
         if (block) {
             block.hidden = false;
-            // disable option so it can't be added twice
             const opt = optionalSelect.querySelector(`option[value="${val}"]`);
             if (opt) opt.disabled = true;
             optionalSelect.value = '';
         }
     });
 
-    // Handle remove buttons for optional blocks (event delegation)
     document.addEventListener('click', (e) => {
         if (e.target.classList && e.target.classList.contains('removeOptionalBtn')) {
             const id = e.target.dataset.removeId;
             const block = document.querySelector(`.optional-block[data-optional-id="${id}"]`);
             if (block) {
-                // clear inputs inside the block
                 const inputs = block.querySelectorAll('input, select, textarea');
                 inputs.forEach(i => {
                     if (i.type === 'checkbox' || i.type === 'radio') i.checked = false;
                     else i.value = '';
                 });
                 block.hidden = true;
-                // re-enable option in select
                 const opt = optionalSelect.querySelector(`option[value="${id}"]`);
                 if (opt) opt.disabled = false;
             }
@@ -43,6 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ingredients
     const ingredientsContainer = document.getElementById("ingredientsContainer");
     const addIngredientBtn = document.getElementById("addIngredientBtn");
+    function updateIngredientRemoveButtons() {
+        const rows = ingredientsContainer.querySelectorAll('.ingredient-row');
+        const removeButtons = ingredientsContainer.querySelectorAll('.removeIngredientBtn');
+        const disable = rows.length <= 1;
+        removeButtons.forEach(btn => {
+            btn.disabled = disable;
+        });
+    }
 
     addIngredientBtn.addEventListener("click", () => {
         const div = document.createElement("div");
@@ -53,13 +56,25 @@ document.addEventListener("DOMContentLoaded", () => {
             <button type="button" class="removeIngredientBtn" title="Remove ingredient">✖</button>
         `;
         ingredientsContainer.appendChild(div);
+        updateIngredientRemoveButtons();
     });
 
     ingredientsContainer.addEventListener("click", (e) => {
         if (e.target.classList.contains("removeIngredientBtn")) {
-            e.target.parentElement.remove();
+            const row = e.target.parentElement;
+            const rows = ingredientsContainer.querySelectorAll('.ingredient-row');
+            if (rows.length > 1) {
+                row.remove();
+            } else {
+                const item = row.querySelector('.ingredient-item');
+                const amount = row.querySelector('.ingredient-amount');
+                if (item) item.value = '';
+                if (amount) amount.value = '';
+            }
+            updateIngredientRemoveButtons();
         }
     });
+    updateIngredientRemoveButtons();
 
     // Lore lines
     const loreContainer = document.getElementById("loreContainer");
@@ -176,11 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Compose name field
+        if ((nameBad && !nameGood) || (nameGood && !nameBad)) {
+            alert("If you provide a Bad Name you must also provide a Good Name, and vice versa. Please fill both or leave both empty.");
+            return;
+        }
+
+        // Name field
         let nameField = "";
         if (nameBad || nameGood) {
-            // Compose with slashes
-            // Fill missing parts with nameNormal to avoid empty parts
             const bad = nameBad || nameNormal;
             const good = nameGood || nameNormal;
             nameField = `${bad}/${nameNormal}/${good}`;
