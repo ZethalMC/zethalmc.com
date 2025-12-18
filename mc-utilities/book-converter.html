@@ -92,6 +92,22 @@
 
     <div id="errorPopup"></div>
 
+    <div class="overlay" id="zipWarningOverlay"></div>
+    <div class="popup" id="zipWarningPopup">
+        <button class="zip-close-btn" onclick="closeZipWarning(false)">&times;</button>
+        <h1>⚠️ ZIP Download Warning</h1>
+        <p>The contents of your ZIP file may be <strong>blocked</strong> when using Windows. Before unzipping, follow these steps:</p>
+        <ol>
+            <li>Right-click the downloaded ZIP file</li>
+            <li>Click <strong>"Properties"</strong></li>
+            <li>Check the <strong>"Unblock"</strong> checkbox at the bottom</li>
+            <li>Click <strong>"Apply"</strong> then <strong>"OK"</strong></li>
+            <li>Now you can unzip the file</li>
+        </ol>
+        <button onclick="closeZipWarning(true)">Got it!</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="book-converter/script.js"></script>
 </body>
 
