@@ -97,12 +97,25 @@ function createSaveButtons(books, title, author) {
         const button = document.createElement("button");
         button.className = "tt";
         button.innerHTML = text + `<span data-text-end="Saved!"data-text-initial="${tooltipText}" class="tooltip"></span>`;
-        button.addEventListener("click", () => saveBookFormat(books, title, extension));
+        button.addEventListener("click", () => saveBookFormat(books, title, author, extension));
         buttonContainer.appendChild(button);
     };
 
     createButton(books.length > 1 ? "Save Stendhal Books" : "Save Stendhal Book", "Will save as .Stendhal files", 'stendhal');
     createButton(books.length > 1 ? "Save as Text Files" : "Save as .txt File", "Will save as .txt files", 'txt');
+
+    // Download ZIP buttons (separate for .stendhal and .txt)
+    const zipButtonStendhal = document.createElement("button");
+    zipButtonStendhal.className = "tt";
+    zipButtonStendhal.innerHTML = "Download ZIP (.stendhal)" + `<span data-text-end="Saved!"data-text-initial="Will download a ZIP with all .stendhal books" class="tooltip"></span>`;
+    zipButtonStendhal.addEventListener("click", () => downloadBooksZip(books, title, author, 'stendhal'));
+    buttonContainer.appendChild(zipButtonStendhal);
+
+    const zipButtonTxt = document.createElement("button");
+    zipButtonTxt.className = "tt";
+    zipButtonTxt.innerHTML = "Download ZIP (.txt)" + `<span data-text-end="Saved!"data-text-initial="Will download a ZIP with all .txt books" class="tooltip"></span>`;
+    zipButtonTxt.addEventListener("click", () => downloadBooksZip(books, title, author, 'txt'));
+    buttonContainer.appendChild(zipButtonTxt);
 
     document.getElementById("container").appendChild(buttonContainer);
 
@@ -170,15 +183,50 @@ function maxCharTextHandler() {
     }
 }
 
-function saveBookFormat(books, title, format) {
+function saveBookFormat(books, title, author, format) {
     const extension = format === 'stendhal' ? 'stendhal' : 'txt';
+    const safeTitle = sanitizeFileName(title) || 'book';
+    const safeAuthor = sanitizeFileName(author) || 'author';
     books.forEach((book, index) => {
         const blob = new Blob([book], { type: 'text/plain' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = `${title} ${index + 1}-${books.length}.${extension}`;
+        link.download = `${safeTitle} - ${safeAuthor} ${index + 1}-${books.length}.${extension}`;
         link.click();
     })
+}
+
+function sanitizeFileName(name) {
+    return name.replace(/[/\\?%*:|"<>]/g, '-').trim();
+}
+
+function downloadBooksZip(books, title, author, extension = 'stendhal') {
+    if (typeof JSZip === 'undefined') {
+        showError('ZIP library not loaded.');
+        return;
+    }
+
+    const zip = new JSZip();
+    const safeTitle = sanitizeFileName(title) || 'books';
+    const safeAuthor = sanitizeFileName(author) || 'author';
+
+    books.forEach((book, index) => {
+        const filename = `${safeTitle} - ${safeAuthor} ${index + 1}-${books.length}.${extension}`;
+        const fileContent = `title: ${title} ${index + 1}-${books.length}\nauthor: ${author}\npages:\n` + String(book || "");
+        zip.file(filename, fileContent);
+    });
+
+    zip.generateAsync({ type: 'blob' }).then((blob) => {
+        const url = URL.createObjectURL(blob);
+        window.zipDownloadData = {
+            url: url,
+            filename: `${safeTitle} - ${safeAuthor} - ${extension}.zip`
+        };
+        showZipWarning();
+    }).catch((err) => {
+        console.error('ZIP generation error:', err);
+        showError('Failed to create ZIP file.');
+    });
 }
 
 // feedback form
@@ -319,4 +367,28 @@ function showNotification(message) {
             notificationElement.style.display = 'none';
         }, 400);
     }, 3000);
+}
+
+function showZipWarning() {
+    const popup = document.getElementById('zipWarningPopup');
+    const overlay = document.getElementById('zipWarningOverlay');
+    popup.classList.add('show');
+    overlay.style.display = 'block';
+}
+
+function closeZipWarning(shouldDownload = false) {
+    const popup = document.getElementById('zipWarningPopup');
+    const overlay = document.getElementById('zipWarningOverlay');
+    
+    if (shouldDownload && window.zipDownloadData) {
+        const a = document.createElement('a');
+        a.href = window.zipDownloadData.url;
+        a.download = window.zipDownloadData.filename;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(window.zipDownloadData.url), 1000);
+        window.zipDownloadData = null;
+    }
+    
+    popup.classList.remove('show');
+    overlay.style.display = 'none';
 }
