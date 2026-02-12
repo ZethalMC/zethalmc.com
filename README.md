@@ -22,7 +22,7 @@ I plan to continually update and expand the website with new projects. Check out
 If you have any questions, suggestions, or just want to say hi, don't hesitate to reach out:
 
 - Email: [ZethalMC@gmail.com](mailto:ZethalMC@gmail.com)
-- Discord: Zethal_
+- Discord: `zethal_`
 - Follow me on NameMC: [Zethal_](https://nl.namemc.com/profile/Zethal_.1)
 - Follow me on GitHub: [ZethalMC](https://github.com/ZethalMC)
 
