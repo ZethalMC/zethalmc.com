@@ -187,13 +187,15 @@ function saveBookFormat(books, title, author, format) {
     const extension = format === 'stendhal' ? 'stendhal' : 'txt';
     const safeTitle = sanitizeFileName(title) || 'book';
     const safeAuthor = sanitizeFileName(author) || 'author';
+
     books.forEach((book, index) => {
-        const blob = new Blob([book], { type: 'text/plain' });
+        const fileContent = `title: ${title}\nauthor: ${author}\npages:\n${book}`;
+        const blob = new Blob([fileContent], { type: 'text/plain' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = `${safeTitle} - ${safeAuthor} ${index + 1}-${books.length}.${extension}`;
         link.click();
-    })
+    });
 }
 
 function sanitizeFileName(name) {
