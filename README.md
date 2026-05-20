@@ -5,17 +5,17 @@ Welcome to my personal portfolio hosted on GitHub! This portfolio showcases my p
 
 ### Website Overview
 
-This website serves as my personal portfolio, utilizing the base code from [HTML5UP's Dimension](https://html5up.net/dimension). It's open-source and free to use, so feel free to adapt it for your own needs!
+This website serves as my personal portfolio, utilizing the base code from [HTML5UP's Halcyonic](https://html5up.net/halcyonic). It's open-source and free to use, so feel free to adapt it for your own needs!
 
 ### Usage
 
-1. Go to [HTML5UP's Dimension](https://html5up.net/dimension).
+1. Go to [HTML5UP's Halcyonic](https://html5up.net/halcyonic).
 2. Download the base code.
 3. Use it for your own!
 
 ### Future Projects
 
-I plan to continually update and expand the website with new projects. Check out the [Projects](https://www.zethalmc.com/#projects) section for the latest additions.
+I plan to continually update and expand the website with new projects. Check out the [Projects](https://www.zethalmc.com/projects) section for the latest additions.
 
 ## Contact
 

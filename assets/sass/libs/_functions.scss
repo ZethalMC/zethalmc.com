@@ -1,3 +1,5 @@
+/// Removes a specific item from a list.
+/// @author Hugo Giraudel
 /// @param {list} $list List.
 /// @param {integer} $index Index.
 /// @return {list} Updated list.
@@ -34,6 +36,7 @@
 }
 
 /// Gets a value from a map.
+/// @author Hugo Giraudel
 /// @param {map} $map Map.
 /// @param {string} $keys Key(s).
 /// @return {string} Value.
