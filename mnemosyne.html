@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mnemosyne Policies</title>
+
+    <style>
+        :root {
+            --primary: #5865F2;
+            --background: #0f1117;
+            --surface: #1a1d26;
+            --text: #ffffff;
+            --muted: #b3b8c5;
+            --border: #2a2f3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--muted);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            background: var(--primary);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            transition: opacity 0.2s;
+        }
+
+        nav a:hover {
+            opacity: 0.9;
+        }
+
+        section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Mnemosyne Policies</h1>
+        <p class="subtitle">Privacy Policy and Terms of Service</p>
+    </header>
+
+    <nav>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#tos">Terms of Service</a>
+    </nav>
+
+    <section id="privacy">
+        <h2>Data Privacy Policy</h2>
+
+        <p>
+            By using Mnemosyne, you consent to this Privacy Policy.
+        </p>
+
+        <h3>What data do we collect?</h3>
+        <ul>
+            <li>User IDs</li>
+            <li>Channel IDs</li>
+            <li>Guild (Server) IDs</li>
+            <li>Text submitted through commands, such as reminder reasons</li>
+        </ul>
+
+        <h3>How do we use your data?</h3>
+        <p>
+            Your data is stored in a database and retrieved as necessary
+            to provide Mnemosyne's commands and features.
+        </p>
+
+        <h3>Who has access?</h3>
+        <p>
+            Only the owner of Mnemosyne, <strong>Zethal_ (ZethalMC)</strong>,
+            has access to the database containing this information.
+        </p>
+
+        <h3>Can I delete my data?</h3>
+        <p>
+            Yes. You may delete your data by deleting all of your reminders
+            or by directly messaging the bot owner.
+        </p>
+    </section>
+
+    <section id="tos">
+        <h2>Terms of Service</h2>
+
+        <ul>
+            <li>Report bugs by DMing <strong>zethal_</strong> on Discord.</li>
+            <li>Do not use the bot to harass, annoy, or target other users.</li>
+            <li>Do not use the bot to promote content not approved by the bot owner.</li>
+            <li>These Terms of Service may be updated or modified at any time.</li>
+        </ul>
+    </section>
+
+    <footer>
+        © 2026 Mnemosyne. All rights reserved.
+    </footer>
+
+</div>
+
+</body>
+</html>
