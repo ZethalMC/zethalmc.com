@@ -1,267 +1,211 @@
-﻿<!DOCTYPE HTML>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>ZethalMC</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <meta name="description" content="ZethalMC (Zethal_)'s personal portfolio website." />
+    <title>ZethalMC — Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="ZethalMC (Zethal_) — programmer and world-builder crafting websites, tools, and stories for Minecraft communities." />
     <meta name="author" content="Zethal_" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/portfolio.css" />
 </head>
 
 <body>
-    <div id="page-wrapper">
 
-        <section id="header">
+    <header id="site-header">
+        <div class="container">
+            <a href="#hero" id="logo">ZethalMC</a>
+            <button id="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+            <nav id="nav">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#servers">Servers</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section id="hero">
             <div class="container">
-                <div class="row">
-                    <div class="col-12">
+                <div class="hero-text">
+                    <p class="eyebrow">Programmer &middot; World-builder &middot; Storyteller</p>
+                    <h1>Hey, I'm ZethalMC.</h1>
+                    <p class="lead">I'm a college student building websites, tools, and lore for Minecraft
+                        communities.</p>
+                    <div class="button-group">
+                        <a class="btn btn-primary" href="#projects">View Projects</a>
+                        <a class="btn btn-ghost" href="#contact">Say Hello</a>
+                    </div>
+                </div>
+                <div class="hero-portrait">
+                    <img src="images/zethpfp.jpg" alt="ZethalMC portrait" />
+                </div>
+            </div>
+        </section>
 
-                        <h1><a href="index.html" id="logo">ZethalMC</a></h1>
-
-                        <nav id="nav">
-                            <a href="https://ZethalMC.com/about">About</a>
-                            <a href="https://ZethalMC.com/projects">Projects</a>
-                            <a href="https://ZethalMC.com/servers">Servers</a>
-                            <a href="https://ZethalMC.com/mc-utilities">Utilities</a>
-                            <a href="https://ZethalMC.com/contact">Contact</a>
-                        </nav>
-
+        <section id="about" class="page-section">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">About</p>
+                    <h2>Who I Am</h2>
+                    <p>I describe myself as a college student, programmer and world-builder crafting websites, tools, and stories for Minecraft
+                        communities.</p>
+                </div>
+                <div class="about-grid">
+                    <div class="about-bio">
+                        <p>I split my time between writing code and writing lore. On the technical side, that means
+                            building small tools that save creators time, like a book converter, a Discord timestamp generator,
+                            and several Discord bots. On the creative side, it means developing stories, places, and plugins
+                            for the Minecraft servers I'm part of.</p>
+                    </div>
+                    <div class="about-skills">
+                        <h3>Skills</h3>
+                        <ul class="tag-list">
+                            <li>Python</li>
+                            <li>HTML &amp; CSS</li>
+                            <li>JavaScript</li>
+                            <li>Creative Storywriting and Storytelling</li>
+                            <li>World-building</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div id="banner">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-6 col-12-medium">
+        </section>
 
-                            <p><strong>Creating Lore, one book at a time.</strong> I build websites, tools and stories
-                                for Minecraft while exploring programming possibilities.</p>
-                            <a class="button-large" href="https://ZethalMC.com/projects">View Projects</a>
-
+        <section id="projects" class="page-section">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow">Projects</p>
+                    <h2>Things I've Built</h2>
+                    <p>Websites, Minecraft tools, and Discord bots designed to help players and creators.</p>
+                </div>
+                <div class="card-grid">
+                    <div class="card">
+                        <img src="images/pic03.jpg" alt="Minecraft Book Converter" />
+                        <div class="card-body">
+                            <h3>Minecraft Book Converter</h3>
+                            <p>Convert formatted text into Minecraft book JSON, ready to use in-game.</p>
+                            <a class="card-link" href="https://ZethalMC.com/mc-utilities/book-converter">Open tool
+                                &rarr;</a>
                         </div>
-                        <div class="col-6 col-12-medium imp-medium">
-                            <button class="bordered-feature-image" "><img
-                                    src="images/zethpfp.jpg" alt="ZethalMC portrait" /></button>
-
+                    </div>
+                    <div class="card">
+                        <img src="images/pic04.jpg" alt="Discord Timestamp Generator" />
+                        <div class="card-body">
+                            <h3>Discord Timestamp Generator</h3>
+                            <p>Generate Discord-formatted timestamps for announcements and events.</p>
+                            <a class="card-link" href="https://ZethalMC.com/utilities/timestamp-generator">Open tool
+                                &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="images/pic05.jpg" alt="Breweryx Converter" />
+                        <div class="card-body">
+                            <h3>Breweryx Converter</h3>
+                            <p>Specialized formatting tool for Breweryx and Minecraft's custom text systems.</p>
+                            <a class="card-link" href="https://ZethalMC.com/mc-utilities/breweryx-converter">Open
+                                tool &rarr;</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="features">
+        <section id="servers" class="page-section">
             <div class="container">
-                <div class="row">
-                    <div class="col-3 col-6-medium col-12-small">
-
-                        <section>
-                            <span class="bordered-feature-image">
-                                <img src="images/zethpfp.jpg" alt="About image" />
-                            </span>
-                            <h2>About Me</h2>
-                            <p>
-                                A college student, programmer and gamer who loves creating digital experiences and
-                                experimenting with what's possible.
-                            </p>
-                        </section>
-
+                <div class="section-head">
+                    <p class="eyebrow">Servers</p>
+                    <h2>Communities I Build For</h2>
+                    <p>I develop lore, build interactive places, and create tools and plugins to enhance player
+                        experiences.</p>
+                </div>
+                <div class="server-grid">
+                    <div class="server-card">
+                        <div class="server-logo">
+                            <img src="images/stoneworks.png" alt="Stoneworks logo" />
+                        </div>
+                        <h3>Stoneworks</h3>
+                        <p>A creative Minecraft server where I develop lore, stories, and other interactive experiences.
+                        </p>
                     </div>
-                    <div class="col-3 col-6-medium col-12-small">
-
-                        <section>
-                            <button class="bordered-feature-image" data-modal="projects-modal">
-                                <img src="images/pic02.jpg" alt="Projects image" />
-                            </button>
-                            <h2>Projects</h2>
-                            <p>
-                                A growing collection of websites, Minecraft utilities, and tools designed to help
-                                players and creators.
-                            </p>
-                        </section>
-
-                    </div>
-                    <div class="col-3 col-6-medium col-12-small">
-
-                        <section>
-                            <button class="bordered-feature-image" data-modal="servers-modal">
-                                <img src="images/pic03.jpg" alt="Servers image" />
-                            </button>
-                            <h2>Servers</h2>
-                            <p>
-                                Stoneworks, Raveris and other communities where I write lore and build experiences.
-                            </p>
-                        </section>
-
-                    </div>
-                    <div class="col-3 col-6-medium col-12-small">
-
-                        <section>
-                            <button class="bordered-feature-image" data-modal="utilities-modal">
-                                <img src="images/pic04.jpg" alt="Utilities image" />
-                            </button>
-                            <h2>Utilities</h2>
-                            <p>
-                                Tools like a Minecraft book converter and Discord timestamp generator make creative work
-                                easier.
-                            </p>
-                        </section>
-
+                    <div class="server-card">
+                        <div class="server-logo server-logo-placeholder" aria-hidden="true">R</div>
+                        <h3>Raveris</h3>
+                        <p>A seasonal server with interactive events.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Information Modals -->
-
-        <div id="projects-modal" class="info-modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Featured Projects</h2>
-                <ul>
-                    <li><strong>Eleysae Website</strong> - A lore-focused website for the Stoneworks server</li>
-                    <li><strong>Minecraft Book Converter</strong> - Convert formatted text to Minecraft book JSON format
-                    </li>
-                    <li><strong>Discord Timestamp Generator</strong> - Easily create Discord-compatible timestamps</li>
-                    <li><strong>Periodic Table</strong> - Interactive educational tool</li>
-                    <li><strong>RGB Generator</strong> - Color generation and conversion utility</li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="servers-modal" class="info-modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Communities</h2>
-                <p><strong>Stoneworks</strong> - A creative Minecraft server where I develop lore, stories, and
-                    interactive experiences.</p>
-                <p><strong>Raveris</strong> - A seasonal server with interactive events.</p>
-                <p>I'm involved in developing lore, building interactive places, and creating tools and plugins to enhance player
-                    experiences in these communities.</p>
-            </div>
-        </div>
-
-        <div id="utilities-modal" class="info-modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Utilities & Tools</h2>
-                <ul>
-                    <li><strong>Minecraft Book Converter</strong> - Format and convert text to Minecraft book JSON for
-                        Stendhal compatibility</li>
-                    <li><strong>Discord Timestamp Generator</strong> - Generate Unix timestamps for Discord message
-                        formatting</li>
-                    <li><strong>RGB Color Generator</strong> - Create and convert RGB colors for various applications
-                    </li>
-                    <li><strong>Breweryx Converter</strong> - Specialized conversion tool for Minecraft text formatting
-                    </li>
-                </ul>
-                <p>All tools are designed to make creative and technical work easier for content creators and
-                    developers.</p>
-            </div>
-        </div>
-
-        <section id="content">
+        <section id="contact" class="page-section">
             <div class="container">
-                <div class="row aln-center">
-                    <div class="col-4 col-12-medium">
-
-                        <section>
-                            <header>
-                                <h2>Who I Am</h2>
-                                <h3>Creator and storyteller</h3>
-                            </header>
-                            <a href="https://ZethalMC.com/about" class="feature-image"><img src="images/zethpfp.jpg"
-                                    alt="Profile image" /></a>
-                            <p>Hello there, I'm ZethalMC! I'm a college student, programmer, and world-builder crafting
-                                websites, tools, and stories for Minecraft communities.</p>
-
-                            <a class="button-large" style="color: #fff;" href="https://ZethalMC.com/about">Learn More</a>
-                        </section>
-
+                <div class="section-head">
+                    <p class="eyebrow">Contact</p>
+                    <h2>Get In Touch</h2>
+                    <p>Have a project, collab idea, or question? Reach out below.</p>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <img src="images/gmaillogo.png" alt="" />
+                        <div>
+                            <h3>Gmail</h3>
+                            <a href="mailto:ZethalMC@gmail.com">ZethalMC@gmail.com</a>
+                        </div>
                     </div>
-                    <div class="col-4 col-6-medium col-12-small">
-
-                        <section>
-                            <header>
-                                <h2>What I Do</h2>
-                                <h3>Projects and tools</h3>
-                            </header>
-                            <ul class="check-list">
-                                <li>Minecraft book converter for Stendhal-compatible books</li>
-                                <li>Discord timestamp generator</li>
-                                <li><s>RGB color generator and converter</s></li>
-                            </ul>
-                        </section>
-
+                    <div class="contact-card">
+                        <img src="images/discordlogo.png" alt="" />
+                        <div>
+                            <h3>Discord</h3>
+                            <a href="https://discord.com/users/zethal_" target="_blank" rel="noopener">zethal_</a>
+                        </div>
                     </div>
-                    <div class="col-4 col-6-medium col-12-small">
-
-                        <section>
-                            <header>
-                                <h2>Contact</h2>
-                                <h3>Reach out</h3>
-                            </header>
-                            <ul class="quote-list">
-                                <li>
-                                    <img src="images/gmaillogo.png" alt="" />
-                                    <p>Email:</p>
-                                    <a href="mailto:ZethalMC@gmail.com">ZethalMC@gmail.com</a>
-                                </li>
-                                <li>
-                                    <img src="images/discordlogo.png" alt="" />
-                                    <p>Discord:</p>
-                                    <a href="https://discord.com/users/zethal_" target="_blank">Zethal_</a>
-                                    <p>ID:</p>
-                                    <span>786981038932623391</span>
-                                </li>
-                                <li>
-                                    <img src="images/githublogo.png" alt="" />
-                                    <p>GitHub:</p>
-                                    <a href="https://github.com/ZethalMC" target="_blank">ZethalMC</a>
-                                </li>
-                                <li>
-                                    <img src="images/pmclogo.png" alt="" />
-                                    <p>PlanetMinecraft:</p>
-                                    <a href="https://www.planetminecraft.com/member/zethal_/"
-                                        target="_blank">Zethal_</a>
-                                </li>
-                                <li>
-                                    <img src="images/NameMClogo.png" alt="" />
-                                    <p>NameMC:</p>
-                                    <a href="https://namemc.com/profile/zethal_.1" target="_blank">Zethal_</a>
-                                </li>
-                            </ul>
-                        </section>
-
+                    <div class="contact-card">
+                        <img src="images/githublogo.png" alt="" />
+                        <div>
+                            <h3>GitHub</h3>
+                            <a href="https://github.com/ZethalMC" target="_blank" rel="noopener">ZethalMC</a>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <img src="images/pmclogo.png" alt="" />
+                        <div>
+                            <h3>PlanetMinecraft</h3>
+                            <a href="https://www.planetminecraft.com/member/zethal_/" target="_blank"
+                                rel="noopener">Zethal_</a>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <img src="images/NameMClogo.png" alt="" />
+                        <div>
+                            <h3>NameMC</h3>
+                            <a href="https://namemc.com/profile/zethal_.1" target="_blank" rel="noopener">Zethal_</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer id="footer">
-            <p class="copyright" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a
-                    property="dct:title" rel="cc:attributionURL" href="http://zethalmc.com">ZethalMC.com</a> by <a
-                    rel="cc:attributionURL dct:creator" property="cc:attributionName"
-                    href="https://github.com/ZethalMC">ZethalMC (Zethal_)</a> is licensed under <a
-                    href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank"
-                    rel="license noopener noreferrer" style="display:inline-block;">CC BY-SA 4.0<img
-                        style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-                        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img
-                        style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-                        src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img
-                        style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-                        src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
-        </footer>
+    </main>
 
-    </div>
+    <footer id="site-footer">
+        <p class="copyright" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a
+                property="dct:title" rel="cc:attributionURL" href="http://zethalmc.com">ZethalMC.com</a> by <a
+                rel="cc:attributionURL dct:creator" property="cc:attributionName"
+                href="https://github.com/ZethalMC">ZethalMC (Zethal_)</a> is licensed under <a
+                href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank"
+                rel="license noopener noreferrer" style="display:inline-block;">CC BY-SA 4.0<img
+                    style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+                    src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img
+                    style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+                    src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img
+                    style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+                    src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+    </footer>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/portfolio.js"></script>
 
 </body>
 
