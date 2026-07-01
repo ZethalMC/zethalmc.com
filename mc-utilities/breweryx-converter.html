@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BreweryX Recipe Creator</title>
+    <link rel="stylesheet" href="../assets/css/portfolio.css" />
     <link rel="stylesheet" href="breweryx-converter/style.css" />
 </head>
 
@@ -30,12 +31,26 @@
                 <legend><strong>Ingredients <span style="color:red">*</span></strong></legend>
                 <div id="ingredientsContainer">
                     <div class="ingredient-row">
-                        <input type="text" class="ingredient-item" placeholder="Item Name (e.g. Apple)" required />
+                        <select class="ingredient-source">
+                            <option value="">Default</option>
+                            <option value="Brewery">BreweryX Brew</option>
+                            <option value="ItemsAdder">ItemsAdder</option>
+                            <option value="Oraxen">Oraxen</option>
+                            <option value="Nexo">Nexo</option>
+                            <option value="custom">Custom...</option>
+                        </select>
+                        <input type="text" class="ingredient-custom-prefix" placeholder="Prefix (e.g. MyPlugin)"
+                            hidden />
+                        <input type="text" class="ingredient-item" placeholder="Item name (e.g. Apple)" required />
                         <input type="number" class="ingredient-amount" placeholder="Amount" min="1" max="64" required />
                         <button type="button" class="removeIngredientBtn" title="Remove ingredient">✖</button>
                     </div>
                 </div>
                 <button type="button" id="addIngredientBtn">Add Ingredient</button>
+                <small class="note">Choose a source for plugin items (BreweryX, ItemsAdder, Oraxen, Nexo), pick
+                    Custom to type your own plugin prefix, or leave as Default for vanilla Minecraft items and
+                    Brewery CustomItems.</small>
+                <small class="note note-warning">⚠ Item names are case-sensitive.</small>
             </fieldset>
 
             <label for="cookingtime">Cooking Time (minutes) <span style="color:red">*</span></label>
@@ -43,7 +58,7 @@
 
             <div class="optional-block" data-optional-id="distillruns" hidden>
                 <label for="distillruns">Distill Runs <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <input type="number" id="distillruns" name="distillruns" min="0" />
                     <button type="button" class="removeOptionalBtn" data-remove-id="distillruns">Remove</button>
                 </div>
@@ -51,7 +66,7 @@
 
             <div class="optional-block" data-optional-id="distilltime" hidden>
                 <label for="distilltime">Distill Time (seconds) <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <input type="number" id="distilltime" name="distilltime" min="0" />
                     <button type="button" class="removeOptionalBtn" data-remove-id="distilltime">Remove</button>
                 </div>
@@ -59,7 +74,7 @@
 
             <div class="optional-block" data-optional-id="wood" hidden>
                 <label for="wood">Wood Type <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <select id="wood" name="wood">
                         <option value="">Any (0)</option>
                         <option value="1">Birch</option>
@@ -81,7 +96,7 @@
 
             <div class="optional-block" data-optional-id="age" hidden>
                 <label for="age">Aging Time (Minecraft days) <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <input type="number" id="age" name="age" min="0" />
                     <button type="button" class="removeOptionalBtn" data-remove-id="age">Remove</button>
                 </div>
@@ -89,7 +104,7 @@
 
             <div class="optional-block" data-optional-id="color" hidden>
                 <label for="color">Color (HEX without # or color name) <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <input type="text" id="color" name="color" placeholder="RED or 99FF33" />
                     <button type="button" class="removeOptionalBtn" data-remove-id="color">Remove</button>
                 </div>
@@ -100,7 +115,7 @@
 
             <div class="optional-block" data-optional-id="alcohol" hidden>
                 <label for="alcohol">Alcohol Level (0-100) <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <input type="number" id="alcohol" name="alcohol" min="0" max="100" />
                     <button type="button" class="removeOptionalBtn" data-remove-id="alcohol">Remove</button>
                 </div>
@@ -110,7 +125,7 @@
                 <fieldset>
                     <legend><strong>Lore Lines <small>(optional)</small></strong></legend>
                     <div id="loreContainer"></div>
-                    <div style="display:flex;gap:8px;align-items:center;">
+                    <div class="inline-row">
                         <button type="button" id="addLoreBtn">Add Lore Line</button>
                         <button type="button" class="removeOptionalBtn" data-remove-id="lore">Remove</button>
                     </div>
@@ -121,7 +136,7 @@
                 <fieldset>
                     <legend><strong>Server Commands <small>(optional)</small></strong></legend>
                     <div id="serverCommandsContainer"></div>
-                    <div style="display:flex;gap:8px;align-items:center;">
+                    <div class="inline-row">
                         <button type="button" id="addServerCommandBtn">Add Server Command</button>
                         <button type="button" class="removeOptionalBtn" data-remove-id="servercommands">Remove</button>
                     </div>
@@ -132,7 +147,7 @@
                 <fieldset>
                     <legend><strong>Player Commands <small>(optional)</small></strong></legend>
                     <div id="playerCommandsContainer"></div>
-                    <div style="display:flex;gap:8px;align-items:center;">
+                    <div class="inline-row">
                         <button type="button" id="addPlayerCommandBtn">Add Player Command</button>
                         <button type="button" class="removeOptionalBtn" data-remove-id="playercommands">Remove</button>
                     </div>
@@ -148,7 +163,7 @@
                     <input type="number" id="cmdNormal" name="cmdNormal" placeholder="1338" min="0" />
                     <label for="cmdGood">Good CMD</label>
                     <input type="number" id="cmdGood" name="cmdGood" placeholder="1339" min="0" />
-                    <div style="display:flex;gap:8px;align-items:center;">
+                    <div class="inline-row">
                         <small class="note">Leave empty if not used.</small>
                         <button type="button" class="removeOptionalBtn" data-remove-id="cmd">Remove</button>
                     </div>
@@ -159,7 +174,7 @@
                 <fieldset>
                     <legend><strong>Potion Effects <small>(optional)</small></strong></legend>
                     <div id="effectsContainer"></div>
-                    <div style="display:flex;gap:8px;align-items:center;">
+                    <div class="inline-row">
                         <button type="button" id="addEffectBtn">Add Effect</button>
                         <button type="button" class="removeOptionalBtn" data-remove-id="effects">Remove</button>
                     </div>
@@ -168,7 +183,7 @@
 
             <div class="optional-block" data-optional-id="drinkmessage" hidden>
                 <label for="drinkmessage">Message After Drinking <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <input type="text" id="drinkmessage" name="drinkmessage" />
                     <button type="button" class="removeOptionalBtn" data-remove-id="drinkmessage">Remove</button>
                 </div>
@@ -176,7 +191,7 @@
 
             <div class="optional-block" data-optional-id="drinktitle" hidden>
                 <label for="drinktitle">Title After Drinking <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <input type="text" id="drinktitle" name="drinktitle" />
                     <button type="button" class="removeOptionalBtn" data-remove-id="drinktitle">Remove</button>
                 </div>
@@ -184,7 +199,7 @@
 
             <div class="optional-block" data-optional-id="glint" hidden>
                 <label for="glint">Glint Effect <small>(optional)</small></label>
-                <div style="display:flex;gap:8px;align-items:center;">
+                <div class="inline-row">
                     <select id="glint" name="glint">
                         <option value="">false</option>
                         <option value="true">true</option>
@@ -193,37 +208,42 @@
                 </div>
             </div>
 
-            <!-- Optional fields picker -->
-            <fieldset>
-                <legend><strong>Optional fields</strong></legend>
-                <label for="optionalSelect">Choose an optional field to add</label>
-                <div style="display:flex;gap:8px;align-items:center;">
-                    <select id="optionalSelect">
-                        <option value="">-- Select --</option>
-                        <option value="distillruns">Distill Runs</option>
-                        <option value="distilltime">Distill Time</option>
-                        <option value="wood">Wood Type</option>
-                        <option value="age">Aging Time</option>
-                        <option value="color">Color</option>
-                        <option value="alcohol">Alcohol Level</option>
-                        <option value="lore">Lore Lines</option>
-                        <option value="servercommands">Server Commands</option>
-                        <option value="playercommands">Player Commands</option>
-                        <option value="cmd">Custom Model Data</option>
-                        <option value="effects">Potion Effects</option>
-                        <option value="drinkmessage">Drink Message</option>
-                        <option value="drinktitle">Drink Title</option>
-                        <option value="glint">Glint Effect</option>
-                    </select>
-                    <button type="button" id="addOptionalBtn">Add</button>
-                </div>
-            </fieldset>
-
             <button type="submit">Generate YML</button>
         </form>
 
         <h2>Generated YML</h2>
-        <pre id="output" readonly></pre>
+        <div class="code-block">
+            <div class="code-block-header">
+                <span>recipes.yml</span>
+                <button type="button" id="copyOutputBtn" class="copy-btn">Copy</button>
+            </div>
+            <pre id="output"></pre>
+        </div>
+    </div>
+
+    <div class="optional-fields-panel">
+        <strong class="optional-fields-title">Optional fields</strong>
+        <label for="optionalSelect">Choose a field to add</label>
+        <div class="inline-row">
+            <select id="optionalSelect">
+                <option value="">-- Select --</option>
+                <option value="distillruns">Distill Runs</option>
+                <option value="distilltime">Distill Time</option>
+                <option value="wood">Wood Type</option>
+                <option value="age">Aging Time</option>
+                <option value="color">Color</option>
+                <option value="alcohol">Alcohol Level</option>
+                <option value="lore">Lore Lines</option>
+                <option value="servercommands">Server Commands</option>
+                <option value="playercommands">Player Commands</option>
+                <option value="cmd">Custom Model Data</option>
+                <option value="effects">Potion Effects</option>
+                <option value="drinkmessage">Drink Message</option>
+                <option value="drinktitle">Drink Title</option>
+                <option value="glint">Glint Effect</option>
+            </select>
+            <button type="button" id="addOptionalBtn">Add</button>
+        </div>
     </div>
 
     <script src="breweryx-converter/script.js"></script>

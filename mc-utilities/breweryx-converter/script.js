@@ -2,6 +2,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("brewForm");
     const output = document.getElementById("output");
 
+    // Keep body padding in sync with the floating panel's real height so it
+    // never overlaps the results when docked to the bottom on mobile.
+    const optionalFieldsPanel = document.querySelector(".optional-fields-panel");
+    const dockedQuery = window.matchMedia("(max-width: 600px)");
+
+    function syncOptionalPanelSpacing() {
+        if (!optionalFieldsPanel) return;
+        if (dockedQuery.matches) {
+            document.body.style.paddingBottom = (optionalFieldsPanel.offsetHeight + 24) + "px";
+        } else {
+            document.body.style.paddingBottom = "";
+        }
+    }
+
+    syncOptionalPanelSpacing();
+    window.addEventListener("resize", syncOptionalPanelSpacing);
+
+    // Copy generated YML to clipboard
+    const copyOutputBtn = document.getElementById("copyOutputBtn");
+    copyOutputBtn.addEventListener("click", async () => {
+        if (!output.textContent) return;
+        try {
+            await navigator.clipboard.writeText(output.textContent);
+            copyOutputBtn.textContent = "Copied!";
+            copyOutputBtn.classList.add("copied");
+            setTimeout(() => {
+                copyOutputBtn.textContent = "Copy";
+                copyOutputBtn.classList.remove("copied");
+            }, 1500);
+        } catch (e) {
+            copyOutputBtn.textContent = "Failed";
+            setTimeout(() => {
+                copyOutputBtn.textContent = "Copy";
+            }, 1500);
+        }
+    });
+
     // Optional fields picker
     const optionalSelect = document.getElementById('optionalSelect');
     const addOptionalBtn = document.getElementById('addOptionalBtn');
@@ -17,6 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const opt = optionalSelect.querySelector(`option[value="${val}"]`);
             if (opt) opt.disabled = true;
             optionalSelect.value = '';
+
+            block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            block.classList.remove('just-added');
+            void block.offsetWidth; // restart animation if triggered again
+            block.classList.add('just-added');
         }
     });
 
@@ -48,7 +90,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const div = document.createElement("div");
         div.className = "ingredient-row";
         div.innerHTML = `
-            <input type="text" class="ingredient-item" placeholder="Item Name (e.g. Apple)" required />
+            <select class="ingredient-source">
+                <option value="">Default</option>
+                <option value="Brewery">BreweryX Brew</option>
+                <option value="ItemsAdder">ItemsAdder</option>
+                <option value="Oraxen">Oraxen</option>
+                <option value="Nexo">Nexo</option>
+                <option value="custom">Custom...</option>
+            </select>
+            <input type="text" class="ingredient-custom-prefix" placeholder="Prefix (e.g. MyPlugin)" hidden />
+            <input type="text" class="ingredient-item" placeholder="Item name (e.g. Apple)" required />
             <input type="number" class="ingredient-amount" placeholder="Amount" min="1" required />
             <button type="button" class="removeIngredientBtn" title="Remove ingredient">✖</button>
         `;
@@ -58,6 +109,15 @@ document.addEventListener("DOMContentLoaded", () => {
     ingredientsContainer.addEventListener("click", (e) => {
         if (e.target.classList.contains("removeIngredientBtn")) {
             e.target.parentElement.remove();
+        }
+    });
+
+    ingredientsContainer.addEventListener("change", (e) => {
+        if (e.target.classList.contains("ingredient-source")) {
+            const row = e.target.closest(".ingredient-row");
+            const customPrefixInput = row.querySelector(".ingredient-custom-prefix");
+            customPrefixInput.hidden = e.target.value !== "custom";
+            if (customPrefixInput.hidden) customPrefixInput.value = "";
         }
     });
 
@@ -194,11 +254,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const ingredientRows = ingredientsContainer.querySelectorAll(".ingredient-row");
         let ingredients = [];
         for (const row of ingredientRows) {
+            const sourceSelectValue = row.querySelector(".ingredient-source").value;
+            let source = sourceSelectValue;
+            if (source === "custom") {
+                source = row.querySelector(".ingredient-custom-prefix").value.trim();
+            }
             let item = row.querySelector(".ingredient-item").value.trim();
             const amount = row.querySelector(".ingredient-amount").value.trim();
             if (item && amount) {
-                item = item.toUpperCase();
-                ingredients.push(`${item}/${amount}`);
+                if (sourceSelectValue === "") {
+                    item = item.charAt(0).toUpperCase() + item.slice(1);
+                }
+                const prefix = source ? `${source}:` : '';
+                ingredients.push(`${prefix}${item}/${amount}`);
             }
         }
         if (ingredients.length === 0) {
