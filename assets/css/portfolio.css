@@ -440,6 +440,18 @@ section.page-section {
     color: var(--accent-bright);
 }
 
+.cc-license-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    vertical-align: middle;
+}
+
+.cc-license-link img {
+    height: 1.2em;
+    vertical-align: middle;
+}
+
 /* Responsive */
 
 @media (max-width: 760px) {
