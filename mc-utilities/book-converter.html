@@ -9,10 +9,17 @@
     <meta name="author" content="Zethal_" />
     <link rel="icon" href="../images/zethpfp.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/portfolio.css" />
+    <link rel="stylesheet" href="../assets/css/feedback.css" />
     <link rel="stylesheet" href="book-converter/style.css" />
 </head>
 
 <body>
+    <header id="site-header">
+        <div class="site-header-inner">
+            <a href="../index.html" id="logo">ZethalMC</a>
+        </div>
+    </header>
+
     <div class="container">
         <header>
             <div class="header">
@@ -71,6 +78,7 @@
     <div class="overlay" id="overlay" onclick="togglePopup()"></div>
 
     <div class="popup" id="popup">
+        <button type="button" class="popup-close-btn" onclick="togglePopup()" aria-label="Close feedback form">&times;</button>
         <h1>Feedback Form</h1>
         <label for="discord">Discord Username and ID:</label>
         <input type="text" id="discord" placeholder="Discord Username / ID" required>
@@ -110,6 +118,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="book-converter/script.js"></script>
+    <script>window.FEEDBACK_SOURCE = "Book Converter";</script>
+    <script src="../assets/js/feedback.js"></script>
 </body>
 
 </html>

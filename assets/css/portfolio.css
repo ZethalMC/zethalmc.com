@@ -63,11 +63,21 @@ section {
     border-bottom: 1px solid var(--border);
 }
 
-#site-header .container {
+/* Standalone (not .container) so pages that redefine .container for their
+   own content card don't leak that styling into the site header. */
+.site-header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 72px;
+}
+
+/* Pages without body padding of their own (the header handles top spacing) */
+#site-header+.container {
+    margin-top: 60px;
 }
 
 #logo {
@@ -183,7 +193,6 @@ section {
 .btn-primary {
     background: linear-gradient(180deg, var(--accent-bright), var(--accent));
     color: #fff;
-    box-shadow: 0 8px 18px rgba(23, 163, 152, 0.28);
 }
 
 .btn-primary:hover {
@@ -291,12 +300,14 @@ section.page-section {
 }
 
 .card {
+    position: relative;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
@@ -334,6 +345,15 @@ section.page-section {
 .card .card-link {
     font-weight: 600;
     font-size: 0.9em;
+}
+
+/* Stretch the card's single link over the whole card (.card is the
+   positioned ancestor), so the entire card is clickable rather than
+   just the "Open tool" text at the bottom. */
+.card .card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
 }
 
 /* Servers */

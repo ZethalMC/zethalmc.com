@@ -1,7 +1,13 @@
 /* ZethalMC — Discord Timestamp Generator (matches assets/css/portfolio.css) */
 
 body {
-    padding: 60px 20px;
+    padding: 0 20px 60px 20px;
+}
+
+/* Pull the header back out to the true viewport edge, canceling body's
+   horizontal padding (which everything else still uses for its gutter). */
+#site-header {
+    margin: 0 -20px;
 }
 
 .container {
@@ -181,6 +187,9 @@ button .fa-regular {
     position: fixed;
     top: 20px;
     right: 20px;
+    max-width: calc(100% - 40px);
+    box-sizing: border-box;
+    word-wrap: break-word;
     background: var(--surface-alt);
     color: var(--text);
     padding: 15px 20px;
@@ -192,177 +201,8 @@ button .fa-regular {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-.feedback-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: linear-gradient(180deg, var(--accent-bright), var(--accent));
-    color: #fff;
-    padding: 14px 28px;
-    border-radius: 999px;
-    cursor: pointer;
-    font-weight: 600;
-    z-index: 1000;
-    border: none;
-    margin: 10px;
-    font-size: 1rem;
-    box-shadow: 0 8px 20px rgba(23, 163, 152, 0.35);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.feedback-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(23, 163, 152, 0.45);
-}
-
-@media (max-width: 600px) {
-    .feedback-button {
-        position: relative;
-        display: block;
-        width: calc(100% - 40px);
-        font-size: 1.1rem;
-        margin: 20px auto;
-    }
-}
-
-.popup {
-    display: none;
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    padding: 30px;
-    width: 100%;
-    max-width: 400px;
-    z-index: 1001;
-    opacity: 1;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    box-sizing: border-box;
-    visibility: hidden;
-}
-
-.popup.show {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-}
-
-.popup h1 {
-    margin-bottom: 20px;
-    color: var(--text);
-    text-align: center;
-    font-size: 1.6em;
-}
-
-.popup label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-align: left;
-    width: 100%;
-}
-
-.popup input,
-.popup textarea {
-    width: calc(100% - 22px);
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    margin-bottom: 20px;
-    font-size: 1rem;
-    background: var(--surface-alt);
-    color: var(--text);
-    font-family: inherit;
-    transition: border-color 0.2s ease;
-}
-
-.popup input:focus,
-.popup textarea:focus {
-    outline: none;
-    border-color: var(--accent-bright);
-}
-
-.popup button {
-    width: 100%;
-}
-
-.notification {
-    margin-top: 20px;
-    background: var(--surface-alt);
-    color: var(--text);
-    padding: 14px 20px;
-    border-radius: 8px;
-    border: 1px solid var(--accent-bright);
-    opacity: 0;
-    display: none;
-    transition: opacity 0.4s ease-out;
-    font-weight: 600;
-    text-align: center;
-}
-
-.notification.show {
-    display: block;
-    opacity: 1;
-    transition: opacity 0.4s ease-in;
-}
-
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.55);
-    z-index: 1000;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    padding: 14px;
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    transition: border-color 0.2s ease;
-    position: relative;
-}
-
-.checkbox-container input[type="checkbox"] {
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-}
-
-.checkbox-container:hover {
-    border-color: var(--accent-bright);
-}
-
-.checkbox-container input:checked~.label-text {
-    color: var(--accent-bright);
-    font-weight: 700;
-}
-
-.checkbox-container.checked {
-    border-color: var(--accent-bright) !important;
-    background: var(--surface) !important;
-}
-
-.label-text {
-    color: var(--text);
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
+/* Feedback popup (.feedback-button, .popup, .notification, .overlay,
+   .checkbox-container, .label-text) lives in assets/css/feedback.css. */
 
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 600px) {
@@ -386,35 +226,6 @@ button .fa-regular {
         font-size: 1rem;
     }
 
-    td input[type="text"] {
-        max-width: 85%;
-    }
-
-    td button {
-        width: 100%;
-    }
-
-    .popup {
-        width: 90%;
-        padding: 20px;
-        bottom: auto;
-        top: 50%;
-        right: 50%;
-        transform: translate(50%, -50%);
-    }
-
-    .popup.show {
-        transform: translate(50%, -50%);
-    }
-
-    .feedback-button {
-        width: calc(100% - 20px);
-        margin: 20px 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
     #container {
         flex-direction: column;
         align-items: stretch;
@@ -431,12 +242,73 @@ button .fa-regular {
         width: 100%;
     }
 
-    table {
-        font-size: 0.9em;
-    }
-
+    /* Stack the table into cards instead of shrinking a 4-column row —
+       a squeezed row can't fit "Long Date with Day of Week and Short
+       Time" next to a timestamp code and a button on a phone width. */
+    table,
+    thead,
+    tbody,
+    tr,
     th,
     td {
-        padding: 8px;
+        display: block;
+        width: 100%;
+    }
+
+    table {
+        border: none;
+        border-radius: 0;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    tbody tr:last-child {
+        margin-bottom: 0;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid var(--border);
+        padding: 10px 12px;
+    }
+
+    tbody tr td:last-child {
+        border-bottom: none;
+    }
+
+    tbody tr td:first-child {
+        background: var(--surface-alt);
+        font-weight: 600;
+    }
+
+    td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+    }
+
+    td input[type="text"] {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 0;
+    }
+
+    td button {
+        width: 100%;
     }
 }

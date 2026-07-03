@@ -1,7 +1,13 @@
 /* ZethalMC — BreweryX Recipe Creator (matches assets/css/portfolio.css) */
 
 body {
-    padding: 60px 20px;
+    padding: 0 20px 60px 20px;
+}
+
+/* Pull the header back out to the true viewport edge, canceling body's
+   horizontal padding (which everything else still uses for its gutter). */
+#site-header {
+    margin: 0 -20px;
 }
 
 .container {
