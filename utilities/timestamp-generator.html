@@ -8,10 +8,17 @@
     <meta name="author" content="Zethal_" />
     <link rel="icon" href="../images/zethpfp.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/portfolio.css">
+    <link rel="stylesheet" href="../assets/css/feedback.css">
     <link rel="stylesheet" href="timestamp-generator/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+
+<header id="site-header">
+    <div class="site-header-inner">
+        <a href="../index.html" id="logo">ZethalMC</a>
+    </div>
+</header>
 
 <div class="container">
     <h1>Discord Timestamp Generator</h1>
@@ -36,44 +43,44 @@
         <tbody>
             <tr>
                 <td>Short Time</td>
-                <td><span id="preview-t"></span></td>
-                <td><input type="text" readonly id="code-t" title="Press Ctrl/Cmd+C to copy"></td>
+                <td data-label="Preview"><span id="preview-t"></span></td>
+                <td data-label="Timestamp"><input type="text" readonly id="code-t" title="Press Ctrl/Cmd+C to copy"></td>
                 <td><button class="copy-btn" data-type="t">Copy</button></td>
             </tr>
             <tr>
                 <td>Long Time</td>
-                <td><span id="preview-T"></span></td>
-                <td><input type="text" readonly id="code-T" title="Press Ctrl/Cmd+C to copy"></td>
+                <td data-label="Preview"><span id="preview-T"></span></td>
+                <td data-label="Timestamp"><input type="text" readonly id="code-T" title="Press Ctrl/Cmd+C to copy"></td>
                 <td><button class="copy-btn" data-type="T">Copy</button></td>
             </tr>
             <tr>
                 <td>Short Date</td>
-                <td><span id="preview-d"></span></td>
-                <td><input type="text" readonly id="code-d" title="Press Ctrl/Cmd+C to copy"></td>
+                <td data-label="Preview"><span id="preview-d"></span></td>
+                <td data-label="Timestamp"><input type="text" readonly id="code-d" title="Press Ctrl/Cmd+C to copy"></td>
                 <td><button class="copy-btn" data-type="d">Copy</button></td>
             </tr>
             <tr>
                 <td>Long Date</td>
-                <td><span id="preview-D"></span></td>
-                <td><input type="text" readonly id="code-D" title="Press Ctrl/Cmd+C to copy"></td>
+                <td data-label="Preview"><span id="preview-D"></span></td>
+                <td data-label="Timestamp"><input type="text" readonly id="code-D" title="Press Ctrl/Cmd+C to copy"></td>
                 <td><button class="copy-btn" data-type="D">Copy</button></td>
             </tr>
             <tr>
                 <td>Long Date with Short Time</td>
-                <td><span id="preview-f"></span></td>
-                <td><input type="text" readonly id="code-f" title="Press Ctrl/Cmd+C to copy"></td>
+                <td data-label="Preview"><span id="preview-f"></span></td>
+                <td data-label="Timestamp"><input type="text" readonly id="code-f" title="Press Ctrl/Cmd+C to copy"></td>
                 <td><button class="copy-btn" data-type="f">Copy</button></td>
             </tr>
             <tr>
                 <td>Long Date with Day of Week and Short Time</td>
-                <td><span id="preview-F"></span></td>
-                <td><input type="text" readonly id="code-F" title="Press Ctrl/Cmd+C to copy"></td>
+                <td data-label="Preview"><span id="preview-F"></span></td>
+                <td data-label="Timestamp"><input type="text" readonly id="code-F" title="Press Ctrl/Cmd+C to copy"></td>
                 <td><button class="copy-btn" data-type="F">Copy</button></td>
             </tr>
             <tr>
                 <td>Relative</td>
-                <td><span id="preview-R"></span></td>
-                <td><input type="text" readonly id="code-R" title="Press Ctrl/Cmd+C to copy"></td>
+                <td data-label="Preview"><span id="preview-R"></span></td>
+                <td data-label="Timestamp"><input type="text" readonly id="code-R" title="Press Ctrl/Cmd+C to copy"></td>
                 <td><button class="copy-btn" data-type="R">Copy</button></td>
             </tr>
         </tbody>
@@ -87,6 +94,7 @@
     <div class="overlay" id="overlay" onclick="togglePopup()"></div>
 
     <div class="popup" id="popup">
+        <button type="button" class="popup-close-btn" onclick="togglePopup()" aria-label="Close feedback form">&times;</button>
         <h1>Feedback Form</h1>
         <label for="discord">Discord Username and ID:</label>
         <input type="text" id="discord" placeholder="Discord Username / ID" required>
@@ -110,5 +118,7 @@
 <div id="notifPopup"></div>
 
 <script src="timestamp-generator/script.js"></script>
+<script>window.FEEDBACK_SOURCE = "Timestamp Generator";</script>
+<script src="../assets/js/feedback.js"></script>
 </body>
 </html>
