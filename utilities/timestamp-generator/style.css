@@ -1,11 +1,7 @@
-/* ZethalMC — Discord Timestamp Generator (matches assets/css/portfolio.css) */
-
 body {
     padding: 0 20px 60px 20px;
 }
 
-/* Pull the header back out to the true viewport edge, canceling body's
-   horizontal padding (which everything else still uses for its gutter). */
 #site-header {
     margin: 0 -20px;
 }
@@ -201,10 +197,6 @@ button .fa-regular {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Feedback popup (.feedback-button, .popup, .notification, .overlay,
-   .checkbox-container, .label-text) lives in assets/css/feedback.css. */
-
-/* Media Queries for Mobile Responsiveness */
 @media (max-width: 600px) {
     .container {
         padding: 18px;
@@ -242,9 +234,6 @@ button .fa-regular {
         width: 100%;
     }
 
-    /* Stack the table into cards instead of shrinking a 4-column row —
-       a squeezed row can't fit "Long Date with Day of Week and Short
-       Time" next to a timestamp code and a button on a phone width. */
     table,
     thead,
     tbody,
