@@ -86,6 +86,75 @@ section {
     margin-bottom: 30px;
 }
 
+/* Collapsible "Instructions" (a <details>, not a <section>, so it needs
+   its own margin instead of inheriting the section rule above). */
+.instructions {
+    margin-bottom: 30px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.instructions summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    user-select: none;
+}
+
+.instructions summary::-webkit-details-marker {
+    display: none;
+}
+
+.instructions summary::after {
+    content: "\25BE";
+    color: var(--accent-bright);
+    font-size: 0.85em;
+    transition: transform 0.2s ease;
+}
+
+.instructions[open] summary {
+    border-bottom: 1px solid var(--border);
+}
+
+.instructions[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.instructions summary:hover {
+    color: var(--accent-bright);
+}
+
+.instructions-body {
+    padding: 18px 20px 4px 20px;
+    color: var(--text-muted);
+}
+
+.instructions-body p {
+    margin: 0 0 14px 0;
+}
+
+.instructions-body strong {
+    color: var(--text);
+}
+
+.instructions-body code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    color: var(--accent-bright);
+}
+
 button {
     font-weight: 600;
     padding: 10px 18px;
