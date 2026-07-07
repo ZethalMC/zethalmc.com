@@ -1,11 +1,7 @@
-/* ZethalMC — Book Converter (matches assets/css/portfolio.css) */
-
 body {
     padding: 0 20px 60px 20px;
 }
 
-/* Pull the header back out to the true viewport edge, canceling body's
-   horizontal padding (which everything else still uses for its gutter). */
 #site-header {
     margin: 0 -20px;
 }
@@ -120,9 +116,6 @@ button:disabled:hover {
     box-shadow: none;
 }
 
-/* Feedback popup (.feedback-button, .popup, .notification, .overlay,
-   .checkbox-container, .label-text) lives in assets/css/feedback.css. */
-
 #errorPopup {
     position: fixed;
     top: 20px;
@@ -138,8 +131,8 @@ button:disabled:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-textarea,
-input[type="text"] {
+.container textarea,
+.container input[type="text"] {
     width: 100%;
     height: 40px;
     padding: 10px;
@@ -153,19 +146,18 @@ input[type="text"] {
     transition: border-color 0.2s ease;
 }
 
-textarea:focus,
-input[type="text"]:focus {
+.container textarea:focus,
+.container input[type="text"]:focus {
     border-color: var(--accent-bright);
     outline: none;
 }
 
-textarea {
+.container textarea {
     width: 100%;
     height: 200px;
     resize: vertical;
 }
 
-/* Slider */
 input[type="range"] {
     appearance: none;
     -webkit-appearance: none;
@@ -222,7 +214,6 @@ input[type="range"]::-moz-range-thumb:hover {
     pointer-events: none;
 }
 
-/* Save/download buttons with tooltip */
 .tt {
     --tooltip-bg: var(--surface-alt);
     --tooltip-border-radius: 8px;
@@ -288,7 +279,6 @@ input[type="range"]::-moz-range-thumb:hover {
     content: attr(data-text-end);
 }
 
-/* Zip download warning */
 #zipWarningOverlay {
     z-index: 1001 !important;
 }

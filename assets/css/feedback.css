@@ -1,5 +1,3 @@
-/* ZethalMC — shared feedback popup (used by mc-utilities/book-converter and utilities/timestamp-generator) */
-
 .feedback-button {
     position: fixed;
     bottom: 24px;
@@ -209,9 +207,6 @@
     transition: color 0.2s ease;
 }
 
-/* Mobile: center the popup instead of anchoring bottom-right, so it can't
-   run off the left edge of narrow viewports (position:fixed + width:100%
-   + right:20px pushes the left edge off-screen below ~400px wide). */
 @media (max-width: 600px) {
     .feedback-button {
         position: relative;
