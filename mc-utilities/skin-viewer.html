@@ -29,10 +29,12 @@
             <div class="instructions-body">
                 <p>Enter a Minecraft <strong>Java Edition</strong> username and click <strong>"Load"</strong> (or
                     press Enter) to fetch that player's current skin and cape.</p>
-                <p>Drag the model with your mouse (or finger, on touch devices) to rotate it. Use the
-                    <strong>Pause/Play</strong> button to toggle the walking animation.</p>
+                <p>Drag the model with your mouse (or finger, on touch devices) to rotate it, and scroll (or pinch,
+                    on touch devices) to zoom. Use <strong>Pause/Play</strong> to toggle the walking animation.</p>
                 <p>This looks up the player's <em>current</em> skin directly from Mojang, so it always reflects
                     whatever they're wearing right now.</p>
+                <p>The address bar updates with the username you looked up, so you can copy the link to share that
+                    exact view.</p>
             </div>
         </details>
 
@@ -45,9 +47,10 @@
         <p id="status" class="status"></p>
 
         <div class="viewer-card">
-            <canvas class="skin-3d" width="300" height="400" data-model="classic" data-flip="false"></canvas>
+            <canvas class="skin-3d" width="300" height="400" data-model="classic"></canvas>
             <br>
             <button id="play-pause-btn" onclick="animateSkin(true);">Pause</button>
+            <p id="player-info" class="player-info"></p>
         </div>
     </div>
 

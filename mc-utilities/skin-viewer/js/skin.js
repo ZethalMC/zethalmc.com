@@ -151,7 +151,7 @@ function colorFaces(geometry, bitmap, rectangles) {
   return new THREE.Mesh(geometry, materials);
 }
 
-function buildSkinModel(skin, cape, slim, flip) {
+function buildSkinModel(skin, cape, slim) {
   if (skin.width < 64 || skin.height < 32) {
     return null;
   }
@@ -265,10 +265,6 @@ function buildSkinModel(skin, cape, slim, flip) {
     model.add(capeGroup);
   }
 
-  if (flip) {
-    model.rotation.z += radians(180);
-  }
-
   return model;
 }
 
@@ -279,6 +275,7 @@ const skin3d = {
   theta: 30,
   phi: 21,
   time: 90,
+  zoomZ: 60,
   animating: true
 };
 
@@ -302,6 +299,9 @@ function animateSkin(toggle) {
 }
 
 function enableSkinRotation() {
+  if (skin3d.rotationEnabled) return;
+  skin3d.rotationEnabled = true;
+
   function startRotation(t, id) {
     skin3d.dragState[id] = t;
   }
@@ -373,6 +373,18 @@ function enableSkinRotation() {
   });
 }
 
+function enableSkinZoom() {
+  if (skin3d.zoomEnabled) return;
+  skin3d.zoomEnabled = true;
+
+  skin3d.canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    skin3d.zoomZ = Math.min(140, Math.max(25, skin3d.zoomZ + e.deltaY * 0.05));
+    if (skin3d.camera) skin3d.camera.position.z = skin3d.zoomZ;
+    if (!skin3d.animationId) renderSkin();
+  }, { passive: false });
+}
+
 function renderSkinLoop() {
   skin3d.time = (performance.now() - skin3d.startTime) * (360 / 1500) % 1440;
   skin3d.animationId = window.requestAnimationFrame(renderSkinLoop);
@@ -385,14 +397,13 @@ function renderSkin() {
   skin3d.id = skin3d.canvas.getAttribute('data-id');
   skin3d.cape = skin3d.canvas.getAttribute('data-cape');
   skin3d.slim = skin3d.canvas.getAttribute('data-model') === 'slim' ? 1 : 0;
-  skin3d.flip = skin3d.canvas.getAttribute('data-flip') === 'true';
 
   let key = `${skin3d.id}:${skin3d.cape}:${skin3d.slim}`;
   if (!skin3d.modelCache[key]) {
     let skin = toCanvas(getImage(skin3d.id));
     let cape = toCanvas(getImage(skin3d.cape));
     if (!skin || skin3d.cape && !cape) return;
-    skin3d.modelCache[key] = buildSkinModel(skin, cape, skin3d.slim, skin3d.flip);
+    skin3d.modelCache[key] = buildSkinModel(skin, cape, skin3d.slim);
   }
   if (skin3d.modelCache[key] !== skin3d.model) {
     if (skin3d.model) skin3d.scene.remove(skin3d.model);
@@ -423,10 +434,10 @@ function renderSkin() {
   }
 
   if (!skin3d.camera) {
-    skin3d.camera = new THREE.PerspectiveCamera(38, skin3d.canvas.width / skin3d.canvas.height, 60 - 20, 60 + 20);
+    skin3d.camera = new THREE.PerspectiveCamera(38, skin3d.canvas.width / skin3d.canvas.height, 10, 200);
     skin3d.camera.position.x = 0;
     skin3d.camera.position.y = 0;
-    skin3d.camera.position.z = 60;
+    skin3d.camera.position.z = skin3d.zoomZ;
     skin3d.camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
@@ -466,7 +477,9 @@ function decodeSlimFlag(propertyValue) {
 async function loadSkin(username) {
   const canvas = skin3d.canvas;
   const status = document.getElementById('status');
+  const info = document.getElementById('player-info');
   if (status) status.textContent = `Loading skin for ${username}...`;
+  if (info) info.textContent = '';
 
   const res = await fetch(`https://playerdb.co/api/player/minecraft/${encodeURIComponent(username)}`);
   if (!res.ok) throw new Error(`Player "${username}" not found`);
@@ -494,6 +507,8 @@ async function loadSkin(username) {
   }
 
   if (status) status.textContent = '';
+  if (info) info.textContent = `${player.username} - UUID: ${player.id}`;
   enableSkinRotation();
+  enableSkinZoom();
   animateSkin();
 }

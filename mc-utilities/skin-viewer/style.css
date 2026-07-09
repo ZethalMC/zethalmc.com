@@ -107,6 +107,13 @@ canvas.skin-3d {
     font-size: 0.9rem;
 }
 
+.player-info {
+    margin: 12px 0 0 0;
+    font-size: 0.85em;
+    color: var(--text-muted);
+    font-family: "Courier New", monospace;
+}
+
 /* Collapsible "Instructions" (a <details>, not a <section>). */
 .instructions {
     margin: 20px 0 30px 0;
