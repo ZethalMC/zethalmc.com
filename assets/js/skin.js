@@ -375,6 +375,7 @@ function enableSkinRotation() {
 
 function enableSkinZoom() {
   if (skin3d.zoomEnabled) return;
+  if (skin3d.canvas.getAttribute('data-zoom') === 'false') return;
   skin3d.zoomEnabled = true;
 
   skin3d.canvas.addEventListener('wheel', e => {
