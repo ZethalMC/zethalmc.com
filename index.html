@@ -124,21 +124,7 @@
                     <p>I develop lore, build interactive places, and create tools and plugins to enhance player
                         experiences.</p>
                 </div>
-                <div class="server-grid">
-                    <div class="server-card">
-                        <div class="server-logo">
-                            <img src="images/stoneworks.png" alt="Stoneworks logo" />
-                        </div>
-                        <h3>Stoneworks</h3>
-                        <p>A creative Minecraft server where I develop lore, stories, and other interactive experiences.
-                        </p>
-                    </div>
-                    <div class="server-card">
-                        <div class="server-logo server-logo-placeholder" aria-hidden="true">R</div>
-                        <h3>Raveris</h3>
-                        <p>A seasonal server with interactive events.</p>
-                    </div>
-                </div>
+                <div class="server-grid" id="serverGrid"></div>
             </div>
         </section>
 
@@ -227,6 +213,23 @@
         </section>
 
     </main>
+
+    <div class="server-modal-overlay" id="serverModalOverlay"></div>
+    <div class="server-modal" id="serverModal" role="dialog" aria-modal="true" aria-labelledby="serverModalTitle"
+        hidden>
+        <button class="server-modal-close" id="serverModalClose" aria-label="Close">&times;</button>
+        <div class="server-modal-logo" id="serverModalLogo"></div>
+        <h3 id="serverModalTitle"></h3>
+        <div class="server-modal-status" id="serverModalStatus">
+            <p class="server-modal-status-loading" id="serverModalStatusLoading">Checking server status&hellip;</p>
+            <div class="server-modal-status-content" id="serverModalStatusContent" hidden>
+                <span class="server-status-badge" id="serverModalBadge"></span>
+                <p class="server-modal-players" id="serverModalPlayers"></p>
+                <p class="server-modal-motd" id="serverModalMotd"></p>
+            </div>
+            <p class="server-modal-status-error" id="serverModalStatusError" hidden>Status unavailable right now.</p>
+        </div>
+    </div>
 
     <footer id="site-footer">
         <p class="copyright" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a

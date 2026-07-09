@@ -349,6 +349,22 @@ section.page-section {
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 26px 28px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#servers .server-card:hover,
+#servers .server-card:focus-visible {
+    transform: translateY(-4px);
+    border-color: var(--accent-bright);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+#servers .server-card:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
 }
 
 #servers .server-card h3 {
@@ -358,6 +374,7 @@ section.page-section {
 #servers .server-card p {
     color: var(--text-muted);
     margin: 0;
+    flex: 1;
 }
 
 #servers .server-logo {
@@ -367,21 +384,37 @@ section.page-section {
     width: 72px;
     height: 72px;
     margin: 0 0 18px 0;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface-alt);
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+}
+
+#servers .server-card:hover .server-logo,
+#servers .server-card:focus-visible .server-logo {
+    border-color: var(--accent-bright);
 }
 
 #servers .server-logo img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    image-rendering: pixelated;
 }
 
 #servers .server-logo-placeholder {
-    border: 1px dashed var(--border);
-    border-radius: 50%;
-    background: var(--surface-alt);
     color: var(--text-muted);
-    font-size: 1.4em;
+    font-size: 1.5em;
     font-weight: 700;
+}
+
+#servers .server-card-hint {
+    display: inline-block;
+    margin-top: 16px;
+    color: var(--accent-bright);
+    font-weight: 600;
+    font-size: 0.85em;
 }
 
 .contact-grid {
@@ -486,6 +519,160 @@ section.page-section {
 
     #about .about-grid {
         flex-direction: column;
+    }
+}
+
+.server-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1000;
+}
+
+.server-modal-overlay.show {
+    display: block;
+}
+
+.server-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(10px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    z-index: 1001;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.server-modal.show {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+}
+
+.server-modal-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 18px auto;
+    border-radius: 50%;
+    border: 2px solid var(--accent-bright);
+    background: var(--surface-alt);
+    overflow: hidden;
+}
+
+.server-modal-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.server-modal-logo.server-logo-placeholder {
+    color: var(--text-muted);
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.server-modal h3 {
+    margin: 0 0 10px 0;
+}
+
+.server-modal p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.server-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: none;
+    transition: color 0.2s ease;
+}
+
+.server-modal-close:hover {
+    color: var(--accent-bright);
+}
+
+.server-modal-status {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.server-modal-status-loading,
+.server-modal-status-error {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.server-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.85em;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--surface-alt);
+}
+
+.server-status-badge::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.server-status-badge.online {
+    color: #3ddc84;
+}
+
+.server-status-badge.offline {
+    color: #e3564c;
+}
+
+.server-modal-players {
+    color: var(--text);
+    font-size: 0.95em;
+    margin: 12px 0 0 0;
+}
+
+.server-modal-motd {
+    color: var(--text-muted);
+    font-size: 0.88em;
+    margin: 6px 0 0 0;
+    white-space: pre-line;
+}
+
+@media (max-width: 600px) {
+    .server-modal {
+        width: 90%;
+        padding: 24px;
     }
 
     section.page-section {
