@@ -13,6 +13,7 @@ Alongside the portfolio, this repo also hosts a few standalone Minecraft utiliti
 - [Book Converter](https://www.zethalmc.com/mc-utilities/book-converter) — convert text into Minecraft book JSON for Stendhal-compatible books.
 - [Discord Timestamp Generator](https://www.zethalmc.com/utilities/timestamp-generator) — generate Discord-formatted timestamps.
 - [BreweryX Recipe Creator](https://www.zethalmc.com/mc-utilities/breweryx-converter) — build BreweryX recipe YAML through a form instead of hand-writing it.
+- [Minecraft Skin Viewer](https://www.zethalmc.com/mc-utilities/skin-viewer) — look up any Minecraft player's current skin and cape in an interactive 3D viewer.
 
 ### Future Projects
 

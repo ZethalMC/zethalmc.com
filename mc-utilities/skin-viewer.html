@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ZethalMC - Minecraft Skin Viewer</title>
+    <meta name="description" content="Look up any Minecraft player's current skin and cape in an interactive, rotatable 3D viewer." />
+    <meta name="author" content="Zethal_" />
+    <link rel="icon" href="../images/zethpfp.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../assets/css/portfolio.css" />
+    <link rel="stylesheet" href="../assets/css/feedback.css" />
+    <link rel="stylesheet" href="skin-viewer/style.css" />
+</head>
+
+<body>
+    <header id="site-header">
+        <div class="site-header-inner">
+            <a href="../index.html" id="logo">ZethalMC</a>
+            <div class="header-controls">
+                <button type="button" class="viewer-tab active" id="tab-3d-btn" onclick="showViewer('3d');">3D Viewer</button>
+                <button type="button" class="viewer-tab" id="tab-static-btn" onclick="showViewer('static');">Static Renders</button>
+                <button id="share-btn" type="button" class="hidden" onclick="shareCurrentView();">Share</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Minecraft Skin Viewer</h1>
+        <p>Look up any Minecraft player's current skin and cape, rendered in an interactive 3D viewer.</p>
+
+        <details class="instructions">
+            <summary>Instructions</summary>
+            <div class="instructions-body">
+                <p>Enter a Minecraft <strong>Java Edition</strong> username and click <strong>"Load"</strong> (or
+                    press Enter) to fetch that player's current skin and cape.</p>
+                <p>Drag the model with your mouse (or finger, on touch devices) to rotate it, and scroll (or pinch,
+                    on touch devices) to zoom. Use <strong>Pause/Play</strong> to toggle the walking animation.</p>
+                <p>This looks up the player's <em>current</em> skin directly from Mojang, so it always reflects
+                    whatever they're wearing right now.</p>
+            </div>
+        </details>
+
+        <label for="username">Minecraft username</label>
+        <div class="lookup-row">
+            <input type="text" id="username" placeholder="Enter a username..." value="Zethal_" autocomplete="off"
+                onkeydown="if (event.key === 'Enter') loadUsername();" />
+            <button id="loadBtn" onclick="loadUsername();">Load</button>
+        </div>
+        <p id="status" class="status"></p>
+        <p id="player-info" class="player-info"></p>
+
+        <div class="viewer-card" id="viewer-3d">
+            <canvas class="skin-3d" width="300" height="400" data-model="classic"></canvas>
+            <br>
+            <button id="play-pause-btn" onclick="animateSkin(true);">Pause</button>
+        </div>
+
+        <div class="viewer-card hidden" id="viewer-static">
+            <p class="render-credit">Flat image renders, powered by <a href="https://vzge.me" target="_blank" rel="noopener">VZGE</a>.</p>
+            <div class="render-controls">
+                <select id="render-type">
+                    <optgroup label="2D">
+                        <option value="face">Face</option>
+                        <option value="front">Front</option>
+                        <option value="frontfull">Front Full</option>
+                    </optgroup>
+                    <optgroup label="3D">
+                        <option value="head">Head</option>
+                        <option value="bust" selected>Bust</option>
+                        <option value="full">Full</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="render-toggles">
+                <label class="render-toggle"><input type="checkbox" id="render-flip"> Flip</label>
+                <label class="render-toggle"><input type="checkbox" id="render-back"> Back</label>
+            </div>
+            <img id="render-preview" class="render-preview" alt="Static render preview">
+            <br>
+            <button id="render-download" type="button">Download PNG</button>
+        </div>
+    </div>
+
+    <button class="feedback-button" onclick="togglePopup()">Feedback</button>
+
+    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+
+    <div class="popup" id="popup">
+        <button type="button" class="popup-close-btn" onclick="togglePopup()" aria-label="Close feedback form">&times;</button>
+        <h1>Feedback Form</h1>
+        <label for="discord">Discord Username and ID:</label>
+        <input type="text" id="discord" placeholder="Discord Username / ID" required>
+
+        <label for="textBox" id="textBoxTitle">Your Feedback:</label>
+        <textarea id="textBox" rows="5" placeholder="Enter your feedback here..." required></textarea>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="contactCheckbox" onclick="toggleCheckbox('contactCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('contactCheckbox')">Contact me?</span>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="bugCheckbox" onclick="toggleCheckbox('bugCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('bugCheckbox')">Bug?</span>
+        </div>
+
+        <button onclick="submitFeedback()">Submit Feedback</button>
+        <div class="notification" id="notification"></div>
+    </div>
+
+    <div id="errorPopup"></div>
+
+    <script src="skin-viewer/js/three.min.js"></script>
+    <script src="skin-viewer/js/skin.js"></script>
+    <script src="skin-viewer/script.js"></script>
+    <script>window.FEEDBACK_SOURCE = "Skin Viewer";</script>
+    <script src="../assets/js/feedback.js"></script>
+</body>
+
+</html>

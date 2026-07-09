@@ -1,0 +1,526 @@
+const TAU = 2 * Math.PI;
+const EPS = 1e-3;
+
+const SKIN = [
+  [
+    [[[16,8,8,8],[0,8,8,8],[8,0,8,8],[16,7,8,-8],[8,8,8,8],[24,8,8,8]], // Head
+     [[48,8,8,8],[32,8,8,8],[40,0,8,8],[48,7,8,-8],[40,8,8,8],[56,8,8,8]]], // Hat
+    [[[28,20,4,12],[16,20,4,12],[20,16,8,4],[28,19,8,-4],[20,20,8,12],[32,20,8,12]]], // Torso
+    [[[[48,20,4,12],[40,20,4,12],[44,16,4,4],[48,19,4,-4],[44,20,4,12],[52,20,4,12]], // Right Arm
+      [[47,20,4,12],[40,20,4,12],[44,16,3,4],[47,19,3,-4],[44,20,3,12],[51,20,3,12]]]], // Right Arm (Slim)
+    [[[[43,20,-4,12],[51,20,-4,12],[47,16,-4,4],[51,19,-4,-4],[47,20,-4,12],[55,20,-4,12]], // Left Arm
+      [[43,20,-4,12],[50,20,-4,12],[46,16,-3,4],[49,19,-3,-4],[46,20,-3,12],[53,20,-3,12]]]], // Left Arm (Slim)
+    [[[8,20,4,12],[0,20,4,12],[4,16,4,4],[8,19,4,-4],[4,20,4,12],[12,20,4,12]]], // Right Leg
+    [[[3,20,-4,12],[11,20,-4,12],[7,16,-4,4],[11,19,-4,-4],[7,20,-4,12],[15,20,-4,12]]] // Left Leg
+  ],
+  [
+    [[[16,8,8,8],[0,8,8,8],[8,0,8,8],[16,7,8,-8],[8,8,8,8],[24,8,8,8]], // Head
+     [[48,8,8,8],[32,8,8,8],[40,0,8,8],[48,7,8,-8],[40,8,8,8],[56,8,8,8]]], // Hat
+    [[[28,20,4,12],[16,20,4,12],[20,16,8,4],[28,19,8,-4],[20,20,8,12],[32,20,8,12]], // Torso
+     [[28,36,4,12],[16,36,4,12],[20,32,8,4],[28,35,8,-4],[20,36,8,12],[32,36,8,12]]], // Jacket
+    [[[[48,20,4,12],[40,20,4,12],[44,16,4,4],[48,19,4,-4],[44,20,4,12],[52,20,4,12]], // Right Arm
+      [[47,20,4,12],[40,20,4,12],[44,16,3,4],[47,19,3,-4],[44,20,3,12],[51,20,3,12]]], // Right Arm (Slim)
+     [[[48,36,4,12],[40,36,4,12],[44,32,4,4],[48,35,4,-4],[44,36,4,12],[52,36,4,12]], // Right Sleeve
+      [[47,36,4,12],[40,36,4,12],[44,32,3,4],[47,35,3,-4],[44,36,3,12],[51,36,3,12]]]], // Right Sleeve (Slim)
+    [[[[40,52,4,12],[32,52,4,12],[36,48,4,4],[40,51,4,-4],[36,52,4,12],[44,52,4,12]], // Left Arm
+      [[39,52,4,12],[32,52,4,12],[36,48,3,4],[39,51,3,-4],[36,52,3,12],[43,52,3,12]]], // Left Arm (Slim)
+     [[[56,52,4,12],[48,52,4,12],[52,48,4,4],[56,51,4,-4],[52,52,4,12],[60,52,4,12]], // Left Sleeve
+      [[55,52,4,12],[48,52,4,12],[52,48,3,4],[55,51,3,-4],[52,52,3,12],[59,52,3,12]]]], // Left Sleeve (Slim)
+    [[[8,20,4,12],[0,20,4,12],[4,16,4,4],[8,19,4,-4],[4,20,4,12],[12,20,4,12]], // Right Leg
+     [[8,36,4,12],[0,36,4,12],[4,32,4,4],[8,35,4,-4],[4,36,4,12],[12,36,4,12]]], // Right Pant
+    [[[24,52,4,12],[16,52,4,12],[20,48,4,4],[24,51,4,-4],[20,52,4,12],[28,52,4,12]], // Left Leg
+     [[8,52,4,12],[0,52,4,12],[4,48,4,4],[8,51,4,-4],[4,52,4,12],[12,52,4,12]]] // Left Pant
+  ]
+];
+
+function radians(d) {
+  return d * (TAU / 360);
+}
+
+function getImage(id) {
+  return id && window.namemc && window.namemc.images && window.namemc.images[id];
+}
+
+function toCanvas(image, x, y, w, h) {
+  if (!image) return null;
+
+  x = (typeof x === 'undefined' ? 0 : x);
+  y = (typeof y === 'undefined' ? 0 : y);
+  w = (typeof w === 'undefined' ? image.width : w);
+  h = (typeof h === 'undefined' ? image.height : h);
+
+  let canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  canvas.getContext('2d', { willReadFrequently: true }).drawImage(image, x, y, w, h, 0, 0, w, h);
+
+  return canvas;
+}
+
+function getBitmap(canvas, x, y, w, h) {
+  if (!canvas) return null;
+
+  x = (typeof x === 'undefined' ? 0 : x);
+  y = (typeof y === 'undefined' ? 0 : y);
+  w = (typeof w === 'undefined' ? canvas.width : w);
+  h = (typeof h === 'undefined' ? canvas.height : h);
+
+  return canvas.getContext('2d', { willReadFrequently: true }).getImageData(x, y, w, h);
+}
+
+function hasAlphaLayer(bitmap) {
+  for (let p = 3; p < bitmap.data.length; p += 4) {
+    if (bitmap.data[p] < 255) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function makeOpaque(bitmap) {
+  if (!bitmap) return null;
+  for (let p = 3; p < bitmap.data.length; p += 4) {
+    bitmap.data[p] = 255;
+  }
+  return bitmap;
+}
+
+function capeScale(height) {
+  if (height % 22 === 0) {
+    return height / 22;
+  } else if (height % 17 === 0) {
+    return height / 17;
+  } else if (height >= 32 && (height & (height - 1)) === 0) { // power of 2
+    return height / 32;
+  } else {
+    return Math.max(1, Math.floor(height / 22));
+  }
+}
+
+function colorFaces(geometry, bitmap, rectangles) {
+  if (!rectangles) return null;
+
+  const faces = [];
+  const materials = [];
+  const materialIndexMap = [];
+  let f = 0;
+  let side = THREE.FrontSide;
+  rectangles.forEach(r => {
+    const dh = 4*Math.sign(r[2]);
+    const dv = 4*Math.sign(r[3])*bitmap.width;
+    const r1 = 4*(r[1]*bitmap.width + r[0]);
+    const r2 = 4*(r[3]*bitmap.width) + r1;
+    for (let p1 = r1, p2 = r1 + 4*r[2]; p1 !== r2; p1 += dv, p2 += dv) {
+      for (let p = p1; p !== p2; p += dh, f += 2) {
+        const a = bitmap.data[p + 3];
+        if (a < 255) side = THREE.DoubleSide;
+        if (a === 0) continue;
+
+        let materialIndex = materialIndexMap[a];
+        if (typeof materialIndex === 'undefined') {
+          materials.push(new THREE.MeshLambertMaterial({
+            vertexColors: THREE.FaceColors,
+            opacity: a / 255,
+            transparent: a < 255
+          }));
+          materialIndex = materials.length - 1;
+          materialIndexMap[a] = materialIndex;
+        }
+
+        const face1 = geometry.faces[f];
+        const face2 = geometry.faces[f + 1];
+        face1.color.r = bitmap.data[p] / 255;
+        face1.color.g = bitmap.data[p + 1] / 255;
+        face1.color.b = bitmap.data[p + 2] / 255;
+        face2.color = face1.color;
+        face1.materialIndex = materialIndex;
+        face2.materialIndex = materialIndex;
+        faces.push(face1);
+        faces.push(face2);
+      }
+    }
+  });
+
+  if (faces.length === 0) return null;
+
+  geometry.faces = faces;
+  geometry = new THREE.BufferGeometry().fromGeometry(geometry);
+
+  materials.forEach(m => m.side = side);
+
+  return new THREE.Mesh(geometry, materials);
+}
+
+function buildSkinModel(skin, cape, slim) {
+  if (skin.width < 64 || skin.height < 32) {
+    return null;
+  }
+
+  let v = (skin.height >= 64 ? 1 : 0);
+  let armW = slim ? 3 : 4;
+
+  let bitmap = getBitmap(skin);
+  let hasAlpha = hasAlphaLayer(bitmap);
+  let opaque = hasAlpha ? makeOpaque(getBitmap(skin)) : bitmap;
+
+  let headGroup = new THREE.Object3D();
+  headGroup.position.x = 0;
+  headGroup.position.y = 12;
+  headGroup.position.z = 0;
+  let headBox = new THREE.BoxGeometry(8, 8, 8, 8, 8, 8);
+  let headMesh = colorFaces(headBox, opaque, SKIN[v][0][0]);
+  headGroup.add(headMesh);
+  if (hasAlpha) {
+    let hatBox = new THREE.BoxGeometry(9, 9, 9, 8, 8, 8);
+    let hatMesh = colorFaces(hatBox, bitmap, SKIN[v][0][1]);
+    if (hatMesh) headGroup.add(hatMesh);
+  }
+
+  let torsoGroup = new THREE.Object3D();
+  torsoGroup.position.x = 0;
+  torsoGroup.position.y = 2;
+  torsoGroup.position.z = 0;
+  let torsoBox = new THREE.BoxGeometry(8 + EPS, 12 + EPS, 4 + EPS, 8, 12, 4);
+  let torsoMesh = colorFaces(torsoBox, opaque, SKIN[v][1][0]);
+  torsoGroup.add(torsoMesh);
+  if (v >= 1 && hasAlpha) {
+    let jacketBox = new THREE.BoxGeometry(8.5 + EPS, 12.5 + EPS, 4.5 + EPS, 8, 12, 4);
+    let jacketMesh = colorFaces(jacketBox, bitmap, SKIN[v][1][1]);
+    if (jacketMesh) torsoGroup.add(jacketMesh);
+  }
+
+  let rightArmGroup = new THREE.Object3D();
+  rightArmGroup.position.x = slim ? -5.5 : -6;
+  rightArmGroup.position.y = 6;
+  rightArmGroup.position.z = 0;
+  let rightArmBox = new THREE.BoxGeometry(armW, 12, 4, armW, 12, 4).translate(0, -4, 0);
+  let rightArmMesh = colorFaces(rightArmBox, opaque, SKIN[v][2][0][slim]);
+  rightArmGroup.add(rightArmMesh);
+  if (v >= 1 && hasAlpha) {
+    let rightSleeveBox = new THREE.BoxGeometry(armW + 0.5 + EPS * 4, 12.5 + EPS * 4, 4.5 + EPS * 4, armW, 12, 4).translate(0, -4, 0);
+    let rightSleeveMesh = colorFaces(rightSleeveBox, bitmap, SKIN[v][2][1][slim]);
+    if (rightSleeveMesh) rightArmGroup.add(rightSleeveMesh);
+  }
+
+  let leftArmGroup = new THREE.Object3D();
+  leftArmGroup.position.x = slim ? 5.5 : 6;
+  leftArmGroup.position.y = 6;
+  leftArmGroup.position.z = 0;
+  let leftArmBox = new THREE.BoxGeometry(armW, 12, 4, armW, 12, 4).translate(0, -4, 0);
+  let leftArmMesh = colorFaces(leftArmBox, opaque, SKIN[v][3][0][slim]);
+  leftArmGroup.add(leftArmMesh);
+  if (v >= 1 && hasAlpha) {
+    let leftSleeveBox = new THREE.BoxGeometry(armW + 0.5 + EPS * 4, 12.5 + EPS * 4, 4.5 + EPS * 4, armW, 12, 4).translate(0, -4, 0);
+    let leftSleeveMesh = colorFaces(leftSleeveBox, bitmap, SKIN[v][3][1][slim]);
+    if (leftSleeveMesh) leftArmGroup.add(leftSleeveMesh);
+  }
+
+  let rightLegGroup = new THREE.Object3D();
+  rightLegGroup.position.x = -2;
+  rightLegGroup.position.y = -4;
+  rightLegGroup.position.z = 0;
+  let rightLegBox = new THREE.BoxGeometry(4, 12, 4, 4, 12, 4).translate(0, -6, 0);
+  let rightLegMesh = colorFaces(rightLegBox, opaque, SKIN[v][4][0]);
+  rightLegGroup.add(rightLegMesh);
+  if (v >= 1 && hasAlpha) {
+    let rightPantBox = new THREE.BoxGeometry(4.5 + EPS * 2, 12.5 + EPS * 2, 4.5 + EPS * 2, 4, 12, 4).translate(0, -6, 0);
+    let rightPantMesh = colorFaces(rightPantBox, bitmap, SKIN[v][4][1]);
+    if (rightPantMesh) rightLegGroup.add(rightPantMesh);
+  }
+
+  let leftLegGroup = new THREE.Object3D();
+  leftLegGroup.position.x = 2;
+  leftLegGroup.position.y = -4;
+  leftLegGroup.position.z = 0;
+  let leftLegBox = new THREE.BoxGeometry(4, 12, 4, 4, 12, 4).translate(0, -6, 0);
+  let leftLegMesh = colorFaces(leftLegBox, opaque, SKIN[v][5][0]);
+  leftLegGroup.add(leftLegMesh);
+  if (v >= 1 && hasAlpha) {
+    let leftPantBox = new THREE.BoxGeometry(4.5 + EPS * 3, 12.5 + EPS * 3, 4.5 + EPS * 3, 4, 12, 4).translate(0, -6, 0);
+    let leftPantMesh = colorFaces(leftPantBox, bitmap, SKIN[v][5][1]);
+    if (leftPantMesh) leftLegGroup.add(leftPantMesh);
+  }
+
+  let model = new THREE.Object3D();
+  model.add(headGroup);
+  model.add(torsoGroup);
+  model.add(rightArmGroup);
+  model.add(leftArmGroup);
+  model.add(rightLegGroup);
+  model.add(leftLegGroup);
+
+  if (cape) {
+    let cs = capeScale(cape.height);
+    let capeGroup = new THREE.Object3D();
+    capeGroup.position.x = 0;
+    capeGroup.position.y = 8;
+    capeGroup.position.z = -2;
+    capeGroup.rotation.y += radians(180);
+    let capeBox = new THREE.BoxGeometry(10, 16, 1, 10*cs, 16*cs, cs).translate(0, -8, 0.5);
+    let capeMesh = colorFaces(capeBox, getBitmap(cape), [
+      [11*cs,cs,cs,16*cs], [0,cs,cs,16*cs], [cs,0,10*cs,cs],
+      [11*cs,cs-1,10*cs,-cs], [cs,cs,10*cs,16*cs], [12*cs,cs,10*cs,16*cs]
+    ]);
+    capeGroup.add(capeMesh);
+    model.add(capeGroup);
+  }
+
+  return model;
+}
+
+const skin3d = {
+  canvas: document.querySelector('canvas.skin-3d'),
+  modelCache: {},
+  dragState: {},
+  theta: 30,
+  phi: 21,
+  time: 90,
+  zoomZ: 60,
+  animating: true
+};
+
+function animateSkin(toggle) {
+  if (toggle) skin3d.animating = !skin3d.animating;
+  const button = document.getElementById('play-pause-btn');
+  if (skin3d.animating) {
+    if (button) button.textContent = 'Pause';
+    if (!skin3d.animationId) {
+      renderSkin();
+      skin3d.startTime = performance.now() - skin3d.time * (1500 / 360);
+      skin3d.animationId = window.requestAnimationFrame(renderSkinLoop);
+    }
+  } else {
+    if (button) button.textContent = 'Play';
+    if (skin3d.animationId) {
+      window.cancelAnimationFrame(skin3d.animationId);
+      skin3d.animationId = null;
+    }
+  }
+}
+
+function enableSkinRotation() {
+  if (skin3d.rotationEnabled) return;
+  skin3d.rotationEnabled = true;
+
+  function startRotation(t, id) {
+    skin3d.dragState[id] = t;
+  }
+
+  function rotate(t, id) {
+    if (!skin3d.dragState[id]) {
+      return false;
+    }
+
+    let result = true;
+
+    skin3d.theta += t.screenX - skin3d.dragState[id].screenX;
+    skin3d.phi   += t.screenY - skin3d.dragState[id].screenY;
+
+    if (skin3d.phi < -90) {
+      skin3d.phi = -90;
+      result = false;
+    } else if (skin3d.phi > 90) {
+      skin3d.phi = 90;
+      result = false;
+    }
+
+    skin3d.dragState[id] = t;
+
+    skin3d.model.rotation.x = radians(skin3d.phi);
+    skin3d.model.rotation.y = radians(skin3d.theta);
+
+    if (!skin3d.animationId) {
+      renderSkin();
+    }
+
+    return result;
+  }
+
+  function endRotation(t, id) {
+    delete skin3d.dragState[id];
+  }
+
+  skin3d.canvas.addEventListener('mousedown', e => { e.preventDefault(); startRotation(e, 'mouse'); });
+  window.addEventListener('mousemove', e => rotate(e, 'mouse'));
+  window.addEventListener('mouseup', e => endRotation(e, 'mouse'));
+  skin3d.canvas.addEventListener('touchstart', e => {
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      startRotation(e.changedTouches[i], e.changedTouches[i].identifier);
+    }
+  });
+  skin3d.canvas.addEventListener('touchmove', e => {
+    let result = false;
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      if (rotate(e.changedTouches[i], e.changedTouches[i].identifier)) {
+        result = true;
+      } else {
+        delete skin3d.dragState[e.changedTouches[i].identifier];
+      }
+    }
+    if (result) {
+      e.preventDefault();
+    }
+  });
+  skin3d.canvas.addEventListener('touchend', e => {
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      endRotation(e.changedTouches[i], e.changedTouches[i].identifier);
+    }
+  });
+  skin3d.canvas.addEventListener('touchcancel', e => {
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      endRotation(e.changedTouches[i], e.changedTouches[i].identifier);
+    }
+  });
+}
+
+function enableSkinZoom() {
+  if (skin3d.zoomEnabled) return;
+  skin3d.zoomEnabled = true;
+
+  skin3d.canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    skin3d.zoomZ = Math.min(140, Math.max(25, skin3d.zoomZ + e.deltaY * 0.05));
+    if (skin3d.camera) skin3d.camera.position.z = skin3d.zoomZ;
+    if (!skin3d.animationId) renderSkin();
+  }, { passive: false });
+}
+
+function renderSkinLoop() {
+  skin3d.time = (performance.now() - skin3d.startTime) * (360 / 1500) % 1440;
+  skin3d.animationId = window.requestAnimationFrame(renderSkinLoop);
+  renderSkin();
+}
+
+function renderSkin() {
+  if (!skin3d.canvas) return;
+
+  skin3d.id = skin3d.canvas.getAttribute('data-id');
+  skin3d.cape = skin3d.canvas.getAttribute('data-cape');
+  skin3d.slim = skin3d.canvas.getAttribute('data-model') === 'slim' ? 1 : 0;
+
+  let key = `${skin3d.id}:${skin3d.cape}:${skin3d.slim}`;
+  if (!skin3d.modelCache[key]) {
+    let skin = toCanvas(getImage(skin3d.id));
+    let cape = toCanvas(getImage(skin3d.cape));
+    if (!skin || skin3d.cape && !cape) return;
+    skin3d.modelCache[key] = buildSkinModel(skin, cape, skin3d.slim);
+  }
+  if (skin3d.modelCache[key] !== skin3d.model) {
+    if (skin3d.model) skin3d.scene.remove(skin3d.model);
+    skin3d.model = skin3d.modelCache[key];
+    if (!skin3d.scene) {
+      skin3d.scene = new THREE.Scene();
+      let ambLight = new THREE.AmbientLight(0xFFFFFF, 0.7);
+      let dirLight = new THREE.DirectionalLight(0xFFFFFF, 0.3);
+      dirLight.position.set(0.678, 0.284, 0.678);
+      skin3d.scene.add(ambLight);
+      skin3d.scene.add(dirLight);
+    }
+    skin3d.scene.add(skin3d.model);
+  }
+
+  if (!skin3d.model) return;
+
+  skin3d.model.rotation.x = radians(skin3d.phi);
+  skin3d.model.rotation.y = radians(skin3d.theta);
+  let angle = Math.sin(radians(skin3d.time));
+  skin3d.model.children[2].rotation.x = -radians(18) * angle;
+  skin3d.model.children[3].rotation.x = radians(18) * angle;
+  skin3d.model.children[4].rotation.x = radians(20) * angle;
+  skin3d.model.children[5].rotation.x = -radians(20) * angle;
+  if (skin3d.model.children[6]) {
+    let capeAngle = Math.sin(radians(skin3d.time / 4));
+    skin3d.model.children[6].rotation.x = radians(18) - radians(6) * capeAngle;
+  }
+
+  if (!skin3d.camera) {
+    skin3d.camera = new THREE.PerspectiveCamera(38, skin3d.canvas.width / skin3d.canvas.height, 10, 200);
+    skin3d.camera.position.x = 0;
+    skin3d.camera.position.y = 0;
+    skin3d.camera.position.z = skin3d.zoomZ;
+    skin3d.camera.lookAt(new THREE.Vector3(0, 0, 0));
+  }
+
+  if (!skin3d.renderer) {
+    skin3d.renderer = new THREE.WebGLRenderer({
+      canvas: skin3d.canvas,
+      antialias: true,
+      alpha: true
+    });
+  }
+
+  skin3d.renderer.render(skin3d.scene, skin3d.camera);
+}
+
+function loadTexture(url) {
+  return new Promise((resolve, reject) => {
+    if (!url) return resolve(null);
+    let image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error(`Failed to load texture: ${url}`));
+    image.src = url;
+  });
+}
+
+function decodeSlimFlag(propertyValue) {
+  if (!propertyValue) return false;
+  try {
+    const decoded = JSON.parse(atob(propertyValue));
+    return decoded.textures && decoded.textures.SKIN && decoded.textures.SKIN.metadata &&
+      decoded.textures.SKIN.metadata.model === 'slim';
+  } catch (e) {
+    return false;
+  }
+}
+
+async function loadSkin(username) {
+  const canvas = skin3d.canvas;
+  const status = document.getElementById('status');
+  const info = document.getElementById('player-info');
+  if (status) status.textContent = `Loading skin for ${username}...`;
+  if (info) info.textContent = '';
+
+  const res = await fetch(`https://playerdb.co/api/player/minecraft/${encodeURIComponent(username)}`);
+  if (!res.ok) throw new Error(`Player "${username}" not found`);
+  const json = await res.json();
+  const player = json.data.player;
+
+  const skinUrl = player.skin_texture;
+  const capeUrl = player.cape_texture;
+  const slim = decodeSlimFlag(player.properties && player.properties[0] && player.properties[0].value);
+
+  if (!window.namemc) window.namemc = {};
+  if (!window.namemc.images) window.namemc.images = {};
+
+  const skinImg = await loadTexture(skinUrl);
+  window.namemc.images[skinUrl] = skinImg;
+  canvas.setAttribute('data-id', skinUrl);
+  canvas.setAttribute('data-model', slim ? 'slim' : 'classic');
+
+  if (capeUrl) {
+    const capeImg = await loadTexture(capeUrl);
+    window.namemc.images[capeUrl] = capeImg;
+    canvas.setAttribute('data-cape', capeUrl);
+  } else {
+    canvas.removeAttribute('data-cape');
+  }
+
+  if (status) status.textContent = '';
+  if (info) {
+    info.innerHTML = '';
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'player-name';
+    nameSpan.textContent = player.username;
+    const uuidSpan = document.createElement('span');
+    uuidSpan.className = 'player-uuid';
+    uuidSpan.textContent = player.id;
+    info.appendChild(nameSpan);
+    info.appendChild(uuidSpan);
+  }
+  skin3d.uuid = player.id;
+  skin3d.username = player.username;
+  enableSkinRotation();
+  enableSkinZoom();
+  animateSkin();
+}

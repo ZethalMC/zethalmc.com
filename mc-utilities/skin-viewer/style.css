@@ -1,0 +1,310 @@
+body {
+    padding: 0 20px 60px 20px;
+}
+
+#site-header {
+    margin: 0 -20px;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (max-width: 640px) {
+    .site-header-inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 20px;
+        gap: 10px;
+    }
+
+    .header-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.container {
+    max-width: 640px;
+    padding: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: left;
+}
+
+h1 {
+    color: var(--text);
+    font-size: 2.2em;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin: 24px 0 8px 0;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.95em;
+}
+
+input,
+select,
+button {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-bright);
+}
+
+button {
+    font-weight: 600;
+    background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(23, 163, 152, 0.3);
+}
+
+.lookup-row {
+    display: flex;
+    gap: 10px;
+}
+
+.lookup-row input {
+    flex: 1;
+    min-width: 0;
+}
+
+.lookup-row button {
+    flex-shrink: 0;
+}
+
+.status {
+    min-height: 1.2em;
+    margin: 10px 0 0 0;
+    font-size: 0.9em;
+    color: var(--text-muted);
+}
+
+.viewer-tab {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+}
+
+.viewer-tab.active {
+    background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+    color: #fff;
+    border-color: transparent;
+}
+
+#share-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+#share-btn:hover {
+    border-color: var(--accent-bright);
+    color: var(--accent-bright);
+}
+
+.viewer-card {
+    margin-top: 20px;
+    text-align: center;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+canvas.skin-3d {
+    cursor: move;
+    touch-action: none;
+    max-width: 100%;
+}
+
+#play-pause-btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+}
+
+.player-name {
+    color: var(--accent-bright);
+    font-weight: 700;
+    font-size: 0.95em;
+}
+
+.player-uuid {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8em;
+    font-family: "Courier New", monospace;
+}
+
+h3 {
+    color: var(--text);
+    font-size: 1.1em;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.render-credit {
+    margin: 0 0 16px 0;
+    font-size: 0.85em;
+    color: var(--text-muted);
+}
+
+.render-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.render-controls select {
+    flex: 1;
+    max-width: 160px;
+}
+
+.render-toggles {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 16px;
+    font-size: 0.9em;
+    color: var(--text-muted);
+}
+
+.render-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.render-toggle input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0;
+    border-radius: 4px;
+    accent-color: var(--accent-bright);
+    cursor: pointer;
+}
+
+.render-preview {
+    display: block;
+    max-width: 180px;
+    min-height: 90px;
+    margin: 0 auto;
+    border-radius: 8px;
+    background:
+        repeating-conic-gradient(var(--surface) 0% 25%, var(--bg) 0% 50%) 50% / 20px 20px;
+}
+
+#render-download {
+    margin-top: 14px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* Collapsible "Instructions" (a <details>, not a <section>). */
+.instructions {
+    margin: 20px 0 30px 0;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.instructions summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    user-select: none;
+}
+
+.instructions summary::-webkit-details-marker {
+    display: none;
+}
+
+.instructions summary::after {
+    content: "\25BE";
+    color: var(--accent-bright);
+    font-size: 0.85em;
+    transition: transform 0.2s ease;
+}
+
+.instructions[open] summary {
+    border-bottom: 1px solid var(--border);
+}
+
+.instructions[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.instructions summary:hover {
+    color: var(--accent-bright);
+}
+
+.instructions-body {
+    padding: 18px 20px 4px 20px;
+    color: var(--text-muted);
+}
+
+.instructions-body p {
+    margin: 0 0 14px 0;
+}
+
+.instructions-body strong,
+.instructions-body em {
+    color: var(--text);
+}
