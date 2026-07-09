@@ -507,7 +507,19 @@ async function loadSkin(username) {
   }
 
   if (status) status.textContent = '';
-  if (info) info.textContent = `${player.username} - UUID: ${player.id}`;
+  if (info) {
+    info.innerHTML = '';
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'player-name';
+    nameSpan.textContent = player.username;
+    const uuidSpan = document.createElement('span');
+    uuidSpan.className = 'player-uuid';
+    uuidSpan.textContent = player.id;
+    info.appendChild(nameSpan);
+    info.appendChild(uuidSpan);
+  }
+  skin3d.uuid = player.id;
+  skin3d.username = player.username;
   enableSkinRotation();
   enableSkinZoom();
   animateSkin();

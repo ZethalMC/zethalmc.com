@@ -17,6 +17,11 @@
     <header id="site-header">
         <div class="site-header-inner">
             <a href="../index.html" id="logo">ZethalMC</a>
+            <div class="header-controls">
+                <button type="button" class="viewer-tab active" id="tab-3d-btn" onclick="showViewer('3d');">3D Viewer</button>
+                <button type="button" class="viewer-tab" id="tab-static-btn" onclick="showViewer('static');">Static Renders</button>
+                <button id="share-btn" type="button" class="hidden" onclick="shareCurrentView();">Share</button>
+            </div>
         </div>
     </header>
 
@@ -33,8 +38,6 @@
                     on touch devices) to zoom. Use <strong>Pause/Play</strong> to toggle the walking animation.</p>
                 <p>This looks up the player's <em>current</em> skin directly from Mojang, so it always reflects
                     whatever they're wearing right now.</p>
-                <p>The address bar updates with the username you looked up, so you can copy the link to share that
-                    exact view.</p>
             </div>
         </details>
 
@@ -45,12 +48,37 @@
             <button id="loadBtn" onclick="loadUsername();">Load</button>
         </div>
         <p id="status" class="status"></p>
+        <p id="player-info" class="player-info"></p>
 
-        <div class="viewer-card">
+        <div class="viewer-card" id="viewer-3d">
             <canvas class="skin-3d" width="300" height="400" data-model="classic"></canvas>
             <br>
             <button id="play-pause-btn" onclick="animateSkin(true);">Pause</button>
-            <p id="player-info" class="player-info"></p>
+        </div>
+
+        <div class="viewer-card hidden" id="viewer-static">
+            <p class="render-credit">Flat image renders, powered by <a href="https://vzge.me" target="_blank" rel="noopener">VZGE</a>.</p>
+            <div class="render-controls">
+                <select id="render-type">
+                    <optgroup label="2D">
+                        <option value="face">Face</option>
+                        <option value="front">Front</option>
+                        <option value="frontfull">Front Full</option>
+                    </optgroup>
+                    <optgroup label="3D">
+                        <option value="head">Head</option>
+                        <option value="bust" selected>Bust</option>
+                        <option value="full">Full</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="render-toggles">
+                <label class="render-toggle"><input type="checkbox" id="render-flip"> Flip</label>
+                <label class="render-toggle"><input type="checkbox" id="render-back"> Back</label>
+            </div>
+            <img id="render-preview" class="render-preview" alt="Static render preview">
+            <br>
+            <button id="render-download" type="button">Download PNG</button>
         </div>
     </div>
 
