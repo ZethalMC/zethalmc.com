@@ -32,8 +32,33 @@
         });
     }
 
-    // To add a server, just add an entry here — the card, live logo, and
-    // popup are all generated from this list.
+    var portraitCycle = document.getElementById('portrait-cycle');
+    if (portraitCycle) {
+        var portraitImgs = Array.prototype.slice.call(portraitCycle.querySelectorAll('img'));
+        var portraitIndex = 0;
+
+        portraitImgs.forEach(function (img) {
+            img.addEventListener('error', function () {
+                var wasActive = img.classList.contains('active');
+                var idx = portraitImgs.indexOf(img);
+                if (idx === -1) return;
+                portraitImgs.splice(idx, 1);
+                img.remove();
+                if (wasActive && portraitImgs.length) {
+                    portraitIndex = idx % portraitImgs.length;
+                    portraitImgs[portraitIndex].classList.add('active');
+                }
+            });
+        });
+
+        setInterval(function () {
+            if (portraitImgs.length < 2) return;
+            portraitImgs[portraitIndex].classList.remove('active');
+            portraitIndex = (portraitIndex + 1) % portraitImgs.length;
+            portraitImgs[portraitIndex].classList.add('active');
+        }, 4000);
+    }
+
     var SERVERS = [
         {
             name: 'Stoneworks',
@@ -119,7 +144,6 @@
                     renderLogoImage(logo, data.icon, server.name);
                 }
             }).catch(function () {
-                // Keep the letter placeholder if the API is unreachable.
             });
 
             return card;

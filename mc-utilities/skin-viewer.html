@@ -5,12 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ZethalMC - Minecraft Skin Viewer</title>
-    <meta name="description" content="Look up any Minecraft player's current skin and cape in an interactive, rotatable 3D viewer." />
+    <meta name="description" content="Look up any Minecraft player's current skin in an interactive, posable 3D viewer, generate static renders, and share the result." />
     <meta name="author" content="Zethal_" />
     <link rel="icon" href="../images/zethpfp.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/portfolio.css" />
     <link rel="stylesheet" href="../assets/css/feedback.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="skin-viewer/style.css" />
+    <link rel="stylesheet" href="skin-viewer/viewer-engine.css" />
 </head>
 
 <body>
@@ -19,23 +21,27 @@
             <a href="../index.html" id="logo">ZethalMC</a>
             <div class="header-controls">
                 <button type="button" class="viewer-tab active" id="tab-3d-btn" onclick="showViewer('3d');">3D Viewer</button>
+                <button type="button" class="viewer-tab hidden" id="tab-position-btn" onclick="showViewer('position');">Position</button>
                 <button type="button" class="viewer-tab" id="tab-static-btn" onclick="showViewer('static');">Static Renders</button>
-                <button id="share-btn" type="button" class="hidden" onclick="shareCurrentView();">Share</button>
+                <button type="button" class="viewer-tab hidden" id="tab-share-btn" onclick="showViewer('share');">Share</button>
             </div>
         </div>
     </header>
 
     <div class="container">
         <h1>Minecraft Skin Viewer</h1>
-        <p>Look up any Minecraft player's current skin and cape, rendered in an interactive 3D viewer.</p>
+        <p>Look up any Minecraft player's current skin, pose it in an interactive 3D viewer, and export or share the result.</p>
 
         <details class="instructions">
             <summary>Instructions</summary>
             <div class="instructions-body">
                 <p>Enter a Minecraft <strong>Java Edition</strong> username and click <strong>"Load"</strong> (or
-                    press Enter) to fetch that player's current skin and cape.</p>
+                    press Enter) to fetch that player's current skin.</p>
                 <p>Drag the model with your mouse (or finger, on touch devices) to rotate it, and scroll (or pinch,
-                    on touch devices) to zoom. Use <strong>Pause/Play</strong> to toggle the walking animation.</p>
+                    on touch devices) to zoom.</p>
+                <p>Use the <strong>Position</strong> tab to fine-tune the pose, scene lighting/background, and held
+                    items; <strong>Static Renders</strong> for flat image exports; and <strong>Share</strong> to copy
+                    a link or download a custom render.</p>
                 <p>This looks up the player's <em>current</em> skin directly from Mojang, so it always reflects
                     whatever they're wearing right now.</p>
             </div>
@@ -51,9 +57,246 @@
         <p id="player-info" class="player-info"></p>
 
         <div class="viewer-card" id="viewer-3d">
-            <canvas class="skin-3d" width="300" height="400" data-model="classic"></canvas>
-            <br>
-            <button id="play-pause-btn" onclick="animateSkin(true);">Pause</button>
+            <div id="canvas-mount">
+                <div id="canvas"></div>
+                <div class="howto">
+                    <i class="fa-solid fa-arrows-rotate"></i> rotate,
+                    <i class="fa-solid fa-up-down-left-right"></i> move and
+                    <i class="fa-solid fa-magnifying-glass"></i> zoom
+                </div>
+            </div>
+        </div>
+
+        <div class="viewer-card hidden" id="viewer-position">
+            <div class="edit-tabs-row">
+                <button type="button" id="edit-pose" class="edit-tabs active">Pose</button>
+                <button type="button" id="edit-scene" class="edit-tabs">Scene</button>
+                <button type="button" id="edit-items" class="edit-tabs">Items</button>
+            </div>
+
+            <div id="model-ava">
+            <div class="model-controls-wrap">
+                <div id="model-controls" class="active">
+                    <div class="switcher-controls">
+                        <div>Head only</div>
+                        <div><span id="head-switcher" class="switcher"></span></div>
+                    </div>
+                    <div>
+                        <div>Model</div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-skin-x">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-skin-x">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-skin-y">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-skin-y">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-skin-z">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-skin-z">
+                        </div>
+                    </div>
+                    <div>
+                        <div>Head</div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-head-x">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-head-x">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-head-y">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-head-y">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-head-z">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-head-z">
+                        </div>
+                    </div>
+                    <div>
+                        <div>Body</div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-body-x">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-body-x">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-body-y">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-body-y">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-body-z">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-body-z">
+                        </div>
+                    </div>
+                    <div class="grid5 br">
+                        <div>Left arm</div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftarm-x">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-leftarm-x">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftarm-y">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-leftarm-y">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftarm-z">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-leftarm-z">
+                        </div>
+                        <div>
+                            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-leftarm-e">
+                            <input type="number" min="0" max="200" value="0" id="text-input-leftarm-e">
+                        </div>
+                    </div>
+                    <div class="grid5">
+                        <div>Right arm</div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightarm-x">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-rightarm-x">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightarm-y">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-rightarm-y">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightarm-z">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-rightarm-z">
+                        </div>
+                        <div>
+                            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-rightarm-e">
+                            <input type="number" min="0" max="200" value="0" id="text-input-rightarm-e">
+                        </div>
+                    </div>
+                    <div class="grid5">
+                        <div>Left leg</div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftleg-x">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-leftleg-x">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftleg-y">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-leftleg-y">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftleg-z">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-leftleg-z">
+                        </div>
+                        <div>
+                            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-leftleg-e">
+                            <input type="number" min="0" max="200" value="0" id="text-input-leftleg-e">
+                        </div>
+                    </div>
+                    <div class="grid5">
+                        <div>Right leg</div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightleg-x">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-rightleg-x">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightleg-y">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-rightleg-y">
+                        </div>
+                        <div>
+                            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightleg-z">
+                            <input type="number" min="-360" max="360" value="0" id="text-input-rightleg-z">
+                        </div>
+                        <div>
+                            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-rightleg-e">
+                            <input type="number" min="0" max="200" value="0" id="text-input-rightleg-e">
+                        </div>
+                    </div>
+                </div>
+                <div id="scene-controls">
+                    <div class="light-settings">
+                        <div class="light-row">
+                            <div class="light-row-label">Ambient</div>
+                            <input type="range" min="0" max="100" value="20" class="slider" id="range-input-alight">
+                            <input type="number" min="0" max="100" value="20" id="text-input-alight">
+                        </div>
+                        <div class="light-row">
+                            <div class="light-row-label">Directional</div>
+                            <input type="range" min="0" max="100" value="30" class="slider" id="range-input-dlight">
+                            <input type="number" min="0" max="100" value="30" id="text-input-dlight">
+                            <div id="dlight-color" class="color" data-color="#ffffff"></div>
+                        </div>
+                        <p class="light-hint">Set both to 0 for no shadows.</p>
+                    </div>
+                    <div>
+                        <div>Sun position (drag the yellow circle)</div>
+                        <div>
+                            <div id="light-area">
+                                <div class="light-steve"></div>
+                                <div id="light-point"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="switcher-controls">
+                        <div>Floor</div>
+                        <div><span id="floor-switcher" class="switcher"></span></div>
+                        <div id="floor-color" class="color" data-color="#ffffff"></div>
+                    </div>
+                    <div class="switcher-controls">
+                        <div>Background</div>
+                        <div><span id="bg-switcher" class="switcher"></span></div>
+                        <div id="bg-color" class="color" data-color="#ffffff"></div>
+                        <div id="bg-color2" class="color" data-color="#ffffff"></div>
+                    </div>
+                </div>
+                <div id="m-items">
+                    <div>
+                        <div id="m-item-left-arm" class="m-item-arms active" data-item="0" title="Edit the item held in this arm">Right arm</div>
+                        <div class="m-item">
+                            <label for="m-item-left-arm-img" title="Upload an image to hold as an item"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-left-arm-img" name="m-item-left-arm-img"><i class="fa-solid fa-image"></i></label>
+                        </div>
+                        <div class="m-item">
+                            <div id="m-item-left-arm-visible" class="img" title="Show/hide the held item"><i class="fa-solid fa-eye icon-shown"></i><i class="fa-solid fa-eye-slash icon-hidden"></i></div>
+                        </div>
+                        <div class="m-item">
+                            <div id="m-item-left-arm-grip" class="img grip" title="Switch between an open hand and a fist grip"><i class="fa-solid fa-hand icon-open"></i><i class="fa-solid fa-hand-back-fist icon-fist"></i></div>
+                        </div>
+                    </div>
+                    <div class="item-transform" data-arm="left">
+                        <div class="item-transform-heading">Right item position / rotation</div>
+                        <div class="item-transform-row">
+                            <div title="Move the item relative to the hand">Position</div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-left-x"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-left-x"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-left-y"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-left-y"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-left-z"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-left-z"></div>
+                        </div>
+                        <div class="item-transform-row">
+                            <div title="Rotate the item to any angle">Rotation</div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-left-rx"><input type="number" min="-180" max="180" value="0" id="text-item-left-rx"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-left-ry"><input type="number" min="-180" max="180" value="0" id="text-item-left-ry"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-left-rz"><input type="number" min="-180" max="180" value="0" id="text-item-left-rz"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="m-item-right-arm" class="m-item-arms" data-item="0" title="Edit the item held in this arm">Left arm</div>
+                        <div class="m-item">
+                            <label for="m-item-right-arm-img" title="Upload an image to hold as an item"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-right-arm-img" name="m-item-right-arm-img"><i class="fa-solid fa-image"></i></label>
+                        </div>
+                        <div class="m-item">
+                            <div id="m-item-right-arm-visible" class="img" title="Show/hide the held item"><i class="fa-solid fa-eye icon-shown"></i><i class="fa-solid fa-eye-slash icon-hidden"></i></div>
+                        </div>
+                        <div class="m-item">
+                            <div id="m-item-right-arm-grip" class="img grip" title="Switch between an open hand and a fist grip"><i class="fa-solid fa-hand icon-open"></i><i class="fa-solid fa-hand-back-fist icon-fist"></i></div>
+                        </div>
+                    </div>
+                    <div class="item-transform" data-arm="right">
+                        <div class="item-transform-heading">Left item position / rotation</div>
+                        <div class="item-transform-row">
+                            <div title="Move the item relative to the hand">Position</div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-right-x"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-right-x"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-right-y"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-right-y"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-right-z"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-right-z"></div>
+                        </div>
+                        <div class="item-transform-row">
+                            <div title="Rotate the item to any angle">Rotation</div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-right-rx"><input type="number" min="-180" max="180" value="0" id="text-item-right-rx"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-right-ry"><input type="number" min="-180" max="180" value="0" id="text-item-right-ry"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-right-rz"><input type="number" min="-180" max="180" value="0" id="text-item-right-rz"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
         </div>
 
         <div class="viewer-card hidden" id="viewer-static">
@@ -79,8 +322,34 @@
             <img id="render-preview" class="render-preview" alt="Static render preview">
             <br>
             <button id="render-download" type="button">Download PNG</button>
+
+            <h3 class="output-heading">Custom 3D Renders</h3>
+            <div class="output-gallery" id="output"></div>
+        </div>
+
+        <div class="viewer-card hidden" id="viewer-share">
+            <h3>Share this view</h3>
+            <div class="share-actions">
+                <button id="share-link-btn" type="button" onclick="shareCurrentView();">Copy Link / Share</button>
+                <button id="download-ava" type="button">Download Current Pose PNG</button>
+            </div>
+            <h3>Share your custom pose</h3>
+            <div class="pose-share-row">
+                <input type="text" id="pose-settings" placeholder="Paste settings here and click Load">
+                <button id="copy-pose-button" type="button">Copy</button>
+                <button id="load-pose-button" type="button">Load</button>
+            </div>
+            <p class="render-credit">The pose/scene/item editor is adapted from <a href="https://mcskins.top/avatar-maker" target="_blank" rel="noopener">mcskins.top</a>'s avatar maker.</p>
         </div>
     </div>
+
+    <input type="file" accept="image/png" id="load_skin" name="load_skin" class="hidden">
+    <input type="checkbox" id="shadowsbox" checked class="hidden">
+    <select id="quality" class="hidden">
+        <option value="0">Low</option>
+        <option value="1">Medium</option>
+        <option value="2" selected>High</option>
+    </select>
 
     <button class="feedback-button" onclick="togglePopup()">Feedback</button>
 
@@ -110,8 +379,41 @@
 
     <div id="errorPopup"></div>
 
-    <script src="../assets/js/three.min.js"></script>
-    <script src="../assets/js/skin.js"></script>
+    <script>
+        const editBtn = {
+            pose: document.getElementById("edit-pose"),
+            scene: document.getElementById("edit-scene"),
+            items: document.getElementById("edit-items")
+        };
+        const editControls = {
+            pose: document.getElementById("model-controls"),
+            scene: document.getElementById("scene-controls"),
+            items: document.getElementById("m-items")
+        };
+        for (const key in editBtn) {
+            editBtn[key].addEventListener("click", () => {
+                if (!editBtn[key].classList.contains("active")) {
+                    for (const kkey in editBtn) {
+                        editControls[kkey].classList.remove("active");
+                        editBtn[kkey].classList.remove("active");
+                    }
+                    editControls[key].classList.add("active");
+                    editBtn[key].classList.add("active");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        const readyMsg = "Click an image to download it, or right-click -> Save Image As...";
+        const sizeErrMsg = "File size exceeds 200 kB";
+        const copyText = "Copy";
+        const copyErrMsg = "Error";
+        const copySuccess = "Copied!";
+        const skinimg = null;
+    </script>
+    <script src="skin-viewer/js/zethalmc-viewer-engine.js"></script>
+    <script src="skin-viewer/js/skin.js"></script>
     <script src="skin-viewer/script.js"></script>
     <script>window.FEEDBACK_SOURCE = "Skin Viewer";</script>
     <script src="../assets/js/feedback.js"></script>

@@ -1,10 +1,103 @@
-function showViewer(which) {
-  const show3d = which === '3d';
-  document.getElementById('viewer-3d').classList.toggle('hidden', !show3d);
-  document.getElementById('viewer-static').classList.toggle('hidden', show3d);
-  document.getElementById('tab-3d-btn').classList.toggle('active', show3d);
-  document.getElementById('tab-static-btn').classList.toggle('active', !show3d);
+function setUrlParams(updates) {
+  const url = new URL(window.location);
+  const tab = updates.tab ?? url.searchParams.get('tab');
+  const user = updates.user ?? url.searchParams.get('user');
+  url.search = '';
+  if (tab) url.searchParams.set('tab', tab);
+  if (user) url.searchParams.set('user', user);
+  window.history.replaceState(null, '', url);
 }
+
+function showViewer(which) {
+  const tabs = { '3d': 'viewer-3d', position: 'viewer-position', static: 'viewer-static', share: 'viewer-share' };
+  for (const [key, panelId] of Object.entries(tabs)) {
+    document.getElementById(panelId).classList.toggle('hidden', key !== which);
+    document.getElementById(`tab-${key}-btn`).classList.toggle('active', key === which);
+  }
+  if (which === '3d' || which === 'position') moveCanvasMount(which);
+
+  setUrlParams({ tab: which });
+}
+
+function moveCanvasMount(which) {
+  const mount = document.getElementById('canvas-mount');
+  const target = document.getElementById(which === '3d' ? 'viewer-3d' : 'viewer-position');
+  target.appendChild(mount);
+}
+
+function revealAdvancedTabs() {
+  document.getElementById('tab-position-btn').classList.remove('hidden');
+  document.getElementById('tab-share-btn').classList.remove('hidden');
+}
+
+const itemBase = { left: null, right: null };
+
+function getItemGroup(arm) {
+  const model = window.__itemModel;
+  if (!model) return null;
+  const bone = model[`${arm}_arm`] && model[`${arm}_arm`].skeleton.bones[2];
+  return (bone && bone.children[0]) || null;
+}
+
+function captureItemBase(arm) {
+  const group = getItemGroup(arm);
+  if (!group) return;
+  itemBase[arm] = {
+    position: { x: group.position.x, y: group.position.y, z: group.position.z },
+    rotation: { x: group.rotation.x, y: group.rotation.y, z: group.rotation.z }
+  };
+}
+
+function applyItemOffset(arm) {
+  const group = getItemGroup(arm);
+  const base = itemBase[arm];
+  if (!group || !base) return;
+  const deg2rad = (d) => d * Math.PI / 180;
+  const val = (id) => parseFloat(document.getElementById(id).value) || 0;
+
+  group.position.set(
+    base.position.x + val(`text-item-${arm}-x`),
+    base.position.y + val(`text-item-${arm}-y`),
+    base.position.z + val(`text-item-${arm}-z`)
+  );
+  group.rotation.set(
+    base.rotation.x + deg2rad(val(`text-item-${arm}-rx`)),
+    base.rotation.y + deg2rad(val(`text-item-${arm}-ry`)),
+    base.rotation.z + deg2rad(val(`text-item-${arm}-rz`))
+  );
+  window.__itemModel.render();
+}
+
+function bindItemAxisInput(arm, axis) {
+  const range = document.getElementById(`range-item-${arm}-${axis}`);
+  const number = document.getElementById(`text-item-${arm}-${axis}`);
+  range.addEventListener('input', () => {
+    number.value = range.value;
+    applyItemOffset(arm);
+  });
+  number.addEventListener('input', () => {
+    range.value = number.value;
+    applyItemOffset(arm);
+  });
+}
+
+['left', 'right'].forEach((arm) => {
+  ['x', 'y', 'z', 'rx', 'ry', 'rz'].forEach((axis) => bindItemAxisInput(arm, axis));
+
+  document.getElementById(`m-item-${arm}-arm-grip`).addEventListener('click', () => {
+    setTimeout(() => {
+      captureItemBase(arm);
+      applyItemOffset(arm);
+    }, 0);
+  });
+
+  document.getElementById(`m-item-${arm}-arm-img`).addEventListener('change', () => {
+    setTimeout(() => {
+      captureItemBase(arm);
+      applyItemOffset(arm);
+    }, 250);
+  });
+});
 
 function loadUsername() {
   const input = document.getElementById('username');
@@ -13,11 +106,8 @@ function loadUsername() {
 
   loadSkin(name)
     .then(() => {
-      const url = new URL(window.location);
-      url.searchParams.set('user', name);
-      window.history.replaceState(null, '', url);
+      setUrlParams({ user: name });
       updateRenderPreview();
-      document.getElementById('share-btn').classList.remove('hidden');
     })
     .catch(err => {
       console.error(err);
@@ -27,7 +117,7 @@ function loadUsername() {
 }
 
 async function shareCurrentView() {
-  const btn = document.getElementById('share-btn');
+  const btn = document.getElementById('share-link-btn');
   const url = window.location.href;
 
   if (navigator.share) {
@@ -50,9 +140,6 @@ async function shareCurrentView() {
   }
 }
 
-// Mirrors the yaw values used by VZGE's own "Quick Render" widget: Bust/Full
-// (and Front Full, though 2D renders ignore angle) flip to y=-40, everything
-// else flips to y=70, and "Back" always adds 180 on top of that.
 function computeRenderYaw(type, flip, back) {
   let yaw = 0;
   if (flip) {
@@ -122,3 +209,8 @@ if (initialUser) {
   document.getElementById('username').value = initialUser;
 }
 loadUsername();
+
+const initialTab = new URLSearchParams(window.location.search).get('tab');
+if (['3d', 'position', 'static', 'share'].includes(initialTab)) {
+  showViewer(initialTab);
+}

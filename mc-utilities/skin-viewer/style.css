@@ -120,19 +120,6 @@ button:hover {
     border-color: transparent;
 }
 
-#share-btn {
-    padding: 8px 16px;
-    font-size: 0.85rem;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text);
-}
-
-#share-btn:hover {
-    border-color: var(--accent-bright);
-    color: var(--accent-bright);
-}
-
 .viewer-card {
     margin-top: 20px;
     text-align: center;
@@ -144,19 +131,6 @@ button:hover {
 
 .hidden {
     display: none;
-}
-
-canvas.skin-3d {
-    cursor: move;
-    touch-action: none;
-    max-width: 100%;
-}
-
-#play-pause-btn {
-    display: inline-block;
-    margin-top: 14px;
-    padding: 8px 20px;
-    font-size: 0.9rem;
 }
 
 .player-info {
@@ -307,4 +281,86 @@ h3 {
 .instructions-body strong,
 .instructions-body em {
     color: var(--text);
+}
+
+#viewer-position,
+#viewer-share {
+    text-align: left;
+}
+
+#canvas-mount {
+    margin: 0 auto;
+    max-width: 420px;
+}
+
+.output-heading {
+    margin: 24px 0 0 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.output-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.output-gallery .tools-text {
+    flex-basis: 100%;
+    color: var(--text-muted);
+    font-size: 0.85em;
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.output-gallery a {
+    display: block;
+    max-width: 150px;
+}
+
+.output-gallery .ava {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+@media (max-width: 480px) {
+    .output-gallery a {
+        max-width: 120px;
+    }
+}
+
+.output-gallery .fade-in {
+    animation: outputFadeIn ease 0.5s;
+}
+
+@keyframes outputFadeIn {
+    0% { opacity: 0; }
+    40% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pose-share-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pose-share-row input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.pose-share-row button {
+    flex-shrink: 0;
 }

@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("brewForm");
     const output = document.getElementById("output");
 
-    // Keep body padding in sync with the floating panel's real height so it
-    // never overlaps the results when docked to the bottom on mobile.
     const optionalFieldsPanel = document.querySelector(".optional-fields-panel");
     const dockedQuery = window.matchMedia("(max-width: 600px)");
 
@@ -19,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     syncOptionalPanelSpacing();
     window.addEventListener("resize", syncOptionalPanelSpacing);
 
-    // Copy generated YML to clipboard
     const copyOutputBtn = document.getElementById("copyOutputBtn");
     copyOutputBtn.addEventListener("click", async () => {
         if (!output.textContent) return;
@@ -39,43 +36,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Optional fields picker
     const optionalSelect = document.getElementById('optionalSelect');
     const addOptionalBtn = document.getElementById('addOptionalBtn');
 
     addOptionalBtn.addEventListener('click', () => {
         const val = optionalSelect.value;
         if (!val) return;
-        // show the optional block with matching data-optional-id
         const block = document.querySelector(`.optional-block[data-optional-id="${val}"]`);
         if (block) {
             block.hidden = false;
-            // disable option so it can't be added twice
             const opt = optionalSelect.querySelector(`option[value="${val}"]`);
             if (opt) opt.disabled = true;
             optionalSelect.value = '';
 
             block.scrollIntoView({ behavior: 'smooth', block: 'center' });
             block.classList.remove('just-added');
-            void block.offsetWidth; // restart animation if triggered again
+            void block.offsetWidth;
             block.classList.add('just-added');
         }
     });
 
-    // Handle remove buttons for optional blocks (event delegation)
     document.addEventListener('click', (e) => {
         if (e.target.classList && e.target.classList.contains('removeOptionalBtn')) {
             const id = e.target.dataset.removeId;
             const block = document.querySelector(`.optional-block[data-optional-id="${id}"]`);
             if (block) {
-                // clear inputs inside the block
                 const inputs = block.querySelectorAll('input, select, textarea');
                 inputs.forEach(i => {
                     if (i.type === 'checkbox' || i.type === 'radio') i.checked = false;
                     else i.value = '';
                 });
                 block.hidden = true;
-                // re-enable option in select
                 const opt = optionalSelect.querySelector(`option[value="${id}"]`);
                 if (opt) opt.disabled = false;
             }
@@ -399,7 +390,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (loreLines.length > 0) {
             yml += `  lore:\n`;
             for (const line of loreLines) {
-                // Escape quotes inside text
                 const escapedLine = line.replace(/"/g, '\\"');
                 yml += `    - "${escapedLine}"\n`;
             }
@@ -451,7 +441,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // Output with .yml code block
         output.textContent = `${yml}`;
     });
 });
