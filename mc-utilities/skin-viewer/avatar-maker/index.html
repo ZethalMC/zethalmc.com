@@ -1,0 +1,1096 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+<title>Minecraft Avatar Maker – create a profile picture</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html,body{min-height:100dvh}
+body{height:auto}
+h1 {
+  text-align: center;
+}
+.tools-text {
+  max-width: 600px;
+  line-height: 1.5em;
+  margin: 1em auto;
+}
+
+#converter {
+  margin: 0 auto;
+  padding: 28px 10px 0;
+  display: table-cell;
+  text-align: center;
+  width: 50%;
+  vertical-align: top;
+}
+#converter input {
+  border: 1px solid #ccc;
+  color: #666;
+  margin: 8px 0 10px;
+  padding: 8px;
+  display: inline-block;
+  max-width: 300px;
+  width: 100%;
+  font-family: Arial;
+  font-size: 14px;
+  border-radius: 5px;
+}
+#converter input[type="submit"] {
+  color: #595959;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 5px;
+  box-shadow: inset 0 1px #fdfdfd;
+  max-width: 220px;
+  -webkit-appearance: button;
+  margin: 20px 0;
+  background: #efefef;
+}
+#converter select {
+  border: solid 1px #ccc;
+  padding: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: all 0.1s ease-in-out;
+  border-radius: 5px;
+  color: #333;
+  position: relative;
+  padding-right: 15px;
+  cursor: pointer;
+}
+#converter .select {
+  display: inline-block;
+  position: relative;
+}
+#converter .select:after {
+  position: absolute;
+  content: "";
+  right: 0.5em;
+  top: 50%;
+  margin-top: -0.16em;
+  border: 0.35714em solid transparent;
+  border-top-color: #cacaca;
+  pointer-events: none;
+}
+#converter > div.optblock {
+  max-width: 430px;
+  width: 100%;
+  margin: 5px auto;
+  text-align: left;
+  display: inline-block;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 2px 8px;
+  background: #e8e7e7;
+  font-size: 14px;
+}
+#converter > div.smallboxopt {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+  line-height:27px
+}
+#converter > div.smallboxopt input,
+#converter > div.smallboxopt select {
+  margin: 0;
+  margin-left: 5px;
+  width: auto;
+}
+#converter .imgupload {
+  max-width: 430px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+  display: block;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+#converter .imgupload input {
+  margin: 0;
+  border: none;
+  background: none;
+}
+#converter .imgupload p {
+  margin: 5px 0;
+}
+#output {
+  max-width: 680px;
+  margin: 10px auto 0;
+  background: #f3f3f3;
+  border-radius: 4px;
+  padding: 20px 8px;
+  -moz-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+#output .tools-text {
+  text-align: left;
+  font-weight: bold;
+  margin: 0 auto;
+}
+#output div p {
+  margin: 0;
+}
+#converter #form_submit {
+  max-width: 105px;
+  margin: 0 0 5px;
+}
+#converter #username-field {
+  margin-right: 3px;
+}
+.result-arrow {
+  font-size: 30px;
+  color: #ee6786;
+}
+#skinbyname {
+  display: none;
+}
+.center {
+  text-align: center;
+}
+.alert {
+  border: 1px solid #ffe79f;
+  padding: 5px 10px;
+  display: inline-block;
+  background: #fffde7;
+  border-radius: 5px;
+}
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+.section {
+  display: block;
+  text-align: center;
+  padding: 30px 0;
+  max-width: 680px;
+  margin: 30px auto 0;
+  border-top: 1px #d8d8d8 solid;
+}
+.ava {
+  display: inline-block;
+}
+.meta {
+  display: block;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #717171;
+  max-width: 680px;
+  margin: 10px auto;
+  padding: 0 15px;
+}
+.tool-tab {
+  display: table;
+  max-width: 700px;
+  margin: 0 auto 20px;
+}
+@media (max-width: 700px) {
+  #converter {
+    display: block;
+    width: 100%;
+    padding: 20px 0;
+  }
+  .tool-tab {
+    display: block;
+  }
+}
+.fade-in {
+animation: fadeIn ease 0.5s;
+-webkit-animation: fadeIn ease 0.5s;
+-moz-animation: fadeIn ease 0.5s;
+-o-animation: fadeIn ease 0.5s;
+-ms-animation: fadeIn ease 0.5s;
+}
+@keyframes fadeIn {
+0% {opacity:0;}
+40% {opacity:0;}
+100% {opacity:1;}
+}
+#cm {
+  transition: height 2s;
+}
+#model-ava {
+  display: none;
+  margin: 0 auto 10px;
+  flex-direction: column;
+  border: none;
+}
+.model-controls-wrap{
+    text-align: center;
+    margin: 10px auto 0;
+    width: 100%;
+}
+#model-controls,#scene-controls{
+margin-top:14px;
+}
+#scene-controls,#model-controls,#m-items{
+display:none;
+max-width:600px;
+margin: 0 auto;
+}
+#model-controls.active,#scene-controls.active,#m-items.active{
+  display:block;
+}
+.model-controls-wrap input[type="range"] {max-width: 100px;}
+.model-controls-wrap input[type="range"]::-webkit-slider-thumb {
+appearance: none;
+-webkit-appearance: none;
+height: 10px;
+width: 10px;
+background: #fff;
+box-shadow: 0 0 3px rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 0, 0, 0.5) inset, 0 0 0 99px #fff inset;
+border: none;
+pointer-events: auto;
+-webkit-transition: 0.1s;
+transition: 0.1s;
+border-radius: 50%;
+border: 4px solid;
+}
+.model-controls-wrap input[type="number"] {
+border: none;
+text-align:center;
+color: #666;
+padding: 4px;
+max-width: 38px;
+width: 38px;
+font-family: Arial;
+font-size: 12px;
+border-radius: 5px;
+position: relative;
+background:none;
+top: -4px;
+left: -4px;
+}
+
+.model-controls-wrap input::-webkit-outer-spin-button,
+.model-controls-wrap input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.model-controls-wrap input[type="number"] {
+-moz-appearance: textfield;}
+#model-controls > div,
+#scene-controls > div{
+display: grid;
+grid-template-columns: 70px auto auto auto;
+font-size: 12px;
+color: #585858;
+position:relative;
+margin-bottom: 5px;
+}
+#scene-controls > div{
+  grid-template-columns: 120px auto auto auto;
+  justify-items: start;
+}
+#model-controls > div.grid5{grid-template-columns: 80px auto auto auto auto;}
+#model-controls > div.grid5.br{margin-top:14px}
+#model-controls div.grid5 input[type="number"] {max-width: 28px;}
+#model-controls div.grid5 input[type="range"] {max-width: 78px;}
+#model-controls > div div:first-child,#scene-controls > div div:first-child{text-align:left}
+#canvas canvas {
+width:100% !important;
+height:auto !important;
+margin:20px auto 0;
+cursor:pointer;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+#pose-settings {
+  border: 1px solid #ccc;
+  color: #666;
+  margin: 8px 0 10px;
+  padding: 8px;
+  display: inline-block;
+  width: 100%;
+  font-family: Arial;
+  font-size: 14px;
+  border-radius: 5px;
+}
+#pose-settings::placeholder {
+  text-align: center;
+}
+.share-pose button {
+  color: #595959;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: inset 0 1px #fdfdfd;
+  max-width: 220px;
+  -webkit-appearance: button;
+  margin: 10px;
+  background: #efefef;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+@media (max-width: 600px) {
+#model-controls > div div:first-child{grid-column:1 / -1;margin-bottom:4px;text-align:center}
+#model-controls > div.grid5.br {margin-top: 0}
+#model-controls > div{grid-template-columns: auto auto auto;}
+.model-controls-wrap input[type="range"]{-webkit-appearance: none;}
+.model-controls-wrap input[type="range"]::-webkit-slider-runnable-track{background: #ddd;border-radius: 10px;}
+.model-controls-wrap input[type="range"]::-moz-range-track{background: #ddd;border-radius: 10px;}
+.model-controls-wrap input[type="range"]::-webkit-slider-thumb{width:20px;height:20px;cursor: pointer;background: #1597ff;box-shadow:none;border:none;border-radius:50%}
+.model-controls-wrap input[type="range"]::-moz-range-thumb{width:20px;height:20px;cursor: pointer;background: #1597ff;box-shadow:none;border:none;border-radius:50%}
+}
+
+#model-ava .switcher-controls {
+  display: flex;
+  margin-bottom: 14px;
+  align-items: center;
+}
+#model-ava .switcher-controls > div:first-child {
+  font-size: 12px;
+  color: #585858;
+  margin-right: 8px;
+}
+#model-ava .switcher-controls > div.color {
+  margin: 0 6px;
+}
+#light-area {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #e6e6e6;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px 0 rgb(0 0 0 / 7%);
+  border-radius: 4px;
+}
+.light-steve {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-5px, -5px);
+  background: #8d6e63;
+  border-radius: 2px;
+}
+#light-point {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #ffeb3b;
+  bottom: 0;
+  right: 0;
+  -webkit-box-shadow: 0 0 10px #ffeb3b;
+  -moz-box-shadow: 0 0 10px #ffeb3b;
+  box-shadow: 0 0 10px #ffeb3b;
+  cursor: grab;
+  border: 2px solid #fffde7;
+}
+.popup.popup_top.gleft {
+left: auto;
+right: 0;
+}
+.switcher {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 1em;
+  cursor: pointer;
+  border-radius: 1.5em;
+  transition: 350ms;
+  background: linear-gradient(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0)), #ddd;
+  box-shadow: 0 0.07em 0.1em -0.1em rgb(0 0 0 / 40%) inset,
+    0 0.05em 0.08em -0.01em rgb(255 255 255 / 70%);
+  vertical-align: middle;
+  margin-right: 12px;
+}
+.switcher::before {
+  position: absolute;
+  content: "";
+  width: 0.8em;
+  height: 0.8em;
+  top: 0.09em;
+  left: 0.1em;
+  border-radius: 50%;
+  transition: 250ms ease-in-out;
+  background: linear-gradient(#f5f5f5 10%, #eee);
+  box-shadow: 0 0.1em 0.15em -0.05em rgb(255 255 255 / 90%) inset,
+    0 0.2em 0.3em -0.1em rgb(0 0 0 / 25%);
+}
+.switcher::after {
+  position: absolute;
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  top: 0.3em;
+  left: 2.3em;
+  border-radius: 50%;
+  transition: 250ms ease-in;
+  background: linear-gradient(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1)),
+    #ddd;
+  box-shadow: 0 0.08em 0.15em -0.1em rgb(0 0 0 / 50%) inset,
+    0 0.05em 0.08em -0.01em rgb(255 255 255 / 70%);
+}
+.switcher.checked::before {
+  left: 1.14em;
+}
+.switcher.checked::after {
+  background: linear-gradient(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1)),
+    #03a9f4;
+  box-shadow: 0 0.08em 0.15em -0.1em rgb(0 0 0 / 50%) inset,
+    0 0.05em 0.08em -0.01em rgb(255 255 255 / 70%);
+}
+.color {
+  width: 20px;
+  height: 20px;
+  border: 1px solid;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.edit-tabs {
+  cursor: pointer;
+  color: #3367cc;
+}
+.edit-tabs.active {
+  color: inherit;
+  cursor: default;
+}
+
+/** picker */
+.picker_wrapper.no_alpha .picker_alpha {
+  display: none;
+}
+.picker_wrapper.no_editor .picker_editor {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.picker_wrapper.no_cancel .picker_cancel {
+  display: none;
+}
+.layout_default.picker_wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: stretch;
+  font-size: 10px;
+  width: 16em;
+  padding: 0.4em;
+}
+.layout_default.picker_wrapper input,
+.layout_default.picker_wrapper button {
+  letter-spacing: 0.07em;
+  font-size: 1em;
+  padding: 0.45em 0.5em;
+  background: #f1f3f4;
+  color: #75797e;
+  border-radius: 0.15em;
+}
+.layout_default.picker_wrapper > * {
+  margin: 0.5em;
+}
+.layout_default.picker_wrapper::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 0;
+  order: 1;
+}
+.layout_default .picker_slider,
+.layout_default .picker_selector {
+  padding: 0.6em;
+}
+.layout_default .picker_hue {
+  width: 100%;
+  padding: 0.4em;
+  border-radius: 50em;
+}
+.layout_default .picker_alpha {
+  padding: 0.4em;
+  border-radius: 50em;
+}
+.layout_default .picker_sl {
+  flex: 1 1 auto;
+}
+.layout_default .picker_sl::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.layout_default .picker_editor {
+  order: 1;
+  width: 6.5rem;
+}
+.layout_default .picker_editor input {
+  width: 100%;
+  height: 100%;
+}
+.layout_default .picker_sample {
+  order: 1;
+  flex: 1 1 auto;
+}
+.layout_default .picker_done,
+.layout_default .picker_cancel {
+  order: 1;
+  display: none;
+}
+.picker_wrapper {
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px silver;
+  cursor: default;
+  font-family: sans-serif;
+  color: #444;
+  pointer-events: auto;
+  border-radius: 0.1em;
+}
+.picker_wrapper:focus {
+  outline: none;
+}
+.picker_wrapper button,
+.picker_wrapper input {
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+.picker_wrapper button:focus,
+.picker_wrapper button:active,
+.picker_wrapper input:focus,
+.picker_wrapper input:active {
+  box-shadow: 0 0 2px 1px #1e90ff;
+}
+.picker_wrapper button {
+  padding: 0.4em 0.6em;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  background-image: linear-gradient(0deg, gainsboro, transparent);
+}
+.picker_wrapper button:active {
+  background-image: linear-gradient(0deg, transparent, gainsboro);
+}
+.picker_wrapper button:hover {
+  background-color: #fff;
+}
+.picker_selector {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+  border-radius: 100%;
+  background: currentColor;
+  cursor: pointer;
+}
+.picker_hue {
+  position: relative;
+  background-image: linear-gradient(
+    90deg,
+    red,
+    yellow,
+    lime,
+    cyan,
+    blue,
+    magenta,
+    red
+  );
+}
+.picker_sl {
+  position: relative;
+  background-image: linear-gradient(180deg, white, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(0deg, black, rgba(0, 0, 0, 0) 50%),
+    linear-gradient(90deg, #808080, rgba(128, 128, 128, 0));
+}
+.picker_alpha,
+.picker_sample {
+  position: relative;
+  background: linear-gradient(
+        45deg,
+        lightgrey 25%,
+        transparent 25%,
+        transparent 75%,
+        lightgrey 75%
+      )
+      0 0/2em 2em,
+    linear-gradient(45deg, lightgrey 25%, white 25%, white 75%, lightgrey 75%)
+      1em 1em/2em 2em;
+}
+.picker_alpha .picker_selector {
+  border-color: #444;
+}
+.picker_editor input {
+  font-family: monospace;
+  padding: 0.2em 0.4em;
+}
+.picker_sample::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  border-radius: 0.15em;
+}
+.picker_wrapper.popup {
+  position: absolute;
+  z-index: 2;
+}
+.picker_wrapper.popup {
+  background: #fff;
+  box-shadow: 0 0.15em 1.5em 0 rgb(0 0 0 / 10%), 0 0 1em 0 rgb(0 0 0 / 3%);
+}
+.popup.popup_top {
+  bottom: 100%;
+  left: 0;
+}
+.popup.popup_bottom {
+  top: 100%;
+  left: 0;
+}
+.popup.popup_left {
+  top: 0;
+  right: 100%;
+}
+.popup.popup_right {
+  top: 0;
+  left: 100%;
+}
+.picker_arrow {
+  display: none;
+}
+.howto {
+    color: #717171;
+    margin-bottom: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.howto img {
+    margin: 0 4px;
+}
+#m-items > div {
+display: flex;
+align-items: center;
+}
+#m-items .page {
+display: none;
+width: 100%;
+flex-direction: row;
+flex-wrap: wrap;
+}
+#m-items .page.active {
+display: flex;
+}
+#m-items .page img {
+cursor: pointer;
+display: block;
+margin: 8px;
+padding: 2px;
+border-radius: 2px;
+-webkit-transition: background-color 0.3s ease;
+transition: background-color 0.3s ease;
+}
+#m-items .page img:hover {
+background-color: rgb(0 0 0 / 10%);
+}
+#m-items .pages {
+display: flex;
+margin-top: 6px;
+flex-wrap: wrap;
+}
+#m-items .pages div {
+cursor: pointer;
+padding: 2px 4px;
+margin: 4px;
+border-radius: 2px;
+}
+#m-items .pages div.active {
+background: #bbdefb;
+}
+#m-items .m-item {
+display: flex;
+width: 32px;
+height: 32px;
+}
+
+#m-items > div > div {
+display: inline-block;
+}
+#m-items .m-item-arms {
+display: flex;
+align-items: center;
+justify-content: space-between;
+color: #585858;
+transition: background-color 0.2s ease;
+border-radius: 5px;
+box-shadow: inset 0 1px #fdfdfd;
+-webkit-appearance: button;
+appearance: button;
+background: #efefef;
+border: 1px solid #ccc;
+margin: 8px 6px 8px 0;
+padding: 4px 6px;
+cursor: pointer;
+width: 96px;
+line-height: 24px;
+font-size:12px;
+}
+#m-items .m-item-arms.active {
+background: #ffffff;
+box-shadow: inset 4px 4px 8px #e0e0e0, inset -4px -4px 8px #ffffff;
+border-color: #efefef;
+cursor: default;
+text-shadow: 1px 1px 1px #ffffff;
+}
+.m-item input {
+display: none;
+}
+.m-item label,
+.m-item .img {
+width: 32px;
+height: 32px;
+cursor: pointer;
+background: url(images/image-file.svg) center no-repeat;
+display: block;
+background-size: 60%;
+}
+.m-item .img {
+background-image: url(images/eye-open.svg);
+}
+.m-item .img.hide {
+background-image: url(images/eye-close.svg);
+padding: 0;
+margin: 0;
+}
+.m-item .img.grip {
+background-image: url(images/g-good.svg);
+}
+.m-item .img.grip.fist {
+background-image: url(images/g-fist.svg);
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+<div id="content">
+<h1>Avatar Maker</h1>
+<div class="tools-text">
+<p>Our avatar generator will turn your Minecraft skin into a profile picture. It creates six different images: 3D heads and bodies.</p>
+</div>
+
+<div class="tool-tab">
+<form action="/avatar-maker" enctype="multipart/form-data" method="POST" id="converter">
+
+
+<div class="optblock">
+<label for="username">Enter your Minecraft username:</label>
+<input id="username-field" type="text" name="username" placeholder="username" value=""><input type="submit" value="Get" id="form_submit">
+</div>
+<div class="imgupload">
+<label for="load_skin">OR select and upload your skin:</label>
+<input type="file" accept="image/png" id="load_skin" name="load_skin">
+<p><i>PNG; Max file size 200 kB</i></p>
+</div>
+<div class="optblock smallboxopt">
+<label for="quality">Graphics quality:</label>
+<select id="quality" name="quality">
+<option value="0">Low</option>
+<option value="1" selected="">Medium</option>
+<option value="2">High</option>
+</select>
+</div>
+<div class="optblock smallboxopt">
+  <label for="shadowsbox">Shadows:</label>
+  <input type="checkbox" id="shadowsbox" name="shadowsbox" checked="">
+</div>
+</form>
+</div>
+
+<div class="center result-arrow">&#8595;</div>
+<div id="output" class="center"><div><p>The result will be here.</p></div></div>
+<div id="model-ava" class="section">
+	<span class="meta">Custom <span id="edit-pose" class="edit-tabs active">pose</span> / <span id="edit-scene" class="edit-tabs">scene</span> / <span id="edit-items" class="edit-tabs">items</span></span>
+	<div class="model-controls-wrap">
+      <div id="model-controls" class="active">
+		<div class="switcher-controls">
+        <div>Head only</div>
+        <div><span id="head-switcher" class="switcher"></span></div>
+        </div>
+        <div>
+          <div>Model</div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-skin-x">
+            <input type="number" min="-360" max="360" value="0" id="text-input-skin-x">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-skin-y">
+            <input type="number" min="-360" max="360" value="0" id="text-input-skin-y">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-skin-z">
+            <input type="number" min="-360" max="360" value="0" id="text-input-skin-z">
+          </div>
+        </div>
+        <div>
+          <div>Head</div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-head-x">
+            <input type="number" min="-360" max="360" value="0" id="text-input-head-x">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-head-y">
+            <input type="number" min="-360" max="360" value="0" id="text-input-head-y">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-head-z">
+            <input type="number" min="-360" max="360" value="0" id="text-input-head-z">
+          </div>
+        </div>
+        <div>
+          <div>Body</div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-body-x">
+            <input type="number" min="-360" max="360" value="0" id="text-input-body-x">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-body-y">
+            <input type="number" min="-360" max="360" value="0" id="text-input-body-y">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-body-z">
+            <input type="number" min="-360" max="360" value="0" id="text-input-body-z">
+          </div>
+        </div>
+        <div class="grid5 br">
+          <div>Left arm</div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftarm-x">
+            <input type="number" min="-360" max="360" value="0" id="text-input-leftarm-x">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftarm-y">
+            <input type="number" min="-360" max="360" value="0" id="text-input-leftarm-y">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftarm-z">
+            <input type="number" min="-360" max="360" value="0" id="text-input-leftarm-z">
+          </div>
+		  <div>
+            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-leftarm-e">
+            <input type="number" min="0" max="200" value="0" id="text-input-leftarm-e">
+          </div>
+        </div>
+        <div class="grid5">
+          <div>Right arm</div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightarm-x">
+            <input type="number" min="-360" max="360" value="0" id="text-input-rightarm-x">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightarm-y">
+            <input type="number" min="-360" max="360" value="0" id="text-input-rightarm-y">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightarm-z">
+            <input type="number" min="-360" max="360" value="0" id="text-input-rightarm-z">
+          </div>
+		  <div>
+            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-rightarm-e">
+            <input type="number" min="0" max="200" value="0" id="text-input-rightarm-e">
+          </div>
+        </div>
+        <div class="grid5">
+          <div>Left leg</div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftleg-x">
+            <input type="number" min="-360" max="360" value="0" id="text-input-leftleg-x">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftleg-y">
+            <input type="number" min="-360" max="360" value="0" id="text-input-leftleg-y">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-leftleg-z">
+            <input type="number" min="-360" max="360" value="0" id="text-input-leftleg-z">
+          </div>
+		  <div>
+            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-leftleg-e">
+            <input type="number" min="0" max="200" value="0" id="text-input-leftleg-e">
+          </div>
+        </div>
+        <div class="grid5">
+          <div>Right leg</div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightleg-x">
+            <input type="number" min="-360" max="360" value="0" id="text-input-rightleg-x">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightleg-y">
+            <input type="number" min="-360" max="360" value="0" id="text-input-rightleg-y">
+          </div>
+          <div>
+            <input type="range" min="-360" max="360" value="0" class="slider" id="range-input-rightleg-z">
+            <input type="number" min="-360" max="360" value="0" id="text-input-rightleg-z">
+          </div>
+		  <div>
+            <input type="range" min="0" max="200" value="0" class="slider" id="range-input-rightleg-e">
+            <input type="number" min="0" max="200" value="0" id="text-input-rightleg-e">
+          </div>
+        </div>
+	</div>
+	<div id="scene-controls">
+    <div>
+      <div>Light intensity (set 30 and 0 for no shadows)</div>
+      <div>
+        <input type="range" min="0" max="100" value="20" class="slider" id="range-input-alight">
+        <input type="number" min="0" max="100" value="20" id="text-input-alight">
+      </div>
+      <div>
+        <input type="range" min="0" max="100" value="30" class="slider" id="range-input-dlight">
+        <input type="number" min="0" max="100" value="30" id="text-input-dlight">
+      </div>
+      <div>
+        <div id="dlight-color" class="color" data-color="#ffffff"></div>
+      </div>
+    </div>
+    <div>
+      <div>Sun position (drag the yellow circle)</div>
+      <div>
+        <div id="light-area">
+          <div class="light-steve"></div>
+          <div id="light-point"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="switcher-controls">
+      <div>Floor</div>
+      <div><span id="floor-switcher" class="switcher"></span></div>
+      <div id="floor-color" class="color" data-color="#ffffff"></div>
+    </div>
+    <div class="switcher-controls">
+      <div>Background</div>
+      <div><span id="bg-switcher" class="switcher"></span></div>
+      <div id="bg-color" class="color" data-color="#ffffff"></div>
+      <div id="bg-color2" class="color" data-color="#ffffff"></div>
+    </div>
+	</div>
+        <div id="m-items">
+          <div>
+            <div id="m-item-left-arm" class="m-item-arms active" data-item="0">
+              Left arm
+            </div>
+            <div class="m-item">
+              <label for="m-item-left-arm-img"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-left-arm-img" name="m-item-left-arm-img"></label>
+            </div>
+            <div class="m-item">
+              <div id="m-item-left-arm-visible" class="img"></div>
+            </div>
+            <div class="m-item">
+              <div id="m-item-left-arm-grip" class="img grip"></div>
+            </div>
+          </div>
+          <div>
+            <div id="m-item-right-arm" class="m-item-arms" data-item="0">
+              Right arm
+            </div>
+            <div class="m-item">
+              <label for="m-item-right-arm-img"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-right-arm-img" name="m-item-right-arm-img"></label>
+            </div>
+            <div class="m-item">
+              <div id="m-item-right-arm-visible" class="img"></div>
+            </div>
+            <div class="m-item">
+              <div id="m-item-right-arm-grip" class="img grip"></div>
+            </div>
+          </div>
+        </div>
+      <div id="canvas"></div>
+		<div class="howto"><img alt="Rotate ico" src="images/rotate.svg" width="16" height="16"> rotate, <img alt="Drag ico" src="images/hand-drag.svg" width="16" height="16"> move and <img alt="Zoom ico" src="images/zoom.svg" width="16" height="16"> zoom</div>
+		<div class="share-pose"><button id="download-ava" class="download">Download</button></div>
+		<span class="meta">Share custom pose settings</span>
+	  <div class="share-pose"><input type="text" id="pose-settings" placeholder="Paste the settings here and click the Load button"><button id="copy-pose-button">Copy</button><button id="load-pose-button">Load</button></div>
+    </div>
+	</div>
+<script>
+const readyMsg = "Click the image to download or right click on it –> Save Image As..."
+const sizeErrMsg = "File size exceeds 200 kB"
+const copyText = "Copy"
+const copyErrMsg = "Error"
+const copySuccess = "Copied!"
+const loadErrMsg = "Loading Error"
+const skinimg = null
+
+const editBtn = {
+  pose: document.getElementById("edit-pose"),
+  scene: document.getElementById("edit-scene"),
+  items: document.getElementById("edit-items")
+}
+
+const controls = {
+  pose: document.getElementById("model-controls"),
+  scene: document.getElementById("scene-controls"),
+  items: document.getElementById("m-items")
+}
+
+for (const key in editBtn) {
+  editBtn[key].addEventListener("click",()=>{
+    if(!editBtn[key].classList.contains("active")){
+      for (const kkey in editBtn) {
+        controls[kkey].classList.remove("active")
+        editBtn[kkey].classList.remove("active")
+      }
+      controls[key].classList.add("active")
+      editBtn[key].classList.add("active")
+    }
+  })
+}
+
+const converterForm = document.getElementById("converter")
+const usernameField = document.getElementById("username-field")
+const loadSkinInput = document.getElementById("load_skin")
+const outputDiv = document.getElementById("output")
+
+function escapeHtml(str) {
+  const div = document.createElement("div")
+  div.textContent = str
+  return div.innerHTML
+}
+
+async function loadSkinByUsername(username) {
+  outputDiv.innerHTML = "<div><p>Loading skin for " + escapeHtml(username) + "...</p></div>"
+  try {
+    const res = await fetch("https://playerdb.co/api/player/minecraft/" + encodeURIComponent(username))
+    if (!res.ok) throw new Error('Player "' + username + '" not found')
+    const json = await res.json()
+    const skinUrl = json.data && json.data.player && json.data.player.skin_texture
+    if (!skinUrl) throw new Error("No skin found for that username")
+
+    const imgRes = await fetch(skinUrl)
+    if (!imgRes.ok) throw new Error("Could not download that skin texture")
+    const blob = await imgRes.blob()
+    const file = new File([blob], username + ".png", { type: "image/png" })
+
+    // Feed the fetched skin through the same file-input pipeline used for uploads
+    // so the existing bundle's change listener (FileReader -> model builder) runs unmodified.
+    const dataTransfer = new DataTransfer()
+    dataTransfer.items.add(file)
+    loadSkinInput.files = dataTransfer.files
+    loadSkinInput.dispatchEvent(new Event("change", { bubbles: true }))
+  } catch (err) {
+    outputDiv.innerHTML = "<div><p>" + escapeHtml(err.message) + "</p></div>"
+  }
+}
+
+converterForm.addEventListener("submit", (e) => {
+  e.preventDefault()
+  const username = usernameField.value.trim()
+  if (username) loadSkinByUsername(username)
+})
+</script>
+<script src="js/skinava.bundle.3.js"></script>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,625 @@
+/*
+ * Styling for the pose/scene/item-attachment widget ported from
+ * skin-viewer/avatar-maker/index.html. Layout/grid/geometry rules are kept as-is
+ * (they're functional, not cosmetic); colors are re-themed to this page's dark
+ * palette (assets/css/portfolio.css custom properties) instead of the original
+ * light-theme hardcoded colors. The vanilla-picker (.picker_*) popup is left
+ * unthemed on purpose -- it's a floating overlay, not page chrome.
+ */
+
+.model-controls-wrap {
+  text-align: center;
+  margin: 10px auto 0;
+  width: 100%;
+}
+#model-controls,
+#scene-controls {
+  margin-top: 14px;
+}
+#scene-controls,
+#model-controls,
+#m-items {
+  display: none;
+  max-width: 600px;
+  margin: 0 auto;
+}
+#model-controls.active,
+#scene-controls.active,
+#m-items.active {
+  display: block;
+}
+.model-controls-wrap input[type="range"] {
+  max-width: 100px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+.model-controls-wrap input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--border);
+  border-radius: 10px;
+  height: 4px;
+}
+.model-controls-wrap input[type="range"]::-moz-range-track {
+  background: var(--border);
+  border-radius: 10px;
+  height: 4px;
+}
+.model-controls-wrap input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  margin-top: -5px;
+  background: var(--accent-bright);
+  border: none;
+  pointer-events: auto;
+  transition: 0.1s;
+  border-radius: 50%;
+}
+.model-controls-wrap input[type="range"]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  background: var(--accent-bright);
+  border: none;
+  pointer-events: auto;
+  transition: 0.1s;
+  border-radius: 50%;
+}
+.model-controls-wrap input[type="number"] {
+  border: none;
+  text-align: center;
+  color: var(--text);
+  background: none;
+  padding: 4px;
+  max-width: 38px;
+  width: 38px;
+  font-family: inherit;
+  font-size: 12px;
+  border-radius: 5px;
+  position: relative;
+  top: -4px;
+  left: -4px;
+}
+.model-controls-wrap input::-webkit-outer-spin-button,
+.model-controls-wrap input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.model-controls-wrap input[type="number"] {
+  -moz-appearance: textfield;
+}
+#model-controls > div,
+#scene-controls > div {
+  display: grid;
+  grid-template-columns: 70px auto auto auto;
+  font-size: 12px;
+  color: var(--text-muted);
+  position: relative;
+  margin-bottom: 5px;
+}
+#scene-controls > div {
+  grid-template-columns: 120px auto auto auto;
+  justify-items: start;
+}
+#model-controls > div.grid5 {
+  grid-template-columns: 80px auto auto auto auto;
+}
+#model-controls > div.grid5.br {
+  margin-top: 14px;
+}
+#model-controls div.grid5 input[type="number"] {
+  max-width: 28px;
+}
+#model-controls div.grid5 input[type="range"] {
+  max-width: 78px;
+}
+#model-controls > div div:first-child,
+#scene-controls > div div:first-child {
+  text-align: left;
+}
+#canvas canvas {
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 auto;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+@media (max-width: 600px) {
+  #model-controls > div div:first-child,
+  #scene-controls > div div:first-child {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  #model-controls > div.grid5.br {
+    margin-top: 0;
+  }
+  #model-controls > div {
+    /* minmax(0, 1fr), not bare "auto": auto tracks size to the range input's
+       content width and refuse to shrink below it, overflowing the card. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  #model-controls > div.grid5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    row-gap: 6px;
+  }
+  #scene-controls > div {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    row-gap: 6px;
+  }
+  .model-controls-wrap input[type="range"] {
+    width: 100%;
+  }
+  .model-controls-wrap input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: -8px;
+  }
+  .model-controls-wrap input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Higher specificity than "#model-controls > div"/"#scene-controls > div" (which are
+   otherwise a CSS grid) so these rows actually lay out as the flex row intended here. */
+#viewer-position .switcher-controls {
+  display: flex;
+  margin-bottom: 14px;
+  align-items: center;
+  gap: 10px;
+}
+#viewer-position .switcher-controls > div:first-child {
+  font-size: 12px;
+  color: var(--text-muted);
+  width: 90px;
+  flex-shrink: 0;
+  margin-right: 0;
+}
+#viewer-position .switcher-controls > div.color {
+  margin: 0;
+}
+/* Same specificity trick as .switcher-controls above -- overrides the
+   "#scene-controls > div" grid so this renders as the row layout intended here. */
+#viewer-position .light-settings {
+  display: block;
+  margin-bottom: 14px;
+}
+#viewer-position .light-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+#viewer-position .light-row-label {
+  width: 80px;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: left;
+}
+#viewer-position .light-row input[type="range"] {
+  flex: 1;
+  max-width: 140px;
+}
+#viewer-position .light-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.85;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  #viewer-position .light-row input[type="range"] {
+    max-width: none;
+  }
+}
+#light-area {
+  width: 100px;
+  height: 100px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px 0 rgb(0 0 0 / 25%);
+  border-radius: 4px;
+}
+.light-steve {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-5px, -5px);
+  background-color: #8d6e63;
+  background-size: cover;
+  image-rendering: pixelated;
+  border-radius: 2px;
+}
+#light-point {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #ffeb3b;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0 0 10px #ffeb3b;
+  cursor: grab;
+  border: 2px solid #fffde7;
+}
+.popup.popup_top.gleft {
+  left: auto;
+  right: 0;
+}
+.switcher {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  vertical-align: middle;
+}
+.switcher::before {
+  position: absolute;
+  content: "";
+  width: 16px;
+  height: 16px;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 40%);
+}
+.switcher.checked {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+}
+.switcher.checked::before {
+  transform: translateX(18px);
+}
+.color {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 3px solid var(--surface-alt);
+  outline: 1px solid var(--border);
+  background-color: #fff;
+  transition: outline-color 0.15s ease, transform 0.1s ease;
+}
+.color:hover {
+  outline-color: var(--accent-bright);
+  transform: scale(1.08);
+}
+.edit-tabs-row {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+}
+.edit-tabs {
+  cursor: pointer;
+  padding: 6px 16px;
+  font-size: 0.85em;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.edit-tabs:hover:not(.active) {
+  color: var(--text);
+}
+.edit-tabs.active {
+  color: #fff;
+  cursor: default;
+  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+}
+
+/** vanilla-picker popup -- intentionally left in its own light styling,
+    it's a floating overlay rather than page chrome */
+.picker_wrapper.no_alpha .picker_alpha {
+  display: none;
+}
+.picker_wrapper.no_editor .picker_editor {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.picker_wrapper.no_cancel .picker_cancel {
+  display: none;
+}
+.layout_default.picker_wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: stretch;
+  font-size: 10px;
+  width: 16em;
+  padding: 0.4em;
+}
+.layout_default.picker_wrapper input,
+.layout_default.picker_wrapper button {
+  letter-spacing: 0.07em;
+  font-size: 1em;
+  padding: 0.45em 0.5em;
+  background: #f1f3f4;
+  color: #75797e;
+  border-radius: 0.15em;
+}
+.layout_default.picker_wrapper > * {
+  margin: 0.5em;
+}
+.layout_default.picker_wrapper::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 0;
+  order: 1;
+}
+.layout_default .picker_slider,
+.layout_default .picker_selector {
+  padding: 0.6em;
+}
+.layout_default .picker_hue {
+  width: 100%;
+  padding: 0.4em;
+  border-radius: 50em;
+}
+.layout_default .picker_alpha {
+  padding: 0.4em;
+  border-radius: 50em;
+}
+.layout_default .picker_sl {
+  flex: 1 1 auto;
+}
+.layout_default .picker_sl::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.layout_default .picker_editor {
+  order: 1;
+  width: 6.5rem;
+}
+.layout_default .picker_editor input {
+  width: 100%;
+  height: 100%;
+}
+.layout_default .picker_sample {
+  order: 1;
+  flex: 1 1 auto;
+}
+.layout_default .picker_done,
+.layout_default .picker_cancel {
+  order: 1;
+  display: none;
+}
+.picker_wrapper {
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px silver;
+  cursor: default;
+  font-family: sans-serif;
+  color: #444;
+  pointer-events: auto;
+  border-radius: 0.1em;
+}
+.picker_wrapper:focus {
+  outline: none;
+}
+.picker_wrapper button,
+.picker_wrapper input {
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+.picker_wrapper button:focus,
+.picker_wrapper button:active,
+.picker_wrapper input:focus,
+.picker_wrapper input:active {
+  box-shadow: 0 0 2px 1px #1e90ff;
+}
+.picker_wrapper button {
+  padding: 0.4em 0.6em;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  background-image: linear-gradient(0deg, gainsboro, transparent);
+}
+.picker_wrapper button:active {
+  background-image: linear-gradient(0deg, transparent, gainsboro);
+}
+.picker_wrapper button:hover {
+  background-color: #fff;
+}
+.picker_selector {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+  border-radius: 100%;
+  background: currentColor;
+  cursor: pointer;
+}
+.picker_hue {
+  position: relative;
+  background-image: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);
+}
+.picker_sl {
+  position: relative;
+  background-image: linear-gradient(180deg, white, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(0deg, black, rgba(0, 0, 0, 0) 50%),
+    linear-gradient(90deg, #808080, rgba(128, 128, 128, 0));
+}
+.picker_alpha,
+.picker_sample {
+  position: relative;
+  background: linear-gradient(45deg, lightgrey 25%, transparent 25%, transparent 75%, lightgrey 75%) 0 0/2em 2em,
+    linear-gradient(45deg, lightgrey 25%, white 25%, white 75%, lightgrey 75%) 1em 1em/2em 2em;
+}
+.picker_alpha .picker_selector {
+  border-color: #444;
+}
+.picker_editor input {
+  font-family: monospace;
+  padding: 0.2em 0.4em;
+}
+.picker_sample::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  border-radius: 0.15em;
+}
+.picker_wrapper.popup {
+  /* assets/css/feedback.css also defines a generic .popup (the feedback modal) with
+     visibility:hidden; this class name collides with vanilla-picker's own .popup, so
+     visibility must be re-asserted here or the color picker silently never paints. */
+  visibility: visible;
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 0.15em 1.5em 0 rgb(0 0 0 / 10%), 0 0 1em 0 rgb(0 0 0 / 3%);
+}
+.popup.popup_top {
+  bottom: 100%;
+  left: 0;
+}
+.popup.popup_bottom {
+  top: 100%;
+  left: 0;
+}
+.popup.popup_left {
+  top: 0;
+  right: 100%;
+}
+.popup.popup_right {
+  top: 0;
+  left: 100%;
+}
+.picker_arrow {
+  display: none;
+}
+
+.howto {
+  color: var(--text-muted);
+  margin: 14px 0 0;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.howto img {
+  margin: 0 4px;
+}
+#m-items > div {
+  display: flex;
+  align-items: center;
+}
+#m-items .page {
+  display: none;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#m-items .page.active {
+  display: flex;
+}
+#m-items .page img {
+  cursor: pointer;
+  display: block;
+  margin: 8px;
+  padding: 2px;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+#m-items .page img:hover {
+  background-color: rgb(255 255 255 / 12%);
+}
+#m-items .pages {
+  display: flex;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+#m-items .pages div {
+  cursor: pointer;
+  padding: 2px 4px;
+  margin: 4px;
+  border-radius: 2px;
+}
+#m-items .pages div.active {
+  background: var(--accent-bright);
+  color: #fff;
+}
+#m-items .m-item {
+  display: flex;
+  width: 32px;
+  height: 32px;
+}
+#m-items > div > div {
+  display: inline-block;
+}
+#m-items .m-item-arms {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-muted);
+  transition: background-color 0.2s ease;
+  border-radius: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin: 8px 6px 8px 0;
+  padding: 4px 6px;
+  cursor: pointer;
+  width: 96px;
+  line-height: 24px;
+  font-size: 12px;
+}
+#m-items .m-item-arms.active {
+  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+  color: #fff;
+  border-color: transparent;
+  cursor: default;
+}
+.m-item input {
+  display: none;
+}
+.m-item label,
+.m-item .img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  background: url(avatar-maker/images/image-file.svg) center no-repeat;
+  display: block;
+  background-size: 60%;
+}
+.m-item .img {
+  background-image: url(avatar-maker/images/eye-open.svg);
+}
+.m-item .img.hide {
+  background-image: url(avatar-maker/images/eye-close.svg);
+  padding: 0;
+  margin: 0;
+}
+.m-item .img.grip {
+  background-image: url(avatar-maker/images/g-good.svg);
+}
+.m-item .img.grip.fist {
+  background-image: url(avatar-maker/images/g-fist.svg);
+}

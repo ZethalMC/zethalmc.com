@@ -1,9 +1,39 @@
+// URLSearchParams.set() on an existing key updates it in place without moving it, so
+// whichever of "tab"/"user" gets written first would stay first forever. Rebuild the
+// query string from scratch each time instead, so the order is always tab, then user.
+function setUrlParams(updates) {
+  const url = new URL(window.location);
+  const tab = updates.tab ?? url.searchParams.get('tab');
+  const user = updates.user ?? url.searchParams.get('user');
+  url.search = '';
+  if (tab) url.searchParams.set('tab', tab);
+  if (user) url.searchParams.set('user', user);
+  window.history.replaceState(null, '', url);
+}
+
 function showViewer(which) {
-  const show3d = which === '3d';
-  document.getElementById('viewer-3d').classList.toggle('hidden', !show3d);
-  document.getElementById('viewer-static').classList.toggle('hidden', show3d);
-  document.getElementById('tab-3d-btn').classList.toggle('active', show3d);
-  document.getElementById('tab-static-btn').classList.toggle('active', !show3d);
+  const tabs = { '3d': 'viewer-3d', position: 'viewer-position', static: 'viewer-static', share: 'viewer-share' };
+  for (const [key, panelId] of Object.entries(tabs)) {
+    document.getElementById(panelId).classList.toggle('hidden', key !== which);
+    document.getElementById(`tab-${key}-btn`).classList.toggle('active', key === which);
+  }
+  if (which === '3d' || which === 'position') moveCanvasMount(which);
+
+  setUrlParams({ tab: which });
+}
+
+// The 3D Viewer and Position tabs share a single live WebGL canvas (the avatar-maker
+// engine only ever creates one). appendChild on a node already in the DOM moves it
+// without tearing down its WebGL context, so the pose/rotation survives the switch.
+function moveCanvasMount(which) {
+  const mount = document.getElementById('canvas-mount');
+  const target = document.getElementById(which === '3d' ? 'viewer-3d' : 'viewer-position');
+  target.appendChild(mount);
+}
+
+function revealAdvancedTabs() {
+  document.getElementById('tab-position-btn').classList.remove('hidden');
+  document.getElementById('tab-share-btn').classList.remove('hidden');
 }
 
 function loadUsername() {
@@ -13,11 +43,8 @@ function loadUsername() {
 
   loadSkin(name)
     .then(() => {
-      const url = new URL(window.location);
-      url.searchParams.set('user', name);
-      window.history.replaceState(null, '', url);
+      setUrlParams({ user: name });
       updateRenderPreview();
-      document.getElementById('share-btn').classList.remove('hidden');
     })
     .catch(err => {
       console.error(err);
@@ -27,7 +54,7 @@ function loadUsername() {
 }
 
 async function shareCurrentView() {
-  const btn = document.getElementById('share-btn');
+  const btn = document.getElementById('share-link-btn');
   const url = window.location.href;
 
   if (navigator.share) {
@@ -122,3 +149,8 @@ if (initialUser) {
   document.getElementById('username').value = initialUser;
 }
 loadUsername();
+
+const initialTab = new URLSearchParams(window.location.search).get('tab');
+if (['3d', 'position', 'static', 'share'].includes(initialTab)) {
+  showViewer(initialTab);
+}
