@@ -32,9 +32,6 @@
         });
     }
 
-    // Cycles the hero portrait between live VZGE renders of Zethal_'s current skin
-    // (head from a few angles, plus a bust) so it always reflects whatever skin is
-    // equipped, without baking any static image files.
     var portraitCycle = document.getElementById('portrait-cycle');
     if (portraitCycle) {
         var portraitImgs = Array.prototype.slice.call(portraitCycle.querySelectorAll('img'));
@@ -62,8 +59,6 @@
         }, 4000);
     }
 
-    // To add a server, just add an entry here — the card, live logo, and
-    // popup are all generated from this list.
     var SERVERS = [
         {
             name: 'Stoneworks',
@@ -149,7 +144,6 @@
                     renderLogoImage(logo, data.icon, server.name);
                 }
             }).catch(function () {
-                // Keep the letter placeholder if the API is unreachable.
             });
 
             return card;

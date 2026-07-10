@@ -157,6 +157,3 @@ function updateOutput() {
     updateRelativeTime();
 }
 setInterval(updateRelativeTime, 1000);
-
-// Feedback popup logic (togglePopup, submitFeedback, etc.) lives in
-// assets/js/feedback.js, shared across the mc-utilities/utilities tools.

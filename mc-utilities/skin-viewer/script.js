@@ -1,6 +1,3 @@
-// URLSearchParams.set() on an existing key updates it in place without moving it, so
-// whichever of "tab"/"user" gets written first would stay first forever. Rebuild the
-// query string from scratch each time instead, so the order is always tab, then user.
 function setUrlParams(updates) {
   const url = new URL(window.location);
   const tab = updates.tab ?? url.searchParams.get('tab');
@@ -22,9 +19,6 @@ function showViewer(which) {
   setUrlParams({ tab: which });
 }
 
-// The 3D Viewer and Position tabs share a single live WebGL canvas (the viewer
-// engine only ever creates one). appendChild on a node already in the DOM moves it
-// without tearing down its WebGL context, so the pose/rotation survives the switch.
 function moveCanvasMount(which) {
   const mount = document.getElementById('canvas-mount');
   const target = document.getElementById(which === '3d' ? 'viewer-3d' : 'viewer-position');
@@ -36,10 +30,6 @@ function revealAdvancedTabs() {
   document.getElementById('tab-share-btn').classList.remove('hidden');
 }
 
-// Held-item move/rotate. zethalmc-viewer-engine.js's own "grip" toggle (fist/open-hand) is a
-// hardcoded position/rotation preset swap that stomps any transform on every upload or
-// grip-icon click -- so these sliders apply an *offset* on top of whatever grip() just
-// set, re-captured as the new base right after each reset, rather than fighting it.
 const itemBase = { left: null, right: null };
 
 function getItemGroup(arm) {
@@ -78,8 +68,6 @@ function applyItemOffset(arm) {
   window.__itemModel.render();
 }
 
-// Keeps a range/number pair in sync (mirrors the bundle's own slider pattern) and
-// re-applies the item offset on every change.
 function bindItemAxisInput(arm, axis) {
   const range = document.getElementById(`range-item-${arm}-${axis}`);
   const number = document.getElementById(`text-item-${arm}-${axis}`);
@@ -96,12 +84,6 @@ function bindItemAxisInput(arm, axis) {
 ['left', 'right'].forEach((arm) => {
   ['x', 'y', 'z', 'rx', 'ry', 'rz'].forEach((axis) => bindItemAxisInput(arm, axis));
 
-  // Re-assert the dialed-in offset on top of the bundle's grip preset. This script runs
-  // at page load, before the bundle attaches its own click listener (that only happens
-  // once Mo.init() runs, after the first skin finishes loading) -- so our listener is
-  // actually attached FIRST and would otherwise fire before the bundle's synchronous
-  // grip() reset. Deferring via setTimeout(0) pushes this to run after every listener
-  // for the current click (including the bundle's) has already finished.
   document.getElementById(`m-item-${arm}-arm-grip`).addEventListener('click', () => {
     setTimeout(() => {
       captureItemBase(arm);
@@ -109,9 +91,6 @@ function bindItemAxisInput(arm, axis) {
     }, 0);
   });
 
-  // The bundle's upload handler rebuilds+resets the transform inside an async
-  // Image.onload with no reliable "done" signal to hook -- a short delay is a
-  // pragmatic stand-in (local blob-image decode is near-instant for icon-sized files).
   document.getElementById(`m-item-${arm}-arm-img`).addEventListener('change', () => {
     setTimeout(() => {
       captureItemBase(arm);
@@ -161,9 +140,6 @@ async function shareCurrentView() {
   }
 }
 
-// Mirrors the yaw values used by VZGE's own "Quick Render" widget: Bust/Full
-// (and Front Full, though 2D renders ignore angle) flip to y=-40, everything
-// else flips to y=70, and "Back" always adds 180 on top of that.
 function computeRenderYaw(type, flip, back) {
   let yaw = 0;
   if (flip) {
