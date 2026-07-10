@@ -1,10 +1,10 @@
 /*
- * Styling for the pose/scene/item-attachment widget ported from
- * skin-viewer/avatar-maker/index.html. Layout/grid/geometry rules are kept as-is
- * (they're functional, not cosmetic); colors are re-themed to this page's dark
- * palette (assets/css/portfolio.css custom properties) instead of the original
- * light-theme hardcoded colors. The vanilla-picker (.picker_*) popup is left
- * unthemed on purpose -- it's a floating overlay, not page chrome.
+ * Styling for the pose/scene/item-attachment widget powered by
+ * skin-viewer/js/zethalmc-viewer-engine.js. Layout/grid/geometry rules are kept
+ * close to the engine's own expectations (they're functional, not cosmetic);
+ * colors are themed to this page's dark palette (assets/css/portfolio.css custom
+ * properties). The vanilla-picker (.picker_*) popup is left unthemed on purpose --
+ * it's a floating overlay, not page chrome.
  */
 
 .model-controls-wrap {
@@ -525,47 +525,13 @@
   align-items: center;
   justify-content: center;
 }
-.howto img {
+.howto i {
   margin: 0 4px;
+  color: var(--accent-bright);
 }
 #m-items > div {
   display: flex;
   align-items: center;
-}
-#m-items .page {
-  display: none;
-  width: 100%;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-#m-items .page.active {
-  display: flex;
-}
-#m-items .page img {
-  cursor: pointer;
-  display: block;
-  margin: 8px;
-  padding: 2px;
-  border-radius: 2px;
-  transition: background-color 0.3s ease;
-}
-#m-items .page img:hover {
-  background-color: rgb(255 255 255 / 12%);
-}
-#m-items .pages {
-  display: flex;
-  margin-top: 6px;
-  flex-wrap: wrap;
-}
-#m-items .pages div {
-  cursor: pointer;
-  padding: 2px 4px;
-  margin: 4px;
-  border-radius: 2px;
-}
-#m-items .pages div.active {
-  background: var(--accent-bright);
-  color: #fff;
 }
 #m-items .m-item {
   display: flex;
@@ -604,22 +570,73 @@
 .m-item .img {
   width: 32px;
   height: 32px;
-  cursor: pointer;
-  background: url(avatar-maker/images/image-file.svg) center no-repeat;
-  display: block;
-  background-size: 60%;
-}
-.m-item .img {
-  background-image: url(avatar-maker/images/eye-open.svg);
-}
-.m-item .img.hide {
-  background-image: url(avatar-maker/images/eye-close.svg);
-  padding: 0;
   margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 15px;
+  border-radius: 4px;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
-.m-item .img.grip {
-  background-image: url(avatar-maker/images/g-good.svg);
+.m-item label:hover,
+.m-item .img:hover {
+  color: var(--accent-bright);
+  background: var(--surface);
 }
-.m-item .img.grip.fist {
-  background-image: url(avatar-maker/images/g-fist.svg);
+/* Each toggle nests both icons; only one is shown at a time based on the bundle's
+   own .hide/.fist state classes (it toggles those classes directly, unmodified). */
+.m-item .img .icon-hidden,
+.m-item .img .icon-fist {
+  display: none;
+}
+.m-item .img.hide .icon-shown,
+.m-item .img.grip.fist .icon-open {
+  display: none;
+}
+.m-item .img.hide .icon-hidden,
+.m-item .img.grip.fist .icon-fist {
+  display: inline;
+}
+
+/* #m-items > div sets display:flex for the arm-selector rows -- override it here with
+   matching specificity (id + class + type) so this renders as a stacked block instead. */
+#m-items > div.item-transform {
+  display: block;
+  margin: 10px 0 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+/* #m-items > div > div sets display:inline-block for the arm-selector rows' own children
+   (upload/visible/grip icons) -- same override-by-specificity fix as .item-transform above,
+   needed again here since these are its grandchildren-equivalent. */
+#m-items > div.item-transform > .item-transform-heading {
+  display: block;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+#m-items > div.item-transform > .item-transform-row {
+  display: grid;
+  grid-template-columns: 70px auto auto auto;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+.item-transform-row > div:first-child {
+  text-align: left;
+}
+@media (max-width: 600px) {
+  .item-transform-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .item-transform-row > div:first-child {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 4px;
+  }
 }

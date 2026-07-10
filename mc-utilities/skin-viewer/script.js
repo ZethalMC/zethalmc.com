@@ -22,7 +22,7 @@ function showViewer(which) {
   setUrlParams({ tab: which });
 }
 
-// The 3D Viewer and Position tabs share a single live WebGL canvas (the avatar-maker
+// The 3D Viewer and Position tabs share a single live WebGL canvas (the viewer
 // engine only ever creates one). appendChild on a node already in the DOM moves it
 // without tearing down its WebGL context, so the pose/rotation survives the switch.
 function moveCanvasMount(which) {
@@ -35,6 +35,90 @@ function revealAdvancedTabs() {
   document.getElementById('tab-position-btn').classList.remove('hidden');
   document.getElementById('tab-share-btn').classList.remove('hidden');
 }
+
+// Held-item move/rotate. zethalmc-viewer-engine.js's own "grip" toggle (fist/open-hand) is a
+// hardcoded position/rotation preset swap that stomps any transform on every upload or
+// grip-icon click -- so these sliders apply an *offset* on top of whatever grip() just
+// set, re-captured as the new base right after each reset, rather than fighting it.
+const itemBase = { left: null, right: null };
+
+function getItemGroup(arm) {
+  const model = window.__itemModel;
+  if (!model) return null;
+  const bone = model[`${arm}_arm`] && model[`${arm}_arm`].skeleton.bones[2];
+  return (bone && bone.children[0]) || null;
+}
+
+function captureItemBase(arm) {
+  const group = getItemGroup(arm);
+  if (!group) return;
+  itemBase[arm] = {
+    position: { x: group.position.x, y: group.position.y, z: group.position.z },
+    rotation: { x: group.rotation.x, y: group.rotation.y, z: group.rotation.z }
+  };
+}
+
+function applyItemOffset(arm) {
+  const group = getItemGroup(arm);
+  const base = itemBase[arm];
+  if (!group || !base) return;
+  const deg2rad = (d) => d * Math.PI / 180;
+  const val = (id) => parseFloat(document.getElementById(id).value) || 0;
+
+  group.position.set(
+    base.position.x + val(`text-item-${arm}-x`),
+    base.position.y + val(`text-item-${arm}-y`),
+    base.position.z + val(`text-item-${arm}-z`)
+  );
+  group.rotation.set(
+    base.rotation.x + deg2rad(val(`text-item-${arm}-rx`)),
+    base.rotation.y + deg2rad(val(`text-item-${arm}-ry`)),
+    base.rotation.z + deg2rad(val(`text-item-${arm}-rz`))
+  );
+  window.__itemModel.render();
+}
+
+// Keeps a range/number pair in sync (mirrors the bundle's own slider pattern) and
+// re-applies the item offset on every change.
+function bindItemAxisInput(arm, axis) {
+  const range = document.getElementById(`range-item-${arm}-${axis}`);
+  const number = document.getElementById(`text-item-${arm}-${axis}`);
+  range.addEventListener('input', () => {
+    number.value = range.value;
+    applyItemOffset(arm);
+  });
+  number.addEventListener('input', () => {
+    range.value = number.value;
+    applyItemOffset(arm);
+  });
+}
+
+['left', 'right'].forEach((arm) => {
+  ['x', 'y', 'z', 'rx', 'ry', 'rz'].forEach((axis) => bindItemAxisInput(arm, axis));
+
+  // Re-assert the dialed-in offset on top of the bundle's grip preset. This script runs
+  // at page load, before the bundle attaches its own click listener (that only happens
+  // once Mo.init() runs, after the first skin finishes loading) -- so our listener is
+  // actually attached FIRST and would otherwise fire before the bundle's synchronous
+  // grip() reset. Deferring via setTimeout(0) pushes this to run after every listener
+  // for the current click (including the bundle's) has already finished.
+  document.getElementById(`m-item-${arm}-arm-grip`).addEventListener('click', () => {
+    setTimeout(() => {
+      captureItemBase(arm);
+      applyItemOffset(arm);
+    }, 0);
+  });
+
+  // The bundle's upload handler rebuilds+resets the transform inside an async
+  // Image.onload with no reliable "done" signal to hook -- a short delay is a
+  // pragmatic stand-in (local blob-image decode is near-instant for icon-sized files).
+  document.getElementById(`m-item-${arm}-arm-img`).addEventListener('change', () => {
+    setTimeout(() => {
+      captureItemBase(arm);
+      applyItemOffset(arm);
+    }, 250);
+  });
+});
 
 function loadUsername() {
   const input = document.getElementById('username');

@@ -32,6 +32,36 @@
         });
     }
 
+    // Cycles the hero portrait between live VZGE renders of Zethal_'s current skin
+    // (head from a few angles, plus a bust) so it always reflects whatever skin is
+    // equipped, without baking any static image files.
+    var portraitCycle = document.getElementById('portrait-cycle');
+    if (portraitCycle) {
+        var portraitImgs = Array.prototype.slice.call(portraitCycle.querySelectorAll('img'));
+        var portraitIndex = 0;
+
+        portraitImgs.forEach(function (img) {
+            img.addEventListener('error', function () {
+                var wasActive = img.classList.contains('active');
+                var idx = portraitImgs.indexOf(img);
+                if (idx === -1) return;
+                portraitImgs.splice(idx, 1);
+                img.remove();
+                if (wasActive && portraitImgs.length) {
+                    portraitIndex = idx % portraitImgs.length;
+                    portraitImgs[portraitIndex].classList.add('active');
+                }
+            });
+        });
+
+        setInterval(function () {
+            if (portraitImgs.length < 2) return;
+            portraitImgs[portraitIndex].classList.remove('active');
+            portraitIndex = (portraitIndex + 1) % portraitImgs.length;
+            portraitImgs[portraitIndex].classList.add('active');
+        }, 4000);
+    }
+
     // To add a server, just add an entry here — the card, live logo, and
     // popup are all generated from this list.
     var SERVERS = [

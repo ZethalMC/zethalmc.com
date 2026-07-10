@@ -14,10 +14,10 @@ function loadTexture(url) {
   });
 }
 
-// Feeds an already-loaded skin Image into the avatar-maker engine (skinava.bundle.3.js),
+// Feeds an already-loaded skin Image into the ZethalMC viewer engine (zethalmc-viewer-engine.js),
 // which only exposes a #load_skin file-input pipeline — re-encode the image as a PNG Blob
 // and push it through that pipeline the same way a manual upload would.
-function feedAvatarMaker(image) {
+function feedViewerEngine(image) {
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas');
     canvas.width = image.width;
@@ -52,7 +52,7 @@ function updateSceneCharacterIcon(image) {
   steve.style.backgroundImage = `url(${canvas.toDataURL('image/png')})`;
 }
 
-// The bundle's own image-decode + pose render is async, so the moment feedAvatarMaker()
+// The bundle's own image-decode + pose render is async, so the moment feedViewerEngine()
 // dispatches the change event tells us nothing about when it's actually done. Watch for
 // its first generated output image instead.
 function waitForAvatarEngine() {
@@ -98,6 +98,6 @@ async function loadSkin(username) {
   skin3d.username = player.username;
   updateSceneCharacterIcon(skinImg);
 
-  await feedAvatarMaker(skinImg);
+  await feedViewerEngine(skinImg);
   waitForAvatarEngine().then(revealAdvancedTabs);
 }

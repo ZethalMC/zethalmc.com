@@ -10,8 +10,9 @@
     <link rel="icon" href="../images/zethpfp.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/portfolio.css" />
     <link rel="stylesheet" href="../assets/css/feedback.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="skin-viewer/style.css" />
-    <link rel="stylesheet" href="skin-viewer/avatar-maker-embed.css" />
+    <link rel="stylesheet" href="skin-viewer/viewer-engine.css" />
 </head>
 
 <body>
@@ -59,9 +60,9 @@
             <div id="canvas-mount">
                 <div id="canvas"></div>
                 <div class="howto">
-                    <img alt="Rotate icon" src="skin-viewer/avatar-maker/images/rotate.svg" width="16" height="16"> rotate,
-                    <img alt="Drag icon" src="skin-viewer/avatar-maker/images/hand-drag.svg" width="16" height="16"> move and
-                    <img alt="Zoom icon" src="skin-viewer/avatar-maker/images/zoom.svg" width="16" height="16"> zoom
+                    <i class="fa-solid fa-arrows-rotate"></i> rotate,
+                    <i class="fa-solid fa-up-down-left-right"></i> move and
+                    <i class="fa-solid fa-magnifying-glass"></i> zoom
                 </div>
             </div>
         </div>
@@ -70,6 +71,7 @@
             <div class="edit-tabs-row">
                 <button type="button" id="edit-pose" class="edit-tabs active">Pose</button>
                 <button type="button" id="edit-scene" class="edit-tabs">Scene</button>
+                <button type="button" id="edit-items" class="edit-tabs">Items</button>
             </div>
 
             <div id="model-ava">
@@ -237,32 +239,59 @@
                         <div id="bg-color2" class="color" data-color="#ffffff"></div>
                     </div>
                 </div>
-                <!-- Item-attachment feature is disabled for now (no "items" tab links here), but these
-                     elements must stay in the DOM: skinava.bundle.3.js binds them unconditionally the
-                     first time a skin loads and throws if any are missing. -->
                 <div id="m-items">
                     <div>
-                        <div id="m-item-left-arm" class="m-item-arms active" data-item="0">Left arm</div>
+                        <div id="m-item-left-arm" class="m-item-arms active" data-item="0" title="Edit the item held in this arm">Right arm</div>
                         <div class="m-item">
-                            <label for="m-item-left-arm-img"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-left-arm-img" name="m-item-left-arm-img"></label>
+                            <label for="m-item-left-arm-img" title="Upload an image to hold as an item"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-left-arm-img" name="m-item-left-arm-img"><i class="fa-solid fa-image"></i></label>
                         </div>
                         <div class="m-item">
-                            <div id="m-item-left-arm-visible" class="img"></div>
+                            <div id="m-item-left-arm-visible" class="img" title="Show/hide the held item"><i class="fa-solid fa-eye icon-shown"></i><i class="fa-solid fa-eye-slash icon-hidden"></i></div>
                         </div>
                         <div class="m-item">
-                            <div id="m-item-left-arm-grip" class="img grip"></div>
+                            <div id="m-item-left-arm-grip" class="img grip" title="Switch between an open hand and a fist grip"><i class="fa-solid fa-hand icon-open"></i><i class="fa-solid fa-hand-back-fist icon-fist"></i></div>
+                        </div>
+                    </div>
+                    <div class="item-transform" data-arm="left">
+                        <div class="item-transform-heading">Right item position / rotation</div>
+                        <div class="item-transform-row">
+                            <div title="Move the item relative to the hand">Position</div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-left-x"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-left-x"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-left-y"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-left-y"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-left-z"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-left-z"></div>
+                        </div>
+                        <div class="item-transform-row">
+                            <div title="Rotate the item to any angle">Rotation</div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-left-rx"><input type="number" min="-180" max="180" value="0" id="text-item-left-rx"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-left-ry"><input type="number" min="-180" max="180" value="0" id="text-item-left-ry"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-left-rz"><input type="number" min="-180" max="180" value="0" id="text-item-left-rz"></div>
                         </div>
                     </div>
                     <div>
-                        <div id="m-item-right-arm" class="m-item-arms" data-item="0">Right arm</div>
+                        <div id="m-item-right-arm" class="m-item-arms" data-item="0" title="Edit the item held in this arm">Left arm</div>
                         <div class="m-item">
-                            <label for="m-item-right-arm-img"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-right-arm-img" name="m-item-right-arm-img"></label>
+                            <label for="m-item-right-arm-img" title="Upload an image to hold as an item"><input type="file" accept="image/png,image/gif,image/jpeg" id="m-item-right-arm-img" name="m-item-right-arm-img"><i class="fa-solid fa-image"></i></label>
                         </div>
                         <div class="m-item">
-                            <div id="m-item-right-arm-visible" class="img"></div>
+                            <div id="m-item-right-arm-visible" class="img" title="Show/hide the held item"><i class="fa-solid fa-eye icon-shown"></i><i class="fa-solid fa-eye-slash icon-hidden"></i></div>
                         </div>
                         <div class="m-item">
-                            <div id="m-item-right-arm-grip" class="img grip"></div>
+                            <div id="m-item-right-arm-grip" class="img grip" title="Switch between an open hand and a fist grip"><i class="fa-solid fa-hand icon-open"></i><i class="fa-solid fa-hand-back-fist icon-fist"></i></div>
+                        </div>
+                    </div>
+                    <div class="item-transform" data-arm="right">
+                        <div class="item-transform-heading">Left item position / rotation</div>
+                        <div class="item-transform-row">
+                            <div title="Move the item relative to the hand">Position</div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-right-x"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-right-x"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-right-y"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-right-y"></div>
+                            <div><input type="range" min="-1" max="1" step="0.01" value="0" class="slider" id="range-item-right-z"><input type="number" min="-1" max="1" step="0.01" value="0" id="text-item-right-z"></div>
+                        </div>
+                        <div class="item-transform-row">
+                            <div title="Rotate the item to any angle">Rotation</div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-right-rx"><input type="number" min="-180" max="180" value="0" id="text-item-right-rx"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-right-ry"><input type="number" min="-180" max="180" value="0" id="text-item-right-ry"></div>
+                            <div><input type="range" min="-180" max="180" value="0" class="slider" id="range-item-right-rz"><input type="number" min="-180" max="180" value="0" id="text-item-right-rz"></div>
                         </div>
                     </div>
                 </div>
@@ -314,11 +343,7 @@
     </div>
 
     <input type="file" accept="image/png" id="load_skin" name="load_skin" class="hidden">
-    <!-- Shadows toggle is hidden from the UI for now, but skinava.bundle.3.js reads #shadowsbox
-         unconditionally at script-load time and throws if it's missing -- keep it, default checked. -->
     <input type="checkbox" id="shadowsbox" checked class="hidden">
-    <!-- Quality selector is hidden from the UI (locked to High), but skinava.bundle.3.js reads
-         #quality unconditionally at script-load time and throws if it's missing -- keep it. -->
     <select id="quality" class="hidden">
         <option value="0">Low</option>
         <option value="1">Medium</option>
@@ -356,11 +381,13 @@
     <script>
         const editBtn = {
             pose: document.getElementById("edit-pose"),
-            scene: document.getElementById("edit-scene")
+            scene: document.getElementById("edit-scene"),
+            items: document.getElementById("edit-items")
         };
         const editControls = {
             pose: document.getElementById("model-controls"),
-            scene: document.getElementById("scene-controls")
+            scene: document.getElementById("scene-controls"),
+            items: document.getElementById("m-items")
         };
         for (const key in editBtn) {
             editBtn[key].addEventListener("click", () => {
@@ -384,7 +411,7 @@
         const copySuccess = "Copied!";
         const skinimg = null;
     </script>
-    <script src="skin-viewer/avatar-maker/js/skinava.bundle.3.js"></script>
+    <script src="skin-viewer/js/zethalmc-viewer-engine.js"></script>
     <script src="skin-viewer/js/skin.js"></script>
     <script src="skin-viewer/script.js"></script>
     <script>window.FEEDBACK_SOURCE = "Skin Viewer";</script>
