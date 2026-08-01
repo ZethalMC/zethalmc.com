@@ -352,6 +352,16 @@ section.page-section {
     inset: 0;
 }
 
+#friends .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 300px));
+}
+
+#friends .card img {
+    height: 240px;
+    object-fit: contain;
+    background: var(--surface-alt);
+}
+
 #servers .server-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
