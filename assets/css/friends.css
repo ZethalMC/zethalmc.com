@@ -1,0 +1,93 @@
+body {
+    padding-bottom: 60px;
+}
+
+.section-head h1 {
+    font-size: 2em;
+    margin: 0 0 10px 0;
+    color: var(--text);
+}
+
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+.friend-entry {
+    display: flex;
+    gap: 26px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    scroll-margin-top: 96px;
+}
+
+.friend-entry-icon {
+    flex: none;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--surface-alt);
+    border: 2px solid var(--border);
+}
+
+.friend-entry-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+}
+
+.friend-entry-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.friend-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.friend-entry-head h2 {
+    margin: 0;
+    font-size: 1.4em;
+    color: var(--text);
+}
+
+.friend-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--accent-bright);
+    color: var(--accent-bright);
+    background: var(--surface-alt);
+    white-space: nowrap;
+}
+
+.friend-entry-tagline {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .friend-entry {
+        flex-direction: column;
+        padding: 22px;
+    }
+
+    .friend-entry-icon {
+        width: 72px;
+        height: 72px;
+    }
+}
