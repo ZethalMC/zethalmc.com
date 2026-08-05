@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ZethalMC - Discord Bot Permissions Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="description" content="Calculate Discord bot permission integers and generate ready-to-use OAuth2 invite links." />
+    <meta name="author" content="Zethal_" />
+    <link rel="icon" href="../images/zethpfp.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/portfolio.css">
+    <link rel="stylesheet" href="../assets/css/feedback.css">
+    <link rel="stylesheet" href="bot-permissions/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header id="site-header">
+    <div class="site-header-inner">
+        <a href="../index.html" id="logo">ZethalMC</a>
+    </div>
+</header>
+
+<div class="container">
+    <h1>Discord Bot Permissions Calculator</h1>
+    <p>Select the permissions your bot needs, then generate an OAuth2 invite link with the correct permission integer baked in.</p>
+</div>
+
+<div class="container" id="container">
+    <div class="result">
+        <span class="result-label">Permissions Integer</span>
+        <code id="number">0</code>
+        <span class="result-equation" id="equation"></span>
+    </div>
+
+    <section class="oauth-section">
+        <h2>Invite Link Generator</h2>
+        <div class="oauth-grid">
+            <div class="field">
+                <label for="clientID">Client ID</label>
+                <input type="text" id="clientID" placeholder="Your bot's application/client ID" class="error">
+            </div>
+            <div class="field">
+                <label for="oauthScopes">Scopes</label>
+                <input type="text" id="oauthScopes" placeholder="bot">
+            </div>
+            <div class="field">
+                <label for="oauthRedirect">Redirect URI</label>
+                <input type="text" id="oauthRedirect" placeholder="(optional)">
+            </div>
+            <div class="checkbox-container" id="codeGrantContainer">
+                <input id="oauthCodeGrant" type="checkbox">
+                <span class="label-text">Require Code Grant</span>
+            </div>
+        </div>
+        <div class="invite-link-row">
+            <a href="#" id="invite" class="disabled" target="_blank" rel="noopener">https://discord.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&amp;scope=bot&amp;permissions=0</a>
+            <button id="copyInvite"><i class="fa-solid fa-copy"></i> Copy Link</button>
+        </div>
+    </section>
+
+    <p class="note twofa-note"><span class="twofa-badge">2FA</span> Permissions marked with this badge require the bot owner to have <a href="https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Two-Factor-Authentication" target="_blank" rel="noopener">Two-Factor Authentication</a> enabled if the server requires it for moderators.</p>
+
+    <div class="permissions-grid">
+        <div class="permission-group">
+            <h3>General Permissions</h3>
+            <ul id="generalGroup"></ul>
+        </div>
+        <div class="permission-group">
+            <h3>Text Permissions</h3>
+            <ul id="textGroup"></ul>
+        </div>
+        <div class="permission-group">
+            <h3>Voice Permissions</h3>
+            <ul id="voiceGroup"></ul>
+        </div>
+    </div>
+</div>
+
+<button class="feedback-button" onclick="togglePopup()">Feedback</button>
+
+    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+
+    <div class="popup" id="popup">
+        <button type="button" class="popup-close-btn" onclick="togglePopup()" aria-label="Close feedback form">&times;</button>
+        <h1>Feedback Form</h1>
+        <label for="discord">Discord Username and ID:</label>
+        <input type="text" id="discord" placeholder="Discord Username / ID" required>
+
+        <label for="textBox" id="textBoxTitle">Your Feedback:</label>
+        <textarea id="textBox" rows="5" placeholder="Enter your feedback here..." required></textarea>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="contactCheckbox" onclick="toggleCheckbox('contactCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('contactCheckbox')">Contact me?</span>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="bugCheckbox" onclick="toggleCheckbox('bugCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('bugCheckbox')">Bug?</span>
+        </div>
+
+        <button onclick="submitFeedback()">Submit Feedback</button>
+        <div class="notification" id="notification"></div>
+    </div>
+
+<div id="notifPopup"></div>
+
+<script src="bot-permissions/script.js"></script>
+<script>window.FEEDBACK_SOURCE = "Bot Permissions Calculator";</script>
+<script src="../assets/js/feedback.js"></script>
+</body>
+</html>
