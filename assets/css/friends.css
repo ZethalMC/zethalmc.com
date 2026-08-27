@@ -80,6 +80,18 @@ body {
     margin: 0;
 }
 
+.friend-entry-note {
+    margin: 12px 0 0 0;
+    padding: 10px 14px;
+    border-left: 3px solid var(--accent-bright);
+    background: var(--surface-alt);
+    border-radius: 6px;
+    color: var(--accent-bright);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.92em;
+}
+
 @media (max-width: 700px) {
     .friend-entry {
         flex-direction: column;
