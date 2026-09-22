@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gradient Text Generator</title>
+    <meta name="description" content="Build multi-stop hex color gradients for Minecraft chat, signs, and plugin configs, exported as legacy, ampersand, or MiniMessage codes." />
+    <meta name="author" content="Zethal_" />
+    <link rel="icon" href="../images/zethpfp.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../assets/css/portfolio.css" />
+    <link rel="stylesheet" href="../assets/css/feedback.css" />
+    <link rel="stylesheet" href="gradient-generator/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header id="site-header">
+        <div class="site-header-inner">
+            <a href="../index.html" id="logo">ZethalMC</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <header>
+            <div class="header">
+                <h1>Gradient Text Generator</h1>
+                <button type="button" id="copyShareLink" class="share-link-btn"><i class="fa-solid fa-link"></i> Copy Share Link</button>
+            </div>
+            <p>Turn plain text into a smooth hex color gradient for Minecraft chat, signs, books, and plugin
+                configs. Your setup is saved to the URL, so you can copy the link to share or bookmark it.</p>
+        </header>
+
+        <details class="instructions">
+            <summary>Instructions</summary>
+            <div class="instructions-body">
+                <p>Type or paste your text, pick two or more colors to gradient across, and choose the output
+                    format your server or plugin expects:</p>
+                <p><strong>Legacy (§)</strong> uses the raw section-symbol hex trick that works anywhere vanilla
+                    formatting works, like signs and books.</p>
+                <p><strong>Ampersand (&amp;#)</strong> is the shorthand most plugins (EssentialsX, LuckPerms,
+                    DeluxeMenus, and similar) parse directly in their config files.</p>
+                <p><strong>MiniMessage</strong> outputs a native <code>&lt;gradient&gt;</code> tag for Adventure-based
+                    plugins on Paper.</p>
+                <p>Already have formatted text you want back in plain English? Paste it into the decoder at the
+                    bottom to strip all color and formatting codes.</p>
+            </div>
+        </details>
+
+        <div id="container" class="generator-grid">
+            <div class="generator-col">
+                <div class="field-card">
+                    <h5><i class="fa-solid fa-font"></i> Text</h5>
+                    <textarea id="textInput" rows="3" placeholder="Type your text here...">ZethalMC</textarea>
+                </div>
+
+                <div class="field-card">
+                    <h5><i class="fa-solid fa-palette"></i> Gradient Colors</h5>
+                    <div id="gradientBar"></div>
+                    <div id="colorStops"></div>
+                    <button type="button" id="addColor"><i class="fa-solid fa-plus"></i> Add Color</button>
+                </div>
+
+                <div class="field-card">
+                    <h5><i class="fa-solid fa-sliders"></i> Formatting</h5>
+                    <div class="format-toolbar" role="group" aria-label="Text formatting">
+                        <button type="button" class="fmt-toggle" data-flag="bold" aria-pressed="false" title="Bold">
+                            <i class="fa-solid fa-bold"></i><span>Bold</span>
+                        </button>
+                        <button type="button" class="fmt-toggle" data-flag="italic" aria-pressed="false" title="Italic">
+                            <i class="fa-solid fa-italic"></i><span>Italic</span>
+                        </button>
+                        <button type="button" class="fmt-toggle" data-flag="underline" aria-pressed="false" title="Underline">
+                            <i class="fa-solid fa-underline"></i><span>Underline</span>
+                        </button>
+                        <button type="button" class="fmt-toggle" data-flag="strikethrough" aria-pressed="false" title="Strikethrough">
+                            <i class="fa-solid fa-strikethrough"></i><span>Strikethrough</span>
+                        </button>
+                        <button type="button" class="fmt-toggle" data-flag="obfuscated" aria-pressed="false" title="Obfuscated">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i><span>Obfuscated</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="generator-col">
+                <div class="field-card">
+                    <h5><i class="fa-solid fa-eye"></i> Preview</h5>
+                    <div id="preview" class="minecraft-text"></div>
+                </div>
+
+                <div class="field-card">
+                    <h5><i class="fa-solid fa-terminal"></i> Output</h5>
+                    <div class="format-toolbar" id="formatSelect" role="group" aria-label="Output format">
+                        <button type="button" class="format-btn" data-format="legacy">Legacy</button>
+                        <button type="button" class="format-btn active" data-format="ampersand">Ampersand</button>
+                        <button type="button" class="format-btn" data-format="minimessage">MiniMessage</button>
+                    </div>
+                    <textarea id="output" rows="3" readonly></textarea>
+                    <button type="button" id="copyOutput"><i class="fa-solid fa-copy"></i> Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="decodeContainer" class="generator-grid">
+            <div class="generator-col">
+                <div class="field-card">
+                    <h5><i class="fa-solid fa-unlock"></i> Decode Formatted Text</h5>
+                    <p class="note">Paste text containing color or formatting codes to strip them back to plain
+                        text.</p>
+                    <textarea id="decodeInput" rows="3" placeholder="Paste formatted text here..."></textarea>
+                    <button type="button" id="decodeButton">Decode</button>
+                </div>
+            </div>
+            <div class="generator-col">
+                <div class="field-card">
+                    <h5><i class="fa-solid fa-eraser"></i> Decoded Text</h5>
+                    <textarea id="decodeOutput" rows="3" readonly placeholder="Decoded text will appear here..."></textarea>
+                    <button type="button" id="copyDecoded"><i class="fa-solid fa-copy"></i> Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="feedback-button" onclick="togglePopup()">Feedback</button>
+
+    <div class="overlay" id="overlay" onclick="togglePopup()"></div>
+
+    <div class="popup" id="popup">
+        <button type="button" class="popup-close-btn" onclick="togglePopup()" aria-label="Close feedback form">&times;</button>
+        <h1>Feedback Form</h1>
+        <label for="discord">Discord Username and ID:</label>
+        <input type="text" id="discord" placeholder="Discord Username / ID" required>
+
+        <label for="textBox" id="textBoxTitle">Your Feedback:</label>
+        <textarea id="textBox" rows="5" placeholder="Enter your feedback here..." required></textarea>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="contactCheckbox" onclick="toggleCheckbox('contactCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('contactCheckbox')">Contact me?</span>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="bugCheckbox" onclick="toggleCheckbox('bugCheckbox')">
+            <span class="label-text" onclick="toggleCheckbox('bugCheckbox')">Bug?</span>
+        </div>
+
+        <button onclick="submitFeedback()">Submit Feedback</button>
+        <div class="notification" id="notification"></div>
+    </div>
+
+    <div id="notifPopup"></div>
+
+    <script src="gradient-generator/script.js"></script>
+    <script>window.FEEDBACK_SOURCE = "Gradient Text Generator";</script>
+    <script src="../assets/js/feedback.js"></script>
+</body>
+
+</html>

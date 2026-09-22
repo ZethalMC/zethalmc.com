@@ -15,6 +15,7 @@ Alongside the portfolio, this repo also hosts a few standalone Minecraft utiliti
 - [BreweryX Recipe Creator](https://www.zethalmc.com/mc-utilities/breweryx-converter) — build BreweryX recipe YAML through a form instead of hand-writing it.
 - [Minecraft Skin Viewer](https://www.zethalmc.com/mc-utilities/skin-viewer) — look up any Minecraft player's current skin and cape in an interactive 3D viewer.
 - [Discord Bot Permissions Calculator](https://www.zethalmc.com/utilities/bot-permissions) — pick permissions and generate an OAuth2 bot invite link.
+- [Gradient Text Generator](https://www.zethalmc.com/mc-utilities/gradient-generator) — turn text into hex gradients for Minecraft chat, signs, and plugin configs.
 
 ### Future Projects
 

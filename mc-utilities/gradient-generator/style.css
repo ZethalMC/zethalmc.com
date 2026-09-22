@@ -1,0 +1,464 @@
+@font-face {
+    font-family: "Minecraft";
+    src: url("../../assets/fonts/MinecraftRegular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Minecraft";
+    src: url("../../assets/fonts/MinecraftBold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Minecraft";
+    src: url("../../assets/fonts/MinecraftItalic.woff") format("woff");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Minecraft";
+    src: url("../../assets/fonts/MinecraftBoldItalic.woff") format("woff");
+    font-weight: 700;
+    font-style: italic;
+}
+
+body {
+    padding: 0 20px 60px 20px;
+}
+
+#site-header {
+    margin: 0 -20px;
+}
+
+.container {
+    max-width: 1080px;
+    padding: 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: left;
+}
+
+.generator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.generator-col {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.generator-col button {
+    align-self: flex-start;
+}
+
+.field-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+}
+
+@media (max-width: 760px) {
+    .generator-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.container>header {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.share-link-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 8px 14px;
+}
+
+.share-link-btn:hover {
+    color: var(--text);
+    border-color: var(--accent-bright);
+    background: none;
+    box-shadow: none;
+}
+
+h1 {
+    color: var(--text);
+    font-size: 2.2em;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+h5 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-weight: 700;
+    margin: 0 0 12px 0;
+}
+
+h5 i {
+    color: var(--accent-bright);
+    font-size: 0.9em;
+}
+
+.note {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0 0 10px 0;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 30px 0;
+}
+
+/* Collapsible "Instructions" */
+.instructions {
+    margin-bottom: 30px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.instructions summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    user-select: none;
+}
+
+.instructions summary::-webkit-details-marker {
+    display: none;
+}
+
+.instructions summary::after {
+    content: "\25BE";
+    color: var(--accent-bright);
+    font-size: 0.85em;
+    transition: transform 0.2s ease;
+}
+
+.instructions[open] summary {
+    border-bottom: 1px solid var(--border);
+}
+
+.instructions[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.instructions summary:hover {
+    color: var(--accent-bright);
+}
+
+.instructions-body {
+    padding: 18px 20px 4px 20px;
+    color: var(--text-muted);
+}
+
+.instructions-body p {
+    margin: 0 0 14px 0;
+}
+
+.instructions-body strong {
+    color: var(--text);
+}
+
+.instructions-body code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    color: var(--accent-bright);
+}
+
+textarea,
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--accent-bright);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+#output,
+#decodeOutput {
+    margin-bottom: 10px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    color: var(--text-muted);
+}
+
+button {
+    font-weight: 600;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(23, 163, 152, 0.3);
+}
+
+button i,
+button .fa-solid {
+    margin-right: 6px;
+}
+
+/* Gradient bar */
+
+#gradientBar {
+    height: 10px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+}
+
+/* Color stops */
+
+#colorStops {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.color-stop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-stop input[type="color"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.color-stop input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.color-stop input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 7px;
+}
+
+.color-stop input[type="text"] {
+    font-family: "Courier New", monospace;
+    text-transform: uppercase;
+}
+
+.color-stop .remove-color {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.color-stop .remove-color i {
+    margin: 0;
+}
+
+.color-stop .remove-color:hover {
+    color: #e3564c;
+    border-color: #e3564c;
+    background: none;
+    box-shadow: none;
+    transform: none;
+}
+
+.color-stop .remove-color:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.color-stop .remove-color:disabled:hover {
+    color: var(--text-muted);
+    border-color: var(--border);
+}
+
+/* Toggle toolbars (formatting + output format) */
+
+.format-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.fmt-toggle,
+.format-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 9px 14px;
+    box-shadow: none;
+}
+
+.fmt-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 auto;
+    justify-content: center;
+}
+
+.fmt-toggle i,
+.format-btn i {
+    color: inherit;
+    margin: 0;
+}
+
+.fmt-toggle:hover,
+.format-btn:hover {
+    color: var(--text);
+    border-color: var(--accent-bright);
+    background: var(--surface);
+    transform: none;
+    box-shadow: none;
+}
+
+.fmt-toggle.active,
+.format-btn.active {
+    background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+    border-color: var(--accent-bright);
+    color: #fff;
+}
+
+#formatSelect {
+    margin-bottom: 14px;
+}
+
+#formatSelect .format-btn {
+    flex: 1 1 0;
+}
+
+/* Preview */
+
+#preview {
+    min-height: 60px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    font-size: 1.3em;
+    line-height: 1.6;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.minecraft-text {
+    font-family: "Minecraft", "Courier New", monospace;
+}
+
+#notifPopup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: calc(100% - 40px);
+    box-sizing: border-box;
+    word-wrap: break-word;
+    background: var(--surface-alt);
+    color: var(--text);
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--accent-bright);
+    display: none;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 1.7em;
+    }
+
+    button:not(.remove-color):not(.fmt-toggle):not(.format-btn) {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .color-stop input[type="text"] {
+        min-width: 0;
+    }
+
+    .fmt-toggle span {
+        display: none;
+    }
+}
