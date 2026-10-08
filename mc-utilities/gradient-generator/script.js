@@ -55,6 +55,27 @@ function lerpColor(c1, c2, t) {
     return { r: lerp(c1.r, c2.r, t), g: lerp(c1.g, c2.g, t), b: lerp(c1.b, c2.b, t) };
 }
 
+const graphemeSegmenter = typeof Intl !== 'undefined' && Intl.Segmenter
+    ? new Intl.Segmenter(undefined, { granularity: 'grapheme' })
+    : null;
+
+// An emoji can span multiple UTF-16 code units (surrogate pairs) or multiple
+// codepoints joined with ZWJ/variation selectors (families, flags, skin tones).
+// Splitting on raw string indices would slice those apart and mangle them, so
+// text is walked grapheme-cluster by grapheme-cluster instead.
+function segmentText(text) {
+    if (graphemeSegmenter) {
+        return Array.from(graphemeSegmenter.segment(text), s => s.segment);
+    }
+    return Array.from(text);
+}
+
+const EMOJI_PATTERN = /\p{Extended_Pictographic}|\p{Regional_Indicator}|\u20E3/u;
+
+function isEmoji(grapheme) {
+    return EMOJI_PATTERN.test(grapheme);
+}
+
 function buildGradient(length, stopHexes) {
     const stopsRgb = stopHexes.map(hexToRgb);
     if (length <= 1) return [rgbToHex(stopsRgb[0])];
@@ -154,33 +175,33 @@ function escapeMiniMessage(text) {
     return text.replace(/\\/g, '\\\\').replace(/</g, '\\<');
 }
 
-function buildLegacyOutput(text, gradientColors, flags, prefixChar) {
+function buildLegacyOutput(segments, gradientColors, flags, prefixChar) {
     const formatCodes = flags.map(f => prefixChar + f.legacy).join('');
     let out = '';
-    for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        if (ch === '\n') {
-            out += '\n';
+    for (let i = 0; i < segments.length; i++) {
+        const seg = segments[i];
+        if (seg === '\n' || isEmoji(seg)) {
+            out += seg;
             continue;
         }
         const hex = gradientColors[i].replace('#', '');
         out += prefixChar + 'x';
         for (const digit of hex) out += prefixChar + digit;
-        out += formatCodes + ch;
+        out += formatCodes + seg;
     }
     return out;
 }
 
-function buildAmpersandOutput(text, gradientColors, flags) {
+function buildAmpersandOutput(segments, gradientColors, flags) {
     const formatCodes = flags.map(f => '&' + f.legacy).join('');
     let out = '';
-    for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        if (ch === '\n') {
-            out += '\n';
+    for (let i = 0; i < segments.length; i++) {
+        const seg = segments[i];
+        if (seg === '\n' || isEmoji(seg)) {
+            out += seg;
             continue;
         }
-        out += '&#' + gradientColors[i].replace('#', '') + formatCodes + ch;
+        out += '&#' + gradientColors[i].replace('#', '') + formatCodes + seg;
     }
     return out;
 }
@@ -192,7 +213,7 @@ function buildMiniMessageOutput(text, gradientColors, flags) {
     return `<gradient:${stopTags}>${openTags}${escapeMiniMessage(text)}${closeTags}</gradient>`;
 }
 
-function renderPreview(text, gradientColors, flags) {
+function renderPreview(segments, gradientColors, flags) {
     preview.innerHTML = '';
     const style = {
         fontWeight: flags.some(f => f.flag === 'bold') ? '700' : '400',
@@ -202,14 +223,18 @@ function renderPreview(text, gradientColors, flags) {
     if (flags.some(f => f.flag === 'underline')) decorations.push('underline');
     if (flags.some(f => f.flag === 'strikethrough')) decorations.push('line-through');
 
-    for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        if (ch === '\n') {
+    for (let i = 0; i < segments.length; i++) {
+        const seg = segments[i];
+        if (seg === '\n') {
             preview.appendChild(document.createElement('br'));
             continue;
         }
+        if (isEmoji(seg)) {
+            preview.appendChild(document.createTextNode(seg));
+            continue;
+        }
         const span = document.createElement('span');
-        span.textContent = ch === ' ' ? ' ' : ch;
+        span.textContent = seg;
         span.style.color = gradientColors[i];
         span.style.fontWeight = style.fontWeight;
         span.style.fontStyle = style.fontStyle;
@@ -229,18 +254,19 @@ function update() {
         return;
     }
 
-    const gradientColors = buildGradient(text.length, colors);
+    const segments = segmentText(text);
+    const gradientColors = buildGradient(segments.length, colors);
     const flags = activeFormatFlags();
 
     if (selectedFormat === 'legacy') {
-        output.value = buildLegacyOutput(text, gradientColors, flags, '§');
+        output.value = buildLegacyOutput(segments, gradientColors, flags, '§');
     } else if (selectedFormat === 'ampersand') {
-        output.value = buildAmpersandOutput(text, gradientColors, flags);
+        output.value = buildAmpersandOutput(segments, gradientColors, flags);
     } else {
         output.value = buildMiniMessageOutput(text, gradientColors, flags);
     }
 
-    renderPreview(text, gradientColors, flags);
+    renderPreview(segments, gradientColors, flags);
 }
 
 function syncHash() {
