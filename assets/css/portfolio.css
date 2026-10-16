@@ -345,6 +345,11 @@ section.page-section {
     background: var(--surface-alt);
 }
 
+.card img.card-img-contain {
+    object-fit: contain;
+    background: var(--bg);
+}
+
 .card .card-body {
     padding: 20px 22px 24px 22px;
     display: flex;
